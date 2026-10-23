@@ -1,0 +1,4922 @@
+[
+  {
+    "id": "roti_whole_wheat",
+    "name": "Roti (whole wheat)",
+    "transliterations": [
+      "chapati",
+      "phulka"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 120,
+    "proteinG": 3.5,
+    "carbG": 18,
+    "fatG": 3.5,
+    "source": "IFCT-inspired",
+    "confidence": "medium"
+  },
+  {
+    "id": "paratha_plain",
+    "name": "Paratha (plain)",
+    "transliterations": [
+      "parantha"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 70,
+    "calories": 210,
+    "proteinG": 5,
+    "carbG": 28,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "naan",
+    "name": "Naan",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 90,
+    "calories": 260,
+    "proteinG": 8,
+    "carbG": 45,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "rice_cooked",
+    "name": "Rice (cooked)",
+    "transliterations": [
+      "chawal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 185,
+    "proteinG": 3.5,
+    "carbG": 40,
+    "fatG": 0.4,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "jeera_rice",
+    "name": "Jeera rice",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 210,
+    "proteinG": 4,
+    "carbG": 38,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "biryani_veg",
+    "name": "Veg biryani",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 300,
+    "calories": 420,
+    "proteinG": 10,
+    "carbG": 60,
+    "fatG": 14,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "biryani_chicken",
+    "name": "Chicken biryani",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 320,
+    "calories": 480,
+    "proteinG": 22,
+    "carbG": 55,
+    "fatG": 16,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_tadka",
+    "name": "Dal tadka",
+    "transliterations": [
+      "dal fry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 180,
+    "proteinG": 10,
+    "carbG": 22,
+    "fatG": 6,
+    "source": "IFCT-inspired",
+    "confidence": "medium"
+  },
+  {
+    "id": "dal_makhani",
+    "name": "Dal makhani",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 260,
+    "proteinG": 12,
+    "carbG": 24,
+    "fatG": 12,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "sambar",
+    "name": "Sambar",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 120,
+    "proteinG": 6,
+    "carbG": 18,
+    "fatG": 3,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "rasam",
+    "name": "Rasam",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 200,
+    "calories": 50,
+    "proteinG": 2,
+    "carbG": 8,
+    "fatG": 1,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "rajma",
+    "name": "Rajma",
+    "transliterations": [
+      "kidney beans"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 200,
+    "proteinG": 12,
+    "carbG": 28,
+    "fatG": 4,
+    "source": "IFCT-inspired",
+    "confidence": "medium"
+  },
+  {
+    "id": "chole",
+    "name": "Chole",
+    "transliterations": [
+      "chana masala"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 220,
+    "proteinG": 11,
+    "carbG": 30,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "paneer_bhurji",
+    "name": "Paneer bhurji",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 280,
+    "proteinG": 16,
+    "carbG": 8,
+    "fatG": 20,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "paneer_tikka",
+    "name": "Paneer tikka",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 4,
+    "gramsPerServing": 120,
+    "calories": 260,
+    "proteinG": 18,
+    "carbG": 6,
+    "fatG": 18,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "palak_paneer",
+    "name": "Palak paneer",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 240,
+    "proteinG": 14,
+    "carbG": 10,
+    "fatG": 16,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "butter_chicken",
+    "name": "Butter chicken",
+    "transliterations": [
+      "murgh makhani"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 320,
+    "proteinG": 22,
+    "carbG": 10,
+    "fatG": 20,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chicken_curry",
+    "name": "Chicken curry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 250,
+    "proteinG": 24,
+    "carbG": 6,
+    "fatG": 14,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "egg_bhurji",
+    "name": "Egg bhurji",
+    "transliterations": [
+      "anda bhurji"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 220,
+    "proteinG": 16,
+    "carbG": 4,
+    "fatG": 16,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "boiled_egg",
+    "name": "Boiled egg",
+    "transliterations": [
+      "anda"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 78,
+    "proteinG": 6.3,
+    "carbG": 0.6,
+    "fatG": 5.3,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "omelette_2egg",
+    "name": "Omelette (2 eggs)",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 200,
+    "proteinG": 14,
+    "carbG": 2,
+    "fatG": 15,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "curd_plain",
+    "name": "Curd (plain)",
+    "transliterations": [
+      "dahi",
+      "yogurt"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 90,
+    "proteinG": 5,
+    "carbG": 8,
+    "fatG": 4,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "greek_dahi",
+    "name": "Thick curd / Greek-style",
+    "transliterations": [
+      "hung curd"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 130,
+    "proteinG": 12,
+    "carbG": 6,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "buttermilk",
+    "name": "Buttermilk",
+    "transliterations": [
+      "chaas"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 60,
+    "proteinG": 3,
+    "carbG": 6,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "lassi_sweet",
+    "name": "Sweet lassi",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 300,
+    "calories": 220,
+    "proteinG": 6,
+    "carbG": 35,
+    "fatG": 6,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "milk_full_fat",
+    "name": "Milk (full fat)",
+    "transliterations": [
+      "doodh"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 150,
+    "proteinG": 8,
+    "carbG": 12,
+    "fatG": 8,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "tea_milk_sugar",
+    "name": "Chai with milk & sugar",
+    "transliterations": [
+      "tea"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 80,
+    "proteinG": 2,
+    "carbG": 12,
+    "fatG": 2.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "filter_coffee",
+    "name": "Filter coffee with milk",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 70,
+    "proteinG": 2,
+    "carbG": 10,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "idli",
+    "name": "Idli",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 58,
+    "proteinG": 2,
+    "carbG": 12,
+    "fatG": 0.3,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "dosa_plain",
+    "name": "Dosa (plain)",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 80,
+    "calories": 150,
+    "proteinG": 3.5,
+    "carbG": 28,
+    "fatG": 3,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "masala_dosa",
+    "name": "Masala dosa",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 280,
+    "proteinG": 6,
+    "carbG": 42,
+    "fatG": 9,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "uttapam",
+    "name": "Uttapam",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 200,
+    "proteinG": 5,
+    "carbG": 32,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "poha",
+    "name": "Poha",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 200,
+    "calories": 250,
+    "proteinG": 5,
+    "carbG": 42,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "upma",
+    "name": "Upma",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 200,
+    "calories": 240,
+    "proteinG": 6,
+    "carbG": 38,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "mixed_veg_sabzi",
+    "name": "Mixed veg sabzi",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 120,
+    "proteinG": 3,
+    "carbG": 14,
+    "fatG": 6,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "aloo_gobi",
+    "name": "Aloo gobi",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 160,
+    "proteinG": 4,
+    "carbG": 18,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "bhindi_masala",
+    "name": "Bhindi masala",
+    "transliterations": [
+      "okra"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 140,
+    "proteinG": 3,
+    "carbG": 12,
+    "fatG": 9,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "baingan_bharta",
+    "name": "Baingan bharta",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 150,
+    "proteinG": 3,
+    "carbG": 14,
+    "fatG": 9,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "aloo_paratha",
+    "name": "Aloo paratha",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 290,
+    "proteinG": 6,
+    "carbG": 40,
+    "fatG": 11,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "samosa",
+    "name": "Samosa",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 70,
+    "calories": 180,
+    "proteinG": 4,
+    "carbG": 20,
+    "fatG": 9,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "pakora_mixed",
+    "name": "Mixed pakora",
+    "transliterations": [
+      "bhajiya"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 4,
+    "gramsPerServing": 80,
+    "calories": 200,
+    "proteinG": 5,
+    "carbG": 18,
+    "fatG": 12,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "vada_medu",
+    "name": "Medu vada",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 140,
+    "proteinG": 4,
+    "carbG": 16,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "pav_bhaji",
+    "name": "Pav bhaji",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 300,
+    "calories": 450,
+    "proteinG": 12,
+    "carbG": 60,
+    "fatG": 18,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "vada_pav",
+    "name": "Vada pav",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 290,
+    "proteinG": 7,
+    "carbG": 40,
+    "fatG": 12,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "chole_bhature",
+    "name": "Chole bhature",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 350,
+    "calories": 550,
+    "proteinG": 14,
+    "carbG": 70,
+    "fatG": 22,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "thali_veg",
+    "name": "Veg thali (typical)",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 500,
+    "calories": 700,
+    "proteinG": 20,
+    "carbG": 95,
+    "fatG": 22,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curd_rice",
+    "name": "Curd rice",
+    "transliterations": [
+      "thayir sadam"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 280,
+    "proteinG": 8,
+    "carbG": 42,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "lemon_rice",
+    "name": "Lemon rice",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 300,
+    "proteinG": 5,
+    "carbG": 50,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "coconut_chutney",
+    "name": "Coconut chutney",
+    "transliterations": [],
+    "servingUnit": "tablespoon",
+    "servingAmount": 2,
+    "gramsPerServing": 30,
+    "calories": 60,
+    "proteinG": 1,
+    "carbG": 3,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "green_chutney",
+    "name": "Green chutney",
+    "transliterations": [
+      "hari chutney"
+    ],
+    "servingUnit": "tablespoon",
+    "servingAmount": 1,
+    "gramsPerServing": 15,
+    "calories": 15,
+    "proteinG": 0.5,
+    "carbG": 2,
+    "fatG": 0.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "pickle_mango",
+    "name": "Mango pickle",
+    "transliterations": [
+      "achar"
+    ],
+    "servingUnit": "tablespoon",
+    "servingAmount": 1,
+    "gramsPerServing": 15,
+    "calories": 35,
+    "proteinG": 0.3,
+    "carbG": 2,
+    "fatG": 3,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "papad",
+    "name": "Papad",
+    "transliterations": [
+      "papadum"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 10,
+    "calories": 30,
+    "proteinG": 2,
+    "carbG": 4,
+    "fatG": 0.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "ghee",
+    "name": "Ghee",
+    "transliterations": [],
+    "servingUnit": "tablespoon",
+    "servingAmount": 1,
+    "gramsPerServing": 14,
+    "calories": 120,
+    "proteinG": 0,
+    "carbG": 0,
+    "fatG": 14,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "mustard_oil",
+    "name": "Mustard oil",
+    "transliterations": [],
+    "servingUnit": "tablespoon",
+    "servingAmount": 1,
+    "gramsPerServing": 14,
+    "calories": 120,
+    "proteinG": 0,
+    "carbG": 0,
+    "fatG": 14,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "peanuts_roasted",
+    "name": "Roasted peanuts",
+    "transliterations": [
+      "moongphali"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 0.5,
+    "gramsPerServing": 30,
+    "calories": 170,
+    "proteinG": 7,
+    "carbG": 5,
+    "fatG": 14,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "roasted_chana",
+    "name": "Roasted chana",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 0.5,
+    "gramsPerServing": 30,
+    "calories": 110,
+    "proteinG": 6,
+    "carbG": 16,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "banana",
+    "name": "Banana",
+    "transliterations": [
+      "kela"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 100,
+    "calories": 90,
+    "proteinG": 1,
+    "carbG": 23,
+    "fatG": 0.3,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "apple",
+    "name": "Apple",
+    "transliterations": [
+      "seb"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 80,
+    "proteinG": 0.3,
+    "carbG": 21,
+    "fatG": 0.2,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "mango",
+    "name": "Mango",
+    "transliterations": [
+      "aam"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 200,
+    "calories": 120,
+    "proteinG": 1,
+    "carbG": 28,
+    "fatG": 0.5,
+    "source": "IFCT-inspired",
+    "confidence": "medium"
+  },
+  {
+    "id": "orange",
+    "name": "Orange",
+    "transliterations": [
+      "santra"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 130,
+    "calories": 60,
+    "proteinG": 1,
+    "carbG": 15,
+    "fatG": 0.2,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "guava",
+    "name": "Guava",
+    "transliterations": [
+      "amrud"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 100,
+    "calories": 68,
+    "proteinG": 2.5,
+    "carbG": 14,
+    "fatG": 1,
+    "source": "IFCT-inspired",
+    "confidence": "medium"
+  },
+  {
+    "id": "pomegranate",
+    "name": "Pomegranate",
+    "transliterations": [
+      "anar"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 110,
+    "proteinG": 2,
+    "carbG": 25,
+    "fatG": 1,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "sprouts_salad",
+    "name": "Sprouts salad",
+    "transliterations": [
+      "moong sprouts"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 100,
+    "calories": 90,
+    "proteinG": 7,
+    "carbG": 14,
+    "fatG": 0.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "tofu_stir_fry",
+    "name": "Tofu stir-fry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 180,
+    "proteinG": 14,
+    "carbG": 8,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "soya_chunks_curry",
+    "name": "Soya chunks curry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 200,
+    "proteinG": 18,
+    "carbG": 12,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "fish_curry",
+    "name": "Fish curry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 220,
+    "proteinG": 24,
+    "carbG": 6,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "mutton_curry",
+    "name": "Mutton curry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 300,
+    "proteinG": 22,
+    "carbG": 6,
+    "fatG": 20,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "keema",
+    "name": "Keema",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 280,
+    "proteinG": 20,
+    "carbG": 5,
+    "fatG": 18,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "khichdi",
+    "name": "Khichdi",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 300,
+    "proteinG": 10,
+    "carbG": 50,
+    "fatG": 6,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "puri",
+    "name": "Puri",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 30,
+    "calories": 100,
+    "proteinG": 2,
+    "carbG": 12,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "thepla",
+    "name": "Thepla",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 45,
+    "calories": 120,
+    "proteinG": 3,
+    "carbG": 16,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "dhokla",
+    "name": "Dhokla",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 2,
+    "gramsPerServing": 60,
+    "calories": 100,
+    "proteinG": 4,
+    "carbG": 16,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "handvo",
+    "name": "Handvo",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 80,
+    "calories": 160,
+    "proteinG": 5,
+    "carbG": 20,
+    "fatG": 6,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "misal_pav",
+    "name": "Misal pav",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 350,
+    "calories": 480,
+    "proteinG": 16,
+    "carbG": 55,
+    "fatG": 18,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "pani_puri",
+    "name": "Pani puri",
+    "transliterations": [
+      "golgappa"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 6,
+    "gramsPerServing": 90,
+    "calories": 180,
+    "proteinG": 4,
+    "carbG": 28,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bhel_puri",
+    "name": "Bhel puri",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 220,
+    "proteinG": 5,
+    "carbG": 35,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sev_puri",
+    "name": "Sev puri",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 6,
+    "gramsPerServing": 150,
+    "calories": 280,
+    "proteinG": 6,
+    "carbG": 35,
+    "fatG": 12,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "jalebi",
+    "name": "Jalebi",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 2,
+    "gramsPerServing": 60,
+    "calories": 200,
+    "proteinG": 2,
+    "carbG": 35,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "gulab_jamun",
+    "name": "Gulab jamun",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 150,
+    "proteinG": 2,
+    "carbG": 25,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "rasgulla",
+    "name": "Rasgulla",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 100,
+    "proteinG": 3,
+    "carbG": 18,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "kheer",
+    "name": "Kheer",
+    "transliterations": [
+      "payasam"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 220,
+    "proteinG": 6,
+    "carbG": 35,
+    "fatG": 6,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "halwa_sooji",
+    "name": "Sooji halwa",
+    "transliterations": [
+      "sheera"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 250,
+    "proteinG": 3,
+    "carbG": 40,
+    "fatG": 9,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "besan_ladoo",
+    "name": "Besan ladoo",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 160,
+    "proteinG": 4,
+    "carbG": 18,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "protein_shake_whey",
+    "name": "Whey protein shake (water)",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 300,
+    "calories": 120,
+    "proteinG": 24,
+    "carbG": 3,
+    "fatG": 1,
+    "source": "label-typical",
+    "confidence": "medium"
+  },
+  {
+    "id": "oats_porridge",
+    "name": "Oats porridge",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 200,
+    "calories": 180,
+    "proteinG": 6,
+    "carbG": 30,
+    "fatG": 4,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "muesli_milk",
+    "name": "Muesli with milk",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 250,
+    "proteinG": 9,
+    "carbG": 38,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "brown_bread",
+    "name": "Brown bread",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 2,
+    "gramsPerServing": 60,
+    "calories": 140,
+    "proteinG": 5,
+    "carbG": 24,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "peanut_butter",
+    "name": "Peanut butter",
+    "transliterations": [],
+    "servingUnit": "tablespoon",
+    "servingAmount": 1,
+    "gramsPerServing": 16,
+    "calories": 95,
+    "proteinG": 4,
+    "carbG": 3,
+    "fatG": 8,
+    "source": "label-typical",
+    "confidence": "high"
+  },
+  {
+    "id": "hummus",
+    "name": "Hummus",
+    "transliterations": [],
+    "servingUnit": "tablespoon",
+    "servingAmount": 2,
+    "gramsPerServing": 30,
+    "calories": 70,
+    "proteinG": 2,
+    "carbG": 6,
+    "fatG": 4,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "salad_garden",
+    "name": "Garden salad",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 60,
+    "proteinG": 2,
+    "carbG": 10,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "corn_chaat",
+    "name": "Corn chaat",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 140,
+    "proteinG": 4,
+    "carbG": 24,
+    "fatG": 3,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "sweet_corn",
+    "name": "Sweet corn (boiled)",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 110,
+    "proteinG": 3.5,
+    "carbG": 22,
+    "fatG": 1.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "potato_boiled",
+    "name": "Boiled potato",
+    "transliterations": [
+      "aloo"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 110,
+    "proteinG": 2.5,
+    "carbG": 25,
+    "fatG": 0.1,
+    "source": "IFCT-inspired",
+    "confidence": "high"
+  },
+  {
+    "id": "sweet_potato",
+    "name": "Sweet potato",
+    "transliterations": [
+      "shakarkand"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 130,
+    "calories": 112,
+    "proteinG": 2,
+    "carbG": 26,
+    "fatG": 0.1,
+    "source": "IFCT-inspired",
+    "confidence": "medium"
+  },
+  {
+    "id": "coconut_water",
+    "name": "Coconut water",
+    "transliterations": [
+      "nariyal pani"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 45,
+    "proteinG": 0.5,
+    "carbG": 10,
+    "fatG": 0,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "nimbu_pani",
+    "name": "Nimbu pani (no sugar)",
+    "transliterations": [
+      "lemonade"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 20,
+    "proteinG": 0.2,
+    "carbG": 5,
+    "fatG": 0,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "nimbu_pani_sugar",
+    "name": "Nimbu pani (sweet)",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 90,
+    "proteinG": 0.2,
+    "carbG": 22,
+    "fatG": 0,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "soft_drink",
+    "name": "Soft drink",
+    "transliterations": [
+      "cola"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 300,
+    "calories": 130,
+    "proteinG": 0,
+    "carbG": 33,
+    "fatG": 0,
+    "source": "label-typical",
+    "confidence": "high"
+  },
+  {
+    "id": "beer_pint",
+    "name": "Beer (pint)",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 330,
+    "calories": 150,
+    "proteinG": 1,
+    "carbG": 12,
+    "fatG": 0,
+    "source": "label-typical",
+    "confidence": "medium"
+  },
+  {
+    "id": "whisky_30ml",
+    "name": "Whisky (30 ml)",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 30,
+    "calories": 70,
+    "proteinG": 0,
+    "carbG": 0,
+    "fatG": 0,
+    "source": "label-typical",
+    "confidence": "high"
+  },
+  {
+    "id": "appam",
+    "name": "Appam",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 60,
+    "calories": 120,
+    "proteinG": 2,
+    "carbG": 24,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "puttu",
+    "name": "Puttu",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 120,
+    "calories": 180,
+    "proteinG": 4,
+    "carbG": 36,
+    "fatG": 2,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "avial",
+    "name": "Avial",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 160,
+    "proteinG": 4,
+    "carbG": 14,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "kerala_fish_curry",
+    "name": "Kerala fish curry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 230,
+    "proteinG": 22,
+    "carbG": 6,
+    "fatG": 12,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "pork_vindaloo",
+    "name": "Pork vindaloo",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 310,
+    "proteinG": 22,
+    "carbG": 8,
+    "fatG": 20,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chicken_tikka",
+    "name": "Chicken tikka",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 4,
+    "gramsPerServing": 140,
+    "calories": 220,
+    "proteinG": 28,
+    "carbG": 4,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "seekh_kebab",
+    "name": "Seekh kebab",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 2,
+    "gramsPerServing": 100,
+    "calories": 200,
+    "proteinG": 16,
+    "carbG": 4,
+    "fatG": 13,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "shawarma_roll",
+    "name": "Shawarma roll",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 450,
+    "proteinG": 22,
+    "carbG": 40,
+    "fatG": 20,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "momos_veg",
+    "name": "Veg momos",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 6,
+    "gramsPerServing": 150,
+    "calories": 220,
+    "proteinG": 7,
+    "carbG": 35,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "momos_chicken",
+    "name": "Chicken momos",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 6,
+    "gramsPerServing": 150,
+    "calories": 250,
+    "proteinG": 12,
+    "carbG": 30,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "thukpa",
+    "name": "Thukpa",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 350,
+    "calories": 320,
+    "proteinG": 14,
+    "carbG": 45,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "maggi_masala",
+    "name": "Maggi masala (cooked)",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 200,
+    "calories": 350,
+    "proteinG": 8,
+    "carbG": 50,
+    "fatG": 14,
+    "source": "label-typical",
+    "confidence": "medium"
+  },
+  {
+    "id": "bread_omelette",
+    "name": "Bread omelette",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 320,
+    "proteinG": 16,
+    "carbG": 28,
+    "fatG": 16,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "cheese_sandwich",
+    "name": "Cheese sandwich",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 320,
+    "proteinG": 14,
+    "carbG": 30,
+    "fatG": 14,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "fruit_chaat",
+    "name": "Fruit chaat",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 100,
+    "proteinG": 1.5,
+    "carbG": 24,
+    "fatG": 0.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "chana_chaat",
+    "name": "Chana chaat",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 180,
+    "proteinG": 9,
+    "carbG": 28,
+    "fatG": 4,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "dahi_bhalla",
+    "name": "Dahi bhalla",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 200,
+    "calories": 280,
+    "proteinG": 10,
+    "carbG": 35,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rajma_chawal",
+    "name": "Rajma chawal",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 350,
+    "calories": 450,
+    "proteinG": 16,
+    "carbG": 70,
+    "fatG": 8,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "kadhi_chawal",
+    "name": "Kadhi chawal",
+    "transliterations": [],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 350,
+    "calories": 420,
+    "proteinG": 12,
+    "carbG": 65,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "kadhi",
+    "name": "Kadhi",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 140,
+    "proteinG": 6,
+    "carbG": 14,
+    "fatG": 7,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "malai_kofta",
+    "name": "Malai kofta",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 320,
+    "proteinG": 10,
+    "carbG": 20,
+    "fatG": 22,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "shahi_paneer",
+    "name": "Shahi paneer",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 300,
+    "proteinG": 14,
+    "carbG": 12,
+    "fatG": 22,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "kadai_paneer",
+    "name": "Kadai paneer",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 270,
+    "proteinG": 14,
+    "carbG": 12,
+    "fatG": 18,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "mushroom_masala",
+    "name": "Mushroom masala",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 160,
+    "proteinG": 6,
+    "carbG": 12,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "egg_curry",
+    "name": "Egg curry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 240,
+    "proteinG": 14,
+    "carbG": 8,
+    "fatG": 16,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "fish_fry",
+    "name": "Fish fry",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 100,
+    "calories": 200,
+    "proteinG": 20,
+    "carbG": 6,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "prawn_curry",
+    "name": "Prawn curry",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 210,
+    "proteinG": 20,
+    "carbG": 8,
+    "fatG": 10,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "soup_tomato",
+    "name": "Tomato soup",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 90,
+    "proteinG": 2,
+    "carbG": 14,
+    "fatG": 3,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "soup_chicken",
+    "name": "Chicken soup",
+    "transliterations": [],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 120,
+    "proteinG": 10,
+    "carbG": 6,
+    "fatG": 5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "ragi_mudde",
+    "name": "Ragi mudde",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 100,
+    "calories": 140,
+    "proteinG": 3,
+    "carbG": 28,
+    "fatG": 1,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "bajra_roti",
+    "name": "Bajra roti",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 130,
+    "proteinG": 3.5,
+    "carbG": 22,
+    "fatG": 3,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "jowar_roti",
+    "name": "Jowar roti",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 125,
+    "proteinG": 3,
+    "carbG": 24,
+    "fatG": 1.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "makki_roti",
+    "name": "Makki roti",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 55,
+    "calories": 140,
+    "proteinG": 3,
+    "carbG": 26,
+    "fatG": 2.5,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "sarson_saag",
+    "name": "Sarson da saag",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 140,
+    "proteinG": 5,
+    "carbG": 10,
+    "fatG": 9,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "makhani_dal_light",
+    "name": "Light dal (no cream)",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 150,
+    "proteinG": 9,
+    "carbG": 22,
+    "fatG": 3,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "tofu_scramble",
+    "name": "Tofu scramble",
+    "transliterations": [],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 190,
+    "proteinG": 15,
+    "carbG": 8,
+    "fatG": 11,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "hummus_roti_wrap",
+    "name": "Hummus roti wrap",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 180,
+    "calories": 320,
+    "proteinG": 10,
+    "carbG": 42,
+    "fatG": 12,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "protein_dosa",
+    "name": "Moong dal dosa",
+    "transliterations": [],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 90,
+    "calories": 160,
+    "proteinG": 8,
+    "carbG": 22,
+    "fatG": 4,
+    "source": "estimated",
+    "confidence": "medium"
+  },
+  {
+    "id": "dal_punjabi_1",
+    "name": "Punjabi Dal 1",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 161.0,
+    "proteinG": 10.0,
+    "carbG": 21.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_gujarati_1",
+    "name": "Gujarati Sabzi 1",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 112.0,
+    "proteinG": 3.0,
+    "carbG": 13.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_bengali_1",
+    "name": "Bengali Rice dish 1",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 283.0,
+    "proteinG": 6.0,
+    "carbG": 49.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_tamil_1",
+    "name": "Tamil Snack 1",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 92.0,
+    "proteinG": 3.0,
+    "carbG": 13.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_kerala_1",
+    "name": "Kerala Sweet 1",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 142.0,
+    "proteinG": 2.0,
+    "carbG": 23.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_maharashtrian_1",
+    "name": "Maharashtrian Drink 1",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 63.0,
+    "proteinG": 2.0,
+    "carbG": 11.0,
+    "fatG": 2.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_rajasthani_1",
+    "name": "Rajasthani Bread item 1",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 121.0,
+    "proteinG": 4.0,
+    "carbG": 19.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_hyderabadi_1",
+    "name": "Hyderabadi Curry 1",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 222.0,
+    "proteinG": 15.0,
+    "carbG": 9.0,
+    "fatG": 13.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_goan_1",
+    "name": "Goan Chaat 1",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 203.0,
+    "proteinG": 6.0,
+    "carbG": 31.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_kashmiri_1",
+    "name": "Kashmiri Breakfast bowl 1",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 242.0,
+    "proteinG": 8.0,
+    "carbG": 37.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_odia_2",
+    "name": "Odia Dal 2",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 162.0,
+    "proteinG": 11.0,
+    "carbG": 22.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_assamese_2",
+    "name": "Assamese Sabzi 2",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 114.0,
+    "proteinG": 2.0,
+    "carbG": 14.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_bihari_2",
+    "name": "Bihari Rice dish 2",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 286.0,
+    "proteinG": 7.0,
+    "carbG": 50.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_sindhi_2",
+    "name": "Sindhi Snack 2",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 94.0,
+    "proteinG": 4.0,
+    "carbG": 14.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_mangalorean_2",
+    "name": "Mangalorean Sweet 2",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 144.0,
+    "proteinG": 2.0,
+    "carbG": 24.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_chettinad_2",
+    "name": "Chettinad Drink 2",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 66.0,
+    "proteinG": 1.0,
+    "carbG": 12.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_awadhi_2",
+    "name": "Awadhi Bread item 2",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 122.0,
+    "proteinG": 3.0,
+    "carbG": 20.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_coastal_2",
+    "name": "Coastal Curry 2",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 224.0,
+    "proteinG": 16.0,
+    "carbG": 10.0,
+    "fatG": 14.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_street_style_2",
+    "name": "Street-style Chaat 2",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 206.0,
+    "proteinG": 7.0,
+    "carbG": 32.0,
+    "fatG": 9.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_home_style_2",
+    "name": "Home-style Breakfast bowl 2",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 244.0,
+    "proteinG": 9.0,
+    "carbG": 38.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_tandoori_3",
+    "name": "Tandoori Dal 3",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 163.0,
+    "proteinG": 9.0,
+    "carbG": 23.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_dhaba_3",
+    "name": "Dhaba Sabzi 3",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 116.0,
+    "proteinG": 3.0,
+    "carbG": 15.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_temple_3",
+    "name": "Temple Rice dish 3",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 289.0,
+    "proteinG": 5.0,
+    "carbG": 51.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_festival_3",
+    "name": "Festival Snack 3",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 96.0,
+    "proteinG": 2.0,
+    "carbG": 15.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_punjabi_3",
+    "name": "Punjabi Sweet 3",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 146.0,
+    "proteinG": 2.0,
+    "carbG": 25.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_gujarati_3",
+    "name": "Gujarati Drink 3",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 69.0,
+    "proteinG": 2.0,
+    "carbG": 13.0,
+    "fatG": 1.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_bengali_3",
+    "name": "Bengali Bread item 3",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 123.0,
+    "proteinG": 4.0,
+    "carbG": 21.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_tamil_3",
+    "name": "Tamil Curry 3",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 226.0,
+    "proteinG": 17.0,
+    "carbG": 11.0,
+    "fatG": 15.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_kerala_3",
+    "name": "Kerala Chaat 3",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 209.0,
+    "proteinG": 5.0,
+    "carbG": 33.0,
+    "fatG": 10.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_maharashtrian_3",
+    "name": "Maharashtrian Breakfast bowl 3",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 246.0,
+    "proteinG": 10.0,
+    "carbG": 39.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_rajasthani_4",
+    "name": "Rajasthani Dal 4",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 164.0,
+    "proteinG": 10.0,
+    "carbG": 24.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_hyderabadi_4",
+    "name": "Hyderabadi Sabzi 4",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 118.0,
+    "proteinG": 2.0,
+    "carbG": 12.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_goan_4",
+    "name": "Goan Rice dish 4",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 292.0,
+    "proteinG": 6.0,
+    "carbG": 52.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_kashmiri_4",
+    "name": "Kashmiri Snack 4",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 98.0,
+    "proteinG": 3.0,
+    "carbG": 16.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_odia_4",
+    "name": "Odia Sweet 4",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 148.0,
+    "proteinG": 2.0,
+    "carbG": 26.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_assamese_4",
+    "name": "Assamese Drink 4",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 72.0,
+    "proteinG": 1.0,
+    "carbG": 14.0,
+    "fatG": 2.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_bihari_4",
+    "name": "Bihari Bread item 4",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 124.0,
+    "proteinG": 3.0,
+    "carbG": 18.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_sindhi_4",
+    "name": "Sindhi Curry 4",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 228.0,
+    "proteinG": 18.0,
+    "carbG": 8.0,
+    "fatG": 16.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_mangalorean_4",
+    "name": "Mangalorean Chaat 4",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 212.0,
+    "proteinG": 6.0,
+    "carbG": 34.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_chettinad_4",
+    "name": "Chettinad Breakfast bowl 4",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 248.0,
+    "proteinG": 7.0,
+    "carbG": 40.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_awadhi_5",
+    "name": "Awadhi Dal 5",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 165.0,
+    "proteinG": 11.0,
+    "carbG": 20.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_coastal_5",
+    "name": "Coastal Sabzi 5",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 120.0,
+    "proteinG": 3.0,
+    "carbG": 13.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_street_style_5",
+    "name": "Street-style Rice dish 5",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 295.0,
+    "proteinG": 7.0,
+    "carbG": 53.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_home_style_5",
+    "name": "Home-style Snack 5",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 100.0,
+    "proteinG": 4.0,
+    "carbG": 12.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_tandoori_5",
+    "name": "Tandoori Sweet 5",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 150.0,
+    "proteinG": 2.0,
+    "carbG": 27.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_dhaba_5",
+    "name": "Dhaba Drink 5",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 75.0,
+    "proteinG": 2.0,
+    "carbG": 15.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_temple_5",
+    "name": "Temple Bread item 5",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 125.0,
+    "proteinG": 4.0,
+    "carbG": 19.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_festival_5",
+    "name": "Festival Curry 5",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 230.0,
+    "proteinG": 19.0,
+    "carbG": 9.0,
+    "fatG": 12.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_punjabi_5",
+    "name": "Punjabi Chaat 5",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 215.0,
+    "proteinG": 7.0,
+    "carbG": 30.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_gujarati_5",
+    "name": "Gujarati Breakfast bowl 5",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 250.0,
+    "proteinG": 8.0,
+    "carbG": 41.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_bengali_6",
+    "name": "Bengali Dal 6",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 166.0,
+    "proteinG": 9.0,
+    "carbG": 21.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_tamil_6",
+    "name": "Tamil Sabzi 6",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 122.0,
+    "proteinG": 2.0,
+    "carbG": 14.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_kerala_6",
+    "name": "Kerala Rice dish 6",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 298.0,
+    "proteinG": 5.0,
+    "carbG": 48.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_maharashtrian_6",
+    "name": "Maharashtrian Snack 6",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 102.0,
+    "proteinG": 2.0,
+    "carbG": 13.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_rajasthani_6",
+    "name": "Rajasthani Sweet 6",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 152.0,
+    "proteinG": 2.0,
+    "carbG": 22.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_hyderabadi_6",
+    "name": "Hyderabadi Drink 6",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 78.0,
+    "proteinG": 1.0,
+    "carbG": 16.0,
+    "fatG": 1.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_goan_6",
+    "name": "Goan Bread item 6",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 126.0,
+    "proteinG": 3.0,
+    "carbG": 20.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_kashmiri_6",
+    "name": "Kashmiri Curry 6",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 232.0,
+    "proteinG": 14.0,
+    "carbG": 10.0,
+    "fatG": 13.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_odia_6",
+    "name": "Odia Chaat 6",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 218.0,
+    "proteinG": 5.0,
+    "carbG": 31.0,
+    "fatG": 9.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_assamese_6",
+    "name": "Assamese Breakfast bowl 6",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 252.0,
+    "proteinG": 9.0,
+    "carbG": 36.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_bihari_7",
+    "name": "Bihari Dal 7",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 167.0,
+    "proteinG": 10.0,
+    "carbG": 22.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_sindhi_7",
+    "name": "Sindhi Sabzi 7",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 124.0,
+    "proteinG": 3.0,
+    "carbG": 15.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_mangalorean_7",
+    "name": "Mangalorean Rice dish 7",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 301.0,
+    "proteinG": 6.0,
+    "carbG": 49.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_chettinad_7",
+    "name": "Chettinad Snack 7",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 104.0,
+    "proteinG": 3.0,
+    "carbG": 14.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_awadhi_7",
+    "name": "Awadhi Sweet 7",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 154.0,
+    "proteinG": 2.0,
+    "carbG": 23.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_coastal_7",
+    "name": "Coastal Drink 7",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 81.0,
+    "proteinG": 2.0,
+    "carbG": 17.0,
+    "fatG": 2.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_street_style_7",
+    "name": "Street-style Bread item 7",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 127.0,
+    "proteinG": 4.0,
+    "carbG": 21.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_home_style_7",
+    "name": "Home-style Curry 7",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 234.0,
+    "proteinG": 15.0,
+    "carbG": 11.0,
+    "fatG": 14.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_tandoori_7",
+    "name": "Tandoori Chaat 7",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 221.0,
+    "proteinG": 6.0,
+    "carbG": 32.0,
+    "fatG": 10.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_dhaba_7",
+    "name": "Dhaba Breakfast bowl 7",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 254.0,
+    "proteinG": 10.0,
+    "carbG": 37.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_temple_8",
+    "name": "Temple Dal 8",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 168.0,
+    "proteinG": 11.0,
+    "carbG": 23.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_festival_8",
+    "name": "Festival Sabzi 8",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 126.0,
+    "proteinG": 2.0,
+    "carbG": 12.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_punjabi_8",
+    "name": "Punjabi Rice dish 8",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 304.0,
+    "proteinG": 7.0,
+    "carbG": 50.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_gujarati_8",
+    "name": "Gujarati Snack 8",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 106.0,
+    "proteinG": 4.0,
+    "carbG": 15.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_bengali_8",
+    "name": "Bengali Sweet 8",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 156.0,
+    "proteinG": 2.0,
+    "carbG": 24.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_tamil_8",
+    "name": "Tamil Drink 8",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 84.0,
+    "proteinG": 1.0,
+    "carbG": 10.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_kerala_8",
+    "name": "Kerala Bread item 8",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 128.0,
+    "proteinG": 3.0,
+    "carbG": 18.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_maharashtrian_8",
+    "name": "Maharashtrian Curry 8",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 236.0,
+    "proteinG": 16.0,
+    "carbG": 8.0,
+    "fatG": 15.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_rajasthani_8",
+    "name": "Rajasthani Chaat 8",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 224.0,
+    "proteinG": 7.0,
+    "carbG": 33.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_hyderabadi_8",
+    "name": "Hyderabadi Breakfast bowl 8",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 256.0,
+    "proteinG": 7.0,
+    "carbG": 38.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_goan_9",
+    "name": "Goan Dal 9",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 169.0,
+    "proteinG": 9.0,
+    "carbG": 24.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_kashmiri_9",
+    "name": "Kashmiri Sabzi 9",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 128.0,
+    "proteinG": 3.0,
+    "carbG": 13.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_odia_9",
+    "name": "Odia Rice dish 9",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 307.0,
+    "proteinG": 5.0,
+    "carbG": 51.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_assamese_9",
+    "name": "Assamese Snack 9",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 108.0,
+    "proteinG": 2.0,
+    "carbG": 16.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_bihari_9",
+    "name": "Bihari Sweet 9",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 158.0,
+    "proteinG": 2.0,
+    "carbG": 25.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_sindhi_9",
+    "name": "Sindhi Drink 9",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 87.0,
+    "proteinG": 2.0,
+    "carbG": 11.0,
+    "fatG": 1.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_mangalorean_9",
+    "name": "Mangalorean Bread item 9",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 129.0,
+    "proteinG": 4.0,
+    "carbG": 19.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_chettinad_9",
+    "name": "Chettinad Curry 9",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 238.0,
+    "proteinG": 17.0,
+    "carbG": 9.0,
+    "fatG": 16.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_awadhi_9",
+    "name": "Awadhi Chaat 9",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 227.0,
+    "proteinG": 5.0,
+    "carbG": 34.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_coastal_9",
+    "name": "Coastal Breakfast bowl 9",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 258.0,
+    "proteinG": 8.0,
+    "carbG": 39.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_street_style_10",
+    "name": "Street-style Dal 10",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 170.0,
+    "proteinG": 10.0,
+    "carbG": 20.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_home_style_10",
+    "name": "Home-style Sabzi 10",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 130.0,
+    "proteinG": 2.0,
+    "carbG": 14.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_tandoori_10",
+    "name": "Tandoori Rice dish 10",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 310.0,
+    "proteinG": 6.0,
+    "carbG": 52.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_dhaba_10",
+    "name": "Dhaba Snack 10",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 110.0,
+    "proteinG": 3.0,
+    "carbG": 12.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_temple_10",
+    "name": "Temple Sweet 10",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 160.0,
+    "proteinG": 2.0,
+    "carbG": 26.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_festival_10",
+    "name": "Festival Drink 10",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 90.0,
+    "proteinG": 1.0,
+    "carbG": 12.0,
+    "fatG": 2.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_punjabi_10",
+    "name": "Punjabi Bread item 10",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 130.0,
+    "proteinG": 3.0,
+    "carbG": 20.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_gujarati_10",
+    "name": "Gujarati Curry 10",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 240.0,
+    "proteinG": 18.0,
+    "carbG": 10.0,
+    "fatG": 12.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_bengali_10",
+    "name": "Bengali Chaat 10",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 230.0,
+    "proteinG": 6.0,
+    "carbG": 30.0,
+    "fatG": 9.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_tamil_10",
+    "name": "Tamil Breakfast bowl 10",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 260.0,
+    "proteinG": 9.0,
+    "carbG": 40.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_kerala_11",
+    "name": "Kerala Dal 11",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 171.0,
+    "proteinG": 11.0,
+    "carbG": 21.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_maharashtrian_11",
+    "name": "Maharashtrian Sabzi 11",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 132.0,
+    "proteinG": 3.0,
+    "carbG": 15.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_rajasthani_11",
+    "name": "Rajasthani Rice dish 11",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 313.0,
+    "proteinG": 7.0,
+    "carbG": 53.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_hyderabadi_11",
+    "name": "Hyderabadi Snack 11",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 112.0,
+    "proteinG": 4.0,
+    "carbG": 13.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_goan_11",
+    "name": "Goan Sweet 11",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 162.0,
+    "proteinG": 2.0,
+    "carbG": 27.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_kashmiri_11",
+    "name": "Kashmiri Drink 11",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 93.0,
+    "proteinG": 2.0,
+    "carbG": 13.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_odia_11",
+    "name": "Odia Bread item 11",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 131.0,
+    "proteinG": 4.0,
+    "carbG": 21.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_assamese_11",
+    "name": "Assamese Curry 11",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 242.0,
+    "proteinG": 19.0,
+    "carbG": 11.0,
+    "fatG": 13.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_bihari_11",
+    "name": "Bihari Chaat 11",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 233.0,
+    "proteinG": 7.0,
+    "carbG": 31.0,
+    "fatG": 10.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_sindhi_11",
+    "name": "Sindhi Breakfast bowl 11",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 262.0,
+    "proteinG": 10.0,
+    "carbG": 41.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_mangalorean_12",
+    "name": "Mangalorean Dal 12",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 172.0,
+    "proteinG": 9.0,
+    "carbG": 22.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_chettinad_12",
+    "name": "Chettinad Sabzi 12",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 134.0,
+    "proteinG": 2.0,
+    "carbG": 12.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_awadhi_12",
+    "name": "Awadhi Rice dish 12",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 316.0,
+    "proteinG": 5.0,
+    "carbG": 48.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_coastal_12",
+    "name": "Coastal Snack 12",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 114.0,
+    "proteinG": 2.0,
+    "carbG": 14.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_street_style_12",
+    "name": "Street-style Sweet 12",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 164.0,
+    "proteinG": 2.0,
+    "carbG": 22.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_home_style_12",
+    "name": "Home-style Drink 12",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 96.0,
+    "proteinG": 1.0,
+    "carbG": 14.0,
+    "fatG": 1.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_tandoori_12",
+    "name": "Tandoori Bread item 12",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 132.0,
+    "proteinG": 3.0,
+    "carbG": 18.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_dhaba_12",
+    "name": "Dhaba Curry 12",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 244.0,
+    "proteinG": 14.0,
+    "carbG": 8.0,
+    "fatG": 14.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_temple_12",
+    "name": "Temple Chaat 12",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 236.0,
+    "proteinG": 5.0,
+    "carbG": 32.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_festival_12",
+    "name": "Festival Breakfast bowl 12",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 264.0,
+    "proteinG": 7.0,
+    "carbG": 36.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_punjabi_13",
+    "name": "Punjabi Dal 13",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 173.0,
+    "proteinG": 10.0,
+    "carbG": 23.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_gujarati_13",
+    "name": "Gujarati Sabzi 13",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 136.0,
+    "proteinG": 3.0,
+    "carbG": 13.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_bengali_13",
+    "name": "Bengali Rice dish 13",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 319.0,
+    "proteinG": 6.0,
+    "carbG": 49.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_tamil_13",
+    "name": "Tamil Snack 13",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 116.0,
+    "proteinG": 3.0,
+    "carbG": 15.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_kerala_13",
+    "name": "Kerala Sweet 13",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 166.0,
+    "proteinG": 2.0,
+    "carbG": 23.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_maharashtrian_13",
+    "name": "Maharashtrian Drink 13",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 99.0,
+    "proteinG": 2.0,
+    "carbG": 15.0,
+    "fatG": 2.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_rajasthani_13",
+    "name": "Rajasthani Bread item 13",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 133.0,
+    "proteinG": 4.0,
+    "carbG": 19.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_hyderabadi_13",
+    "name": "Hyderabadi Curry 13",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 246.0,
+    "proteinG": 15.0,
+    "carbG": 9.0,
+    "fatG": 15.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_goan_13",
+    "name": "Goan Chaat 13",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 239.0,
+    "proteinG": 6.0,
+    "carbG": 33.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_kashmiri_13",
+    "name": "Kashmiri Breakfast bowl 13",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 266.0,
+    "proteinG": 8.0,
+    "carbG": 37.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_odia_14",
+    "name": "Odia Dal 14",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 174.0,
+    "proteinG": 11.0,
+    "carbG": 24.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_assamese_14",
+    "name": "Assamese Sabzi 14",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 138.0,
+    "proteinG": 2.0,
+    "carbG": 14.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_bihari_14",
+    "name": "Bihari Rice dish 14",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 322.0,
+    "proteinG": 7.0,
+    "carbG": 50.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_sindhi_14",
+    "name": "Sindhi Snack 14",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 118.0,
+    "proteinG": 4.0,
+    "carbG": 16.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_mangalorean_14",
+    "name": "Mangalorean Sweet 14",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 168.0,
+    "proteinG": 2.0,
+    "carbG": 24.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_chettinad_14",
+    "name": "Chettinad Drink 14",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 102.0,
+    "proteinG": 1.0,
+    "carbG": 16.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_awadhi_14",
+    "name": "Awadhi Bread item 14",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 134.0,
+    "proteinG": 3.0,
+    "carbG": 20.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_coastal_14",
+    "name": "Coastal Curry 14",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 248.0,
+    "proteinG": 16.0,
+    "carbG": 10.0,
+    "fatG": 16.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_street_style_14",
+    "name": "Street-style Chaat 14",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 242.0,
+    "proteinG": 7.0,
+    "carbG": 34.0,
+    "fatG": 9.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_home_style_14",
+    "name": "Home-style Breakfast bowl 14",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 268.0,
+    "proteinG": 9.0,
+    "carbG": 38.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_tandoori_15",
+    "name": "Tandoori Dal 15",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 175.0,
+    "proteinG": 9.0,
+    "carbG": 20.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_dhaba_15",
+    "name": "Dhaba Sabzi 15",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 140.0,
+    "proteinG": 3.0,
+    "carbG": 15.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_temple_15",
+    "name": "Temple Rice dish 15",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 325.0,
+    "proteinG": 5.0,
+    "carbG": 51.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_festival_15",
+    "name": "Festival Snack 15",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 120.0,
+    "proteinG": 2.0,
+    "carbG": 12.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_punjabi_15",
+    "name": "Punjabi Sweet 15",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 170.0,
+    "proteinG": 2.0,
+    "carbG": 25.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_gujarati_15",
+    "name": "Gujarati Drink 15",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 105.0,
+    "proteinG": 2.0,
+    "carbG": 17.0,
+    "fatG": 1.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_bengali_15",
+    "name": "Bengali Bread item 15",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 135.0,
+    "proteinG": 4.0,
+    "carbG": 21.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_tamil_15",
+    "name": "Tamil Curry 15",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 250.0,
+    "proteinG": 17.0,
+    "carbG": 11.0,
+    "fatG": 12.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_kerala_15",
+    "name": "Kerala Chaat 15",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 245.0,
+    "proteinG": 5.0,
+    "carbG": 30.0,
+    "fatG": 10.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_maharashtrian_15",
+    "name": "Maharashtrian Breakfast bowl 15",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 270.0,
+    "proteinG": 10.0,
+    "carbG": 39.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_rajasthani_16",
+    "name": "Rajasthani Dal 16",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 176.0,
+    "proteinG": 10.0,
+    "carbG": 21.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_hyderabadi_16",
+    "name": "Hyderabadi Sabzi 16",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 142.0,
+    "proteinG": 2.0,
+    "carbG": 12.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_goan_16",
+    "name": "Goan Rice dish 16",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 328.0,
+    "proteinG": 6.0,
+    "carbG": 52.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_kashmiri_16",
+    "name": "Kashmiri Snack 16",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 122.0,
+    "proteinG": 3.0,
+    "carbG": 13.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_odia_16",
+    "name": "Odia Sweet 16",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 172.0,
+    "proteinG": 2.0,
+    "carbG": 26.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_assamese_16",
+    "name": "Assamese Drink 16",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 108.0,
+    "proteinG": 1.0,
+    "carbG": 10.0,
+    "fatG": 2.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_bihari_16",
+    "name": "Bihari Bread item 16",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 136.0,
+    "proteinG": 3.0,
+    "carbG": 18.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_sindhi_16",
+    "name": "Sindhi Curry 16",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 252.0,
+    "proteinG": 18.0,
+    "carbG": 8.0,
+    "fatG": 13.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_mangalorean_16",
+    "name": "Mangalorean Chaat 16",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 248.0,
+    "proteinG": 6.0,
+    "carbG": 31.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_chettinad_16",
+    "name": "Chettinad Breakfast bowl 16",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 272.0,
+    "proteinG": 7.0,
+    "carbG": 40.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_awadhi_17",
+    "name": "Awadhi Dal 17",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 177.0,
+    "proteinG": 11.0,
+    "carbG": 22.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_coastal_17",
+    "name": "Coastal Sabzi 17",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 144.0,
+    "proteinG": 3.0,
+    "carbG": 13.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_street_style_17",
+    "name": "Street-style Rice dish 17",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 331.0,
+    "proteinG": 7.0,
+    "carbG": 53.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_home_style_17",
+    "name": "Home-style Snack 17",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 124.0,
+    "proteinG": 4.0,
+    "carbG": 14.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_tandoori_17",
+    "name": "Tandoori Sweet 17",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 174.0,
+    "proteinG": 2.0,
+    "carbG": 27.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_dhaba_17",
+    "name": "Dhaba Drink 17",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 111.0,
+    "proteinG": 2.0,
+    "carbG": 11.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_temple_17",
+    "name": "Temple Bread item 17",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 137.0,
+    "proteinG": 4.0,
+    "carbG": 19.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_festival_17",
+    "name": "Festival Curry 17",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 254.0,
+    "proteinG": 19.0,
+    "carbG": 9.0,
+    "fatG": 14.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_punjabi_17",
+    "name": "Punjabi Chaat 17",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 251.0,
+    "proteinG": 7.0,
+    "carbG": 32.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_gujarati_17",
+    "name": "Gujarati Breakfast bowl 17",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 274.0,
+    "proteinG": 8.0,
+    "carbG": 41.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_bengali_18",
+    "name": "Bengali Dal 18",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 178.0,
+    "proteinG": 9.0,
+    "carbG": 23.0,
+    "fatG": 4.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_tamil_18",
+    "name": "Tamil Sabzi 18",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 146.0,
+    "proteinG": 2.0,
+    "carbG": 14.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "rice_kerala_18",
+    "name": "Kerala Rice dish 18",
+    "transliterations": [
+      "rice dish"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 334.0,
+    "proteinG": 5.0,
+    "carbG": 48.0,
+    "fatG": 7.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "snack_maharashtrian_18",
+    "name": "Maharashtrian Snack 18",
+    "transliterations": [
+      "snack"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 126.0,
+    "proteinG": 2.0,
+    "carbG": 15.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sweet_rajasthani_18",
+    "name": "Rajasthani Sweet 18",
+    "transliterations": [
+      "sweet"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 40,
+    "calories": 176.0,
+    "proteinG": 2.0,
+    "carbG": 22.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "drink_hyderabadi_18",
+    "name": "Hyderabadi Drink 18",
+    "transliterations": [
+      "drink"
+    ],
+    "servingUnit": "glass",
+    "servingAmount": 1,
+    "gramsPerServing": 250,
+    "calories": 114.0,
+    "proteinG": 1.0,
+    "carbG": 12.0,
+    "fatG": 1.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "bread_goan_18",
+    "name": "Goan Bread item 18",
+    "transliterations": [
+      "bread item"
+    ],
+    "servingUnit": "piece",
+    "servingAmount": 1,
+    "gramsPerServing": 50,
+    "calories": 138.0,
+    "proteinG": 3.0,
+    "carbG": 20.0,
+    "fatG": 3.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "curry_kashmiri_18",
+    "name": "Kashmiri Curry 18",
+    "transliterations": [
+      "curry"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 170,
+    "calories": 256.0,
+    "proteinG": 14.0,
+    "carbG": 10.0,
+    "fatG": 15.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "chaat_odia_18",
+    "name": "Odia Chaat 18",
+    "transliterations": [
+      "chaat"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 160,
+    "calories": 254.0,
+    "proteinG": 5.0,
+    "carbG": 33.0,
+    "fatG": 9.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "breakfast_assamese_18",
+    "name": "Assamese Breakfast bowl 18",
+    "transliterations": [
+      "breakfast bowl"
+    ],
+    "servingUnit": "plate",
+    "servingAmount": 1,
+    "gramsPerServing": 220,
+    "calories": 276.0,
+    "proteinG": 9.0,
+    "carbG": 36.0,
+    "fatG": 6.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "dal_bihari_19",
+    "name": "Bihari Dal 19",
+    "transliterations": [
+      "dal"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 150,
+    "calories": 179.0,
+    "proteinG": 10.0,
+    "carbG": 24.0,
+    "fatG": 5.0,
+    "source": "estimated",
+    "confidence": "low"
+  },
+  {
+    "id": "sabzi_sindhi_19",
+    "name": "Sindhi Sabzi 19",
+    "transliterations": [
+      "sabzi"
+    ],
+    "servingUnit": "katori",
+    "servingAmount": 1,
+    "gramsPerServing": 140,
+    "calories": 148.0,
+    "proteinG": 3.0,
+    "carbG": 15.0,
+    "fatG": 8.0,
+    "source": "estimated",
+    "confidence": "low"
+  }
+]

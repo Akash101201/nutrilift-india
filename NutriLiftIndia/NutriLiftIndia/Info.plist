@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>NutriLift India reads steps, active energy, workouts, and body mass from Apple Health to show daily activity and optional weight trends. All data stays on your device.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>NutriLift India may write body mass you log in the app to Apple Health if you choose. Nothing is uploaded to NutriLift servers.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take a meal photo for on-device calorie and macro estimates using Apple Foundation Models. Photos stay on your device and are not uploaded.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choose a meal photo for on-device nutrition estimates. Photos stay on your device and are not uploaded.</string>
+	<key>UIBackgroundModes</key>
+	<array/>
+</dict>
+</plist>

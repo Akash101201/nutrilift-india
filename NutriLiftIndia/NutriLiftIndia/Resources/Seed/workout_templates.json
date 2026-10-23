@@ -1,0 +1,219 @@
+[
+  {
+    "id": "tmpl_full_body_a",
+    "name": "Full Body A",
+    "notes": "Squat focus + push/pull",
+    "exercises": [
+      {
+        "exerciseId": "ex_squat",
+        "sets": 3,
+        "reps": 8
+      },
+      {
+        "exerciseId": "ex_bench_press",
+        "sets": 3,
+        "reps": 8
+      },
+      {
+        "exerciseId": "ex_barbell_row",
+        "sets": 3,
+        "reps": 8
+      },
+      {
+        "exerciseId": "ex_db_shoulder_press",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_plank",
+        "sets": 3,
+        "reps": 30
+      }
+    ]
+  },
+  {
+    "id": "tmpl_full_body_b",
+    "name": "Full Body B",
+    "notes": "Hinge focus + accessories",
+    "exercises": [
+      {
+        "exerciseId": "ex_deadlift",
+        "sets": 3,
+        "reps": 5
+      },
+      {
+        "exerciseId": "ex_incline_db_press",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_lat_pulldown",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_lunge",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_face_pull",
+        "sets": 3,
+        "reps": 15
+      }
+    ]
+  },
+  {
+    "id": "tmpl_upper",
+    "name": "Upper Body",
+    "notes": "Push + pull upper",
+    "exercises": [
+      {
+        "exerciseId": "ex_bench_press",
+        "sets": 4,
+        "reps": 6
+      },
+      {
+        "exerciseId": "ex_pullup",
+        "sets": 3,
+        "reps": 6
+      },
+      {
+        "exerciseId": "ex_ohp",
+        "sets": 3,
+        "reps": 8
+      },
+      {
+        "exerciseId": "ex_seated_row",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_lateral_raise",
+        "sets": 3,
+        "reps": 12
+      },
+      {
+        "exerciseId": "ex_triceps_pushdown",
+        "sets": 3,
+        "reps": 12
+      },
+      {
+        "exerciseId": "ex_db_curl",
+        "sets": 3,
+        "reps": 12
+      }
+    ]
+  },
+  {
+    "id": "tmpl_lower",
+    "name": "Lower Body",
+    "notes": "Squat / hinge / glutes",
+    "exercises": [
+      {
+        "exerciseId": "ex_squat",
+        "sets": 4,
+        "reps": 6
+      },
+      {
+        "exerciseId": "ex_rdl",
+        "sets": 3,
+        "reps": 8
+      },
+      {
+        "exerciseId": "ex_leg_press",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_leg_curl",
+        "sets": 3,
+        "reps": 12
+      },
+      {
+        "exerciseId": "ex_hip_thrust",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_calf_raise",
+        "sets": 3,
+        "reps": 12
+      }
+    ]
+  },
+  {
+    "id": "tmpl_push",
+    "name": "Push (PPL)",
+    "notes": "Chest, shoulders, triceps",
+    "exercises": [
+      {
+        "exerciseId": "ex_bench_press",
+        "sets": 4,
+        "reps": 6
+      },
+      {
+        "exerciseId": "ex_incline_db_press",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_ohp",
+        "sets": 3,
+        "reps": 8
+      },
+      {
+        "exerciseId": "ex_lateral_raise",
+        "sets": 3,
+        "reps": 15
+      },
+      {
+        "exerciseId": "ex_triceps_pushdown",
+        "sets": 3,
+        "reps": 12
+      },
+      {
+        "exerciseId": "ex_overhead_triceps",
+        "sets": 3,
+        "reps": 12
+      }
+    ]
+  },
+  {
+    "id": "tmpl_pull",
+    "name": "Pull (PPL)",
+    "notes": "Back and biceps",
+    "exercises": [
+      {
+        "exerciseId": "ex_deadlift",
+        "sets": 3,
+        "reps": 5
+      },
+      {
+        "exerciseId": "ex_pullup",
+        "sets": 3,
+        "reps": 6
+      },
+      {
+        "exerciseId": "ex_barbell_row",
+        "sets": 3,
+        "reps": 8
+      },
+      {
+        "exerciseId": "ex_face_pull",
+        "sets": 3,
+        "reps": 15
+      },
+      {
+        "exerciseId": "ex_barbell_curl",
+        "sets": 3,
+        "reps": 10
+      },
+      {
+        "exerciseId": "ex_hammer_curl",
+        "sets": 3,
+        "reps": 12
+      }
+    ]
+  }
+]
