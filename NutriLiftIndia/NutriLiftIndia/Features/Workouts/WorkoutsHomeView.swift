@@ -64,7 +64,7 @@ struct WorkoutsHomeView: View {
                         ForEach(prs, id: \.exerciseSeedId) { pr in
                             VStack(alignment: .leading) {
                                 Text(pr.exerciseName)
-                                Text("\(Formatters.kg(pr.bestWeightKg)) × \(pr.reps) · e1RM \(Formatters.kg(pr.estimatedOneRM))")
+                                Text("\(Formatters.kg(pr.bestWeightKg)) × \(pr.bestReps) · e1RM \(Formatters.kg(pr.estimatedOneRM))")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }

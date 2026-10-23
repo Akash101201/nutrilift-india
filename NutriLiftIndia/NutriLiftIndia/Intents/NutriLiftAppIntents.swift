@@ -60,26 +60,46 @@ struct RemainingProteinIntent: AppIntent {
     }
 }
 
+enum WorkoutTemplateName: String, AppEnum {
+    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Workout template")
+    static var caseDisplayRepresentations: [WorkoutTemplateName: DisplayRepresentation] = [
+        .fullBodyA: "Full Body A",
+        .fullBodyB: "Full Body B",
+        .upperBody: "Upper Body",
+        .lowerBody: "Lower Body",
+        .push: "Push (PPL)",
+        .pull: "Pull (PPL)",
+    ]
+
+    case fullBodyA = "Full Body A"
+    case fullBodyB = "Full Body B"
+    case upperBody = "Upper Body"
+    case lowerBody = "Lower Body"
+    case push = "Push (PPL)"
+    case pull = "Pull (PPL)"
+}
+
 struct StartNamedWorkoutTemplateIntent: AppIntent {
     static var title: LocalizedStringResource = "Start workout template"
     static var description = IntentDescription("Find a NutriLift India workout template by name.")
 
     @Parameter(title: "Template name")
-    var templateName: String
+    var templateName: WorkoutTemplateName
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let container = try IntentModelAccess.container()
         let context = ModelContext(container)
         let templates = try context.fetch(FetchDescriptor<WorkoutTemplate>())
+        let selectedName = templateName.rawValue
         let match = templates.first {
-            $0.name.localizedCaseInsensitiveContains(templateName)
+            $0.name.localizedCaseInsensitiveCompare(selectedName) == .orderedSame
         }
         if let match {
             return .result(dialog: "Open NutriLift India and start “\(match.name)” from the Workouts tab. (\(match.exercises.count) exercises)")
         }
         let names = templates.map(\.name).sorted().joined(separator: ", ")
-        return .result(dialog: "No template matched “\(templateName)”. Available: \(names.isEmpty ? "none yet" : names).")
+        return .result(dialog: "No template matched “\(selectedName)”. Available: \(names.isEmpty ? "none yet" : names).")
     }
 }
 
