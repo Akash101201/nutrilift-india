@@ -136,12 +136,16 @@ enum InsightsEngine {
             ($0.finishedAt.map { ctx.calendar.isDate($0, inSameDayAs: ctx.now) } ?? false)
             || ctx.calendar.isDate($0.startedAt, inSameDayAs: ctx.now)
         }
-        let hardSets = ctx.sessions
-            .filter { ctx.calendar.isDate($0.startedAt, inSameDayAs: ctx.now) }
-            .flatMap(\.sets)
-            .filter(\.isCompleted)   // planned, unticked rows don't count as training
-            .filter { ($0.rpe ?? 0) >= 8 || $0.reps * Int($0.weightKg) > 0 }
-            .count
+        var hardSets = 0
+        for session in ctx.sessions where ctx.calendar.isDate(session.startedAt, inSameDayAs: ctx.now) {
+            for set in session.sets where set.isCompleted {
+                let isHighEffort = (set.rpe ?? 0) >= 8
+                let hasWork = set.reps * Int(set.weightKg) > 0
+                if isHighEffort || hasWork {
+                    hardSets += 1
+                }
+            }
+        }
         guard trainedToday, hardSets >= 8, deficit >= 700, ctx.targets.calories < 2200 else { return [] }
         return [Insight(
             id: "deficit_training",
