@@ -60,7 +60,7 @@ Several constants (activity multipliers, protein g/kg, diet bumps) are judgment 
 Bundled under `NutriLiftIndia/NutriLiftIndia/Resources/Seed/`:
 
 - `foods.json` — **320** Indian-first foods (English names + transliterations, household units, kcal/P/C/F, source/confidence). Core items are IFCT-inspired or estimated; generated regional variants are low-confidence placeholders for search coverage.
-- `exercises.json` — **90** exercises with muscle group + equipment.
+- `exercises.json` — **908** exercises: the original gym staples, plus the public-domain [free-exercise-db](https://github.com/yuhonas/free-exercise-db) catalog (names and instructions; no photos). Staple ids are unchanged so saved routines still match. Muscles are mapped onto the app's groups.
 - `workout_templates.json` — Full Body A/B, Upper, Lower, Push, Pull (**6** templates).
 
 Values are guides for logging, not lab assays.

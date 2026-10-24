@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 
 enum SeedLoader {
-    static let currentSeedVersion = 1
+    static let currentSeedVersion = 2
 
     @MainActor
     static func seedIfNeeded(context: ModelContext) throws {
@@ -16,10 +16,16 @@ enum SeedLoader {
         guard !settings.hasSeeded || settings.seedVersion < currentSeedVersion else { return }
 
         if settings.hasSeeded {
+            let rememberedFoods = try foodUserState(context: context)
             try clearSeededContent(context: context)
+            // Persist deletes before inserting rows that reuse the same unique ids.
+            try context.save()
+            try loadFoods(context: context)
+            try restoreFoodUserState(rememberedFoods, context: context)
+        } else {
+            try loadFoods(context: context)
         }
 
-        try loadFoods(context: context)
         try loadExercises(context: context)
         try loadTemplates(context: context)
 
@@ -40,6 +46,32 @@ enum SeedLoader {
         exercises.forEach(context.delete)
         let templates = try context.fetch(FetchDescriptor<WorkoutTemplate>()).filter { !$0.isCustom }
         templates.forEach(context.delete)
+    }
+
+    private struct FoodUserState {
+        var isFavorite: Bool
+        var lastUsedAt: Date?
+    }
+
+    @MainActor
+    private static func foodUserState(context: ModelContext) throws -> [String: FoodUserState] {
+        let foods = try context.fetch(FetchDescriptor<FoodItem>()).filter { !$0.isCustom }
+        var remembered: [String: FoodUserState] = [:]
+        for food in foods where food.isFavorite || food.lastUsedAt != nil {
+            remembered[food.seedId] = FoodUserState(isFavorite: food.isFavorite, lastUsedAt: food.lastUsedAt)
+        }
+        return remembered
+    }
+
+    @MainActor
+    private static func restoreFoodUserState(_ remembered: [String: FoodUserState], context: ModelContext) throws {
+        guard !remembered.isEmpty else { return }
+        let foods = try context.fetch(FetchDescriptor<FoodItem>())
+        for food in foods {
+            guard let state = remembered[food.seedId] else { continue }
+            food.isFavorite = state.isFavorite
+            food.lastUsedAt = state.lastUsedAt
+        }
     }
 
     @MainActor
@@ -72,7 +104,13 @@ enum SeedLoader {
         for dto in exercises {
             let muscle = MuscleGroup(rawValue: dto.muscleGroup) ?? .fullBody
             let equipment = EquipmentType(rawValue: dto.equipment) ?? .other
-            context.insert(Exercise(seedId: dto.id, name: dto.name, muscleGroup: muscle, equipment: equipment))
+            context.insert(Exercise(
+                seedId: dto.id,
+                name: dto.name,
+                muscleGroup: muscle,
+                equipment: equipment,
+                instructions: dto.instructions
+            ))
         }
     }
 
@@ -104,16 +142,25 @@ enum SeedLoader {
     @MainActor
     private static func insertDefaultMealTemplates(context: ModelContext) throws {
         let foods = try context.fetch(FetchDescriptor<FoodItem>())
+        let existing = try context.fetch(FetchDescriptor<MealTemplate>())
         func food(_ id: String) -> FoodItem? { foods.first { $0.seedId == id } }
 
-        let combos: [(String, MealType, [(String, Double)])] = [
-            ("2 roti + dal + sabzi", .lunch, [("roti_whole_wheat", 2), ("dal_tadka", 1), ("mixed_veg_sabzi", 1)]),
-            ("Idli + sambar", .breakfast, [("idli", 3), ("sambar", 1)]),
-            ("Curd rice", .dinner, [("curd_rice", 1)]),
-            ("Egg bhurji + roti", .dinner, [("egg_bhurji", 1), ("roti_whole_wheat", 2)]),
+        let combos: [(String, String, MealType, [(String, Double)])] = [
+            ("meal_roti_dal_sabzi", "2 roti + dal + sabzi", .lunch, [("roti_whole_wheat", 2), ("dal_tadka", 1), ("mixed_veg_sabzi", 1)]),
+            ("meal_idli_sambar", "Idli + sambar", .breakfast, [("idli", 3), ("sambar", 1)]),
+            ("meal_curd_rice", "Curd rice", .dinner, [("curd_rice", 1)]),
+            ("meal_egg_bhurji_roti", "Egg bhurji + roti", .dinner, [("egg_bhurji", 1), ("roti_whole_wheat", 2)]),
         ]
 
-        for (name, meal, parts) in combos {
+        for (key, name, meal, parts) in combos {
+            if existing.contains(where: { $0.builtInKey == key }) { continue }
+            let expectedIds = parts.map(\.0)
+            if let legacy = existing
+                .filter({ $0.builtInKey == nil && $0.name == name && $0.items.map(\.foodSeedId) == expectedIds })
+                .min(by: { $0.createdAt < $1.createdAt }) {
+                legacy.builtInKey = key
+                continue
+            }
             var items: [MealTemplateItem] = []
             for (id, qty) in parts {
                 guard let f = food(id) else { continue }
@@ -127,7 +174,7 @@ enum SeedLoader {
                 ))
             }
             guard !items.isEmpty else { continue }
-            context.insert(MealTemplate(name: name, mealType: meal, items: items))
+            context.insert(MealTemplate(name: name, mealType: meal, items: items, builtInKey: key))
         }
     }
 

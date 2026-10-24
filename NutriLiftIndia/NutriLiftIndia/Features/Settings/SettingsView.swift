@@ -399,6 +399,8 @@ struct AboutCalculationsView: View {
                      "On-device Apple Foundation Models only when available. Photos are not uploaded. Values are estimates, so always confirm or edit before saving. Photos are discarded after logging by default.")
                 card("🏋️", "Strength",
                      "Estimated 1RM uses Epley: weight × (1 + reps/30).")
+                card("🤸", "Exercises",
+                     "The built-in list adds the public-domain free-exercise-db catalog (Unlicense): names and how-to steps for strength, stretching, and cardio. Photos are not included. Muscles are grouped into the app's list, so forearms sit with biceps, calves with legs, and traps with shoulders.")
                 Text("All numbers are estimates for everyday use, not medical advice.")
                     .font(.rounded(.footnote))
                     .foregroundStyle(.secondary)

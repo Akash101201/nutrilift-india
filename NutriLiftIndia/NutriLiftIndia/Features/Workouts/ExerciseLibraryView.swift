@@ -138,6 +138,7 @@ struct ExerciseDetailView: View {
     let equipment: EquipmentType?
 
     @Query private var sessions: [WorkoutSession]
+    @Query private var library: [Exercise]
     @State private var metric: Metric = .oneRM
 
     enum Metric: String, CaseIterable, Identifiable {
@@ -160,6 +161,10 @@ struct ExerciseDetailView: View {
         WorkoutHistory.entries(exerciseSeedId: seedId, in: sessions)
     }
 
+    private var instructions: [String] {
+        library.first { $0.seedId == seedId }?.instructions ?? []
+    }
+
     private func value(_ entry: WorkoutHistory.ExerciseEntry) -> Double {
         switch metric {
         case .oneRM: entry.bestE1RM
@@ -172,6 +177,9 @@ struct ExerciseDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
+                if !instructions.isEmpty {
+                    howToCard
+                }
                 if entries.isEmpty {
                     FriendlyEmptyState(
                         emoji: "📈",
@@ -211,6 +219,19 @@ struct ExerciseDetailView: View {
             Spacer(minLength: 0)
         }
         .padding(.top, 8)
+    }
+
+    private var howToCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            EmojiHeader(emoji: "📝", title: "How to")
+            ForEach(Array(instructions.enumerated()), id: \.offset) { index, step in
+                Text("\(index + 1). \(step)")
+                    .font(.rounded(.subheadline))
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .appCard()
     }
 
     private var statTiles: some View {

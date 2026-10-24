@@ -393,16 +393,14 @@ def build_templates() -> list[dict]:
 
 def main() -> None:
     foods = build_foods()
-    exercises = [
-        {"id": e[0], "name": e[1], "muscleGroup": e[2], "equipment": e[3]}
-        for e in EXERCISES
-    ]
     templates = build_templates()
 
     (OUT / "foods.json").write_text(json.dumps(foods, indent=2), encoding="utf-8")
-    (OUT / "exercises.json").write_text(json.dumps(exercises, indent=2), encoding="utf-8")
     (OUT / "workout_templates.json").write_text(json.dumps(templates, indent=2), encoding="utf-8")
-    print(f"Wrote {len(foods)} foods, {len(exercises)} exercises, {len(templates)} templates -> {OUT}")
+    print(f"Wrote {len(foods)} foods, {len(templates)} templates -> {OUT}")
+
+    from build_exercises import write_exercises
+    write_exercises()
 
 
 if __name__ == "__main__":

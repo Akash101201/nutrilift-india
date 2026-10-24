@@ -269,13 +269,16 @@ final class MealTemplate {
     var mealTypeRaw: String
     var itemsJSON: String
     var createdAt: Date
+    /// Set on the built-in meal templates so a user template with the same name does not replace them.
+    var builtInKey: String? = nil
 
-    init(name: String, mealType: MealType, items: [MealTemplateItem]) {
+    init(name: String, mealType: MealType, items: [MealTemplateItem], builtInKey: String? = nil) {
         self.id = UUID()
         self.name = name
         self.mealTypeRaw = mealType.rawValue
         self.itemsJSON = (try? String(data: JSONEncoder().encode(items), encoding: .utf8)) ?? "[]"
         self.createdAt = Date()
+        self.builtInKey = builtInKey
     }
 
     var mealType: MealType {
@@ -329,6 +332,8 @@ final class Exercise {
     var name: String
     var muscleGroupRaw: String
     var equipmentRaw: String
+    /// Step-by-step cues from the bundled catalog. Optional so stores created before this field still open.
+    var instructions: [String]? = nil
     /// Exercises the user created. Never removed by seed refreshes.
     var isCustom: Bool = false
 
@@ -337,12 +342,14 @@ final class Exercise {
         name: String,
         muscleGroup: MuscleGroup,
         equipment: EquipmentType,
+        instructions: [String] = [],
         isCustom: Bool = false
     ) {
         self.seedId = seedId
         self.name = name
         self.muscleGroupRaw = muscleGroup.rawValue
         self.equipmentRaw = equipment.rawValue
+        self.instructions = instructions
         self.isCustom = isCustom
     }
 
