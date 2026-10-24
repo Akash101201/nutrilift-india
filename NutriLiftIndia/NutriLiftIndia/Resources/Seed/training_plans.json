@@ -1,0 +1,69 @@
+[
+  {
+    "id": "plan_gym_starter",
+    "name": "Gym Starter 3-Day",
+    "notes": "Full body rotation with a machine-friendly day",
+    "experienceLevel": "beginner",
+    "daysPerWeek": 3,
+    "days": [
+      {
+        "name": "Full Body A",
+        "templateId": "tmpl_full_body_a"
+      },
+      {
+        "name": "Full Body B",
+        "templateId": "tmpl_full_body_b"
+      },
+      {
+        "name": "Full Body Easy",
+        "templateId": "tmpl_full_body_a_easy"
+      }
+    ]
+  },
+  {
+    "id": "plan_upper_lower",
+    "name": "Upper / Lower 4-Day",
+    "notes": "Classic upper/lower split",
+    "experienceLevel": "intermediate",
+    "daysPerWeek": 4,
+    "days": [
+      {
+        "name": "Upper Body",
+        "templateId": "tmpl_upper"
+      },
+      {
+        "name": "Lower Body",
+        "templateId": "tmpl_lower"
+      },
+      {
+        "name": "Upper Body",
+        "templateId": "tmpl_upper"
+      },
+      {
+        "name": "Lower Body",
+        "templateId": "tmpl_lower"
+      }
+    ]
+  },
+  {
+    "id": "plan_ppl",
+    "name": "Push Pull Legs",
+    "notes": "Higher-frequency PPL rotation",
+    "experienceLevel": "advanced",
+    "daysPerWeek": 6,
+    "days": [
+      {
+        "name": "Push",
+        "templateId": "tmpl_push"
+      },
+      {
+        "name": "Pull",
+        "templateId": "tmpl_pull"
+      },
+      {
+        "name": "Lower Body",
+        "templateId": "tmpl_lower"
+      }
+    ]
+  }
+]

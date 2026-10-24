@@ -55,6 +55,8 @@ enum ExportService {
         var leanMassKg: Double?
         var fiberTargetG: Double?
         var waterTargetMl: Double?
+        var experience: String?
+        var activePlanSeedId: String?
     }
 
     struct DiaryDTO: Codable {
@@ -135,7 +137,9 @@ enum ExportService {
                     bodyFatPercent: $0.bodyFatPercent,
                     leanMassKg: $0.leanMassKg,
                     fiberTargetG: $0.fiberTargetG,
-                    waterTargetMl: $0.waterTargetMl
+                    waterTargetMl: $0.waterTargetMl,
+                    experience: $0.experienceRaw,
+                    activePlanSeedId: $0.activePlanSeedId
                 )
             },
             diary: diary.map {

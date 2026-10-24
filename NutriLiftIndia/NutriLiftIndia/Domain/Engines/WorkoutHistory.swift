@@ -126,14 +126,16 @@ enum WorkoutRecapBuilder {
                 name: first.exerciseName,
                 muscle: first.muscleGroup,
                 equipment: exercises.first { $0.seedId == seedId }?.equipment,
-                sets: sets.map { LoggedSet(weightKg: $0.weightKg, reps: $0.reps) },
+                sets: sets.map { LoggedSet(weightKg: $0.weightKg, reps: $0.reps, rpe: $0.rpe) },
                 previousBestE1RM: WorkoutHistory.bestE1RM(
                     exerciseSeedId: seedId,
                     in: allSessions,
                     before: session.startedAt,
                     excluding: session.id
                 ),
-                previousSets: previous.isEmpty ? nil : previous.map { LoggedSet(weightKg: $0.weightKg, reps: $0.reps) }
+                previousSets: previous.isEmpty
+                    ? nil
+                    : previous.map { LoggedSet(weightKg: $0.weightKg, reps: $0.reps, rpe: $0.rpe) }
             )
         }
 

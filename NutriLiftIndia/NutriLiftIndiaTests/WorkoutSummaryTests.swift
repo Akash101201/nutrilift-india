@@ -97,6 +97,32 @@ final class WorkoutSummaryTests: XCTestCase {
         XCTAssertTrue(tip?.contains("reps") == true, "Got \(tip ?? "nil")")
     }
 
+    func testBeginnerTonePrefersFormLanguage() {
+        let tip = ProgressionAdvisor.suggestion(
+            for: log("Bench Press", [(60, 8), (60, 7)]),
+            experience: .beginner
+        )
+        XCTAssertTrue(tip?.contains("Form first") == true, "Got \(tip ?? "nil")")
+    }
+
+    func testAdvancedUsesRPEWhenLogged() {
+        let exercise = ExerciseLog(
+            exerciseSeedId: "bench",
+            name: "Bench Press",
+            muscle: .chest,
+            equipment: .barbell,
+            sets: [
+                LoggedSet(weightKg: 60, reps: 8, rpe: 6),
+                LoggedSet(weightKg: 60, reps: 8, rpe: 7),
+            ],
+            previousBestE1RM: 70,
+            previousSets: nil
+        )
+        let tip = ProgressionAdvisor.suggestion(for: exercise, experience: .advanced)
+        XCTAssertTrue(tip?.contains("RPE") == true, "Got \(tip ?? "nil")")
+        XCTAssertTrue(tip?.contains("62.5") == true, "Got \(tip ?? "nil")")
+    }
+
     func testWeightTextDropsUselessDecimals() {
         XCTAssertEqual(WorkoutSummary.kgText(60), "60")
         XCTAssertEqual(WorkoutSummary.kgText(62.5), "62.5")

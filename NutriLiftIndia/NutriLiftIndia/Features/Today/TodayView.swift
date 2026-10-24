@@ -9,6 +9,7 @@ struct TodayView: View {
     @Query(sort: \BodyWeightSample.date, order: .reverse) private var weightSamples: [BodyWeightSample]
     @Query(sort: \FoodDiaryEntry.date, order: .reverse) private var diary: [FoodDiaryEntry]
     @Query(sort: \WorkoutTemplate.name) private var templates: [WorkoutTemplate]
+    @Query private var plans: [TrainingPlan]
     @Query(sort: \WorkoutSession.startedAt, order: .reverse) private var sessions: [WorkoutSession]
     @Query(sort: \WaterLogEntry.date, order: .reverse) private var waterLogs: [WaterLogEntry]
     @ObservedObject private var health = HealthKitService.shared
@@ -327,6 +328,31 @@ struct TodayView: View {
         } else {
             VStack(alignment: .leading, spacing: 12) {
                 EmojiHeader(emoji: "🏋️", title: "Workout")
+
+                if let next = todayNextPlanDay, let routine = templates.first(where: { $0.seedId == next.templateSeedId }) {
+                    Button {
+                        Haptics.tap()
+                        launcher.start(routine, context: modelContext)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Next in your plan")
+                                    .font(.rounded(.caption, weight: .semibold))
+                                    .opacity(0.9)
+                                Text(next.name)
+                                    .font(.rounded(.headline, weight: .bold))
+                            }
+                            Spacer()
+                            Image(systemName: "play.circle.fill")
+                        }
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 12)
+                        .background(Theme.brandGradient, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+
                 Button("Start empty workout") {
                     Haptics.tap()
                     launcher.startEmpty(context: modelContext)
@@ -365,6 +391,14 @@ struct TodayView: View {
             }
             .appCard()
         }
+    }
+
+    private var todayNextPlanDay: PlanScheduler.NextDay? {
+        let plan = plans.first { $0.seedId == (profile?.activePlanSeedId ?? "") }
+            ?? plans.first { $0.experience == (profile?.experience ?? .intermediate) }
+        guard let plan else { return nil }
+        let lastTemplate = sessions.first(where: \.isFinished)?.templateSeedId
+        return PlanScheduler.nextDay(days: PlanScheduler.dayRefs(from: plan), lastFinishedTemplateSeedId: lastTemplate)
     }
 
     // MARK: Weight

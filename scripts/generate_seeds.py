@@ -315,6 +315,7 @@ def build_templates() -> list[dict]:
             "id": "tmpl_full_body_a",
             "name": "Full Body A",
             "notes": "Squat focus + push/pull",
+            "recommendedLevel": "beginner",
             "exercises": [
                 {"exerciseId": "ex_squat", "sets": 3, "reps": 8},
                 {"exerciseId": "ex_bench_press", "sets": 3, "reps": 8},
@@ -327,6 +328,7 @@ def build_templates() -> list[dict]:
             "id": "tmpl_full_body_b",
             "name": "Full Body B",
             "notes": "Hinge focus + accessories",
+            "recommendedLevel": "beginner",
             "exercises": [
                 {"exerciseId": "ex_deadlift", "sets": 3, "reps": 5},
                 {"exerciseId": "ex_incline_db_press", "sets": 3, "reps": 10},
@@ -336,9 +338,24 @@ def build_templates() -> list[dict]:
             ],
         },
         {
+            "id": "tmpl_full_body_a_easy",
+            "name": "Full Body Easy",
+            "notes": "Machine and dumbbell friendly full body",
+            "recommendedLevel": "beginner",
+            "exercises": [
+                {"exerciseId": "ex_goblet_squat", "sets": 3, "reps": 10},
+                {"exerciseId": "ex_chest_press_machine", "sets": 3, "reps": 10},
+                {"exerciseId": "ex_seated_row", "sets": 3, "reps": 10},
+                {"exerciseId": "ex_db_shoulder_press", "sets": 3, "reps": 10},
+                {"exerciseId": "ex_leg_curl", "sets": 2, "reps": 12},
+                {"exerciseId": "ex_plank", "sets": 3, "reps": 20},
+            ],
+        },
+        {
             "id": "tmpl_upper",
             "name": "Upper Body",
             "notes": "Push + pull upper",
+            "recommendedLevel": "intermediate",
             "exercises": [
                 {"exerciseId": "ex_bench_press", "sets": 4, "reps": 6},
                 {"exerciseId": "ex_pullup", "sets": 3, "reps": 6},
@@ -353,6 +370,7 @@ def build_templates() -> list[dict]:
             "id": "tmpl_lower",
             "name": "Lower Body",
             "notes": "Squat / hinge / glutes",
+            "recommendedLevel": "intermediate",
             "exercises": [
                 {"exerciseId": "ex_squat", "sets": 4, "reps": 6},
                 {"exerciseId": "ex_rdl", "sets": 3, "reps": 8},
@@ -366,6 +384,7 @@ def build_templates() -> list[dict]:
             "id": "tmpl_push",
             "name": "Push (PPL)",
             "notes": "Chest, shoulders, triceps",
+            "recommendedLevel": "advanced",
             "exercises": [
                 {"exerciseId": "ex_bench_press", "sets": 4, "reps": 6},
                 {"exerciseId": "ex_incline_db_press", "sets": 3, "reps": 10},
@@ -379,6 +398,7 @@ def build_templates() -> list[dict]:
             "id": "tmpl_pull",
             "name": "Pull (PPL)",
             "notes": "Back and biceps",
+            "recommendedLevel": "advanced",
             "exercises": [
                 {"exerciseId": "ex_deadlift", "sets": 3, "reps": 5},
                 {"exerciseId": "ex_pullup", "sets": 3, "reps": 6},
@@ -391,13 +411,57 @@ def build_templates() -> list[dict]:
     ]
 
 
+def build_plans() -> list[dict]:
+    return [
+        {
+            "id": "plan_gym_starter",
+            "name": "Gym Starter 3-Day",
+            "notes": "Full body rotation with a machine-friendly day",
+            "experienceLevel": "beginner",
+            "daysPerWeek": 3,
+            "days": [
+                {"name": "Full Body A", "templateId": "tmpl_full_body_a"},
+                {"name": "Full Body B", "templateId": "tmpl_full_body_b"},
+                {"name": "Full Body Easy", "templateId": "tmpl_full_body_a_easy"},
+            ],
+        },
+        {
+            "id": "plan_upper_lower",
+            "name": "Upper / Lower 4-Day",
+            "notes": "Classic upper/lower split",
+            "experienceLevel": "intermediate",
+            "daysPerWeek": 4,
+            "days": [
+                {"name": "Upper Body", "templateId": "tmpl_upper"},
+                {"name": "Lower Body", "templateId": "tmpl_lower"},
+                {"name": "Upper Body", "templateId": "tmpl_upper"},
+                {"name": "Lower Body", "templateId": "tmpl_lower"},
+            ],
+        },
+        {
+            "id": "plan_ppl",
+            "name": "Push Pull Legs",
+            "notes": "Higher-frequency PPL rotation",
+            "experienceLevel": "advanced",
+            "daysPerWeek": 6,
+            "days": [
+                {"name": "Push", "templateId": "tmpl_push"},
+                {"name": "Pull", "templateId": "tmpl_pull"},
+                {"name": "Lower Body", "templateId": "tmpl_lower"},
+            ],
+        },
+    ]
+
+
 def main() -> None:
     foods = build_foods()
     templates = build_templates()
+    plans = build_plans()
 
     (OUT / "foods.json").write_text(json.dumps(foods, indent=2), encoding="utf-8")
     (OUT / "workout_templates.json").write_text(json.dumps(templates, indent=2), encoding="utf-8")
-    print(f"Wrote {len(foods)} foods, {len(templates)} templates -> {OUT}")
+    (OUT / "training_plans.json").write_text(json.dumps(plans, indent=2), encoding="utf-8")
+    print(f"Wrote {len(foods)} foods, {len(templates)} templates, {len(plans)} plans -> {OUT}")
 
     from build_exercises import write_exercises
     write_exercises()

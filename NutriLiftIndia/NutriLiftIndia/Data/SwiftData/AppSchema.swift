@@ -11,6 +11,8 @@ enum AppSchema {
         Exercise.self,
         WorkoutTemplate.self,
         TemplateExercise.self,
+        TrainingPlan.self,
+        PlanDay.self,
         WorkoutSession.self,
         WorkoutSet.self,
         BodyWeightSample.self,

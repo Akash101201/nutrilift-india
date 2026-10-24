@@ -139,6 +139,7 @@ struct OnboardingFlowView: View {
         case .body: bodyPage
         case .activity: activityPage
         case .goal: goalPage
+        case .experience: experiencePage
         case .diet: dietPage
         case .fineTune: fineTunePage
         case .results: resultsPage
@@ -316,6 +317,19 @@ struct OnboardingFlowView: View {
             }
         }
         .animation(.easeInOut(duration: 0.25), value: vm.goal)
+    }
+
+    private var experiencePage: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            pageTitle("🏋️", "How experienced are you in the gym?", "We'll match a simple plan to where you are now. You can change this later.")
+            EmojiChoiceGrid(
+                options: ExperienceLevel.allCases.map {
+                    EmojiOption(value: $0, emoji: $0.emoji, title: $0.displayName, subtitle: $0.detail)
+                },
+                selection: $vm.experience,
+                columns: 1
+            )
+        }
     }
 
     private var dietPage: some View {
@@ -542,7 +556,8 @@ struct OnboardingFlowView: View {
             weightKg: vm.weightKg,
             activity: vm.activity,
             goal: vm.goal,
-            dietPref: vm.dietPref
+            dietPref: vm.dietPref,
+            experience: vm.experience
         )
         profile.pace = vm.pace
         profile.bodyFatPercent = vm.goalInput.bodyFatPercent
@@ -569,7 +584,7 @@ struct OnboardingFlowView: View {
 @MainActor
 final class OnboardingViewModel: ObservableObject {
     enum Step: Int, CaseIterable {
-        case welcome, about, body, activity, goal, diet, fineTune, results, health
+        case welcome, about, body, activity, goal, experience, diet, fineTune, results, health
     }
 
     struct BodyFatChoice {
@@ -591,6 +606,7 @@ final class OnboardingViewModel: ObservableObject {
     @Published var activity: ActivityLevel = .light
     @Published var goal: FitnessGoal = .lose
     @Published var pace: Pace = .steady
+    @Published var experience: ExperienceLevel = .beginner
     @Published var dietPref: DietPreference = .veg
     /// 0 means "not provided".
     @Published var bodyFatInput = 0.0

@@ -173,6 +173,75 @@ enum Pace: String, Codable, CaseIterable, Identifiable {
     }
 }
 
+/// How experienced the user is in the gym. Distinct from lifestyle `ActivityLevel` (used for TDEE).
+enum ExperienceLevel: String, Codable, CaseIterable, Identifiable {
+    case beginner
+    case intermediate
+    case advanced
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .beginner: "Beginner"
+        case .intermediate: "Intermediate"
+        case .advanced: "Advanced"
+        }
+    }
+
+    var emoji: String {
+        switch self {
+        case .beginner: "🌱"
+        case .intermediate: "🏋️"
+        case .advanced: "🔥"
+        }
+    }
+
+    var detail: String {
+        switch self {
+        case .beginner: "New to the gym, or still learning form"
+        case .intermediate: "Comfortable with the basics, building strength"
+        case .advanced: "Train hard regularly and program your own work"
+        }
+    }
+
+    /// Default starter training plan seed id for this level.
+    var defaultPlanSeedId: String {
+        switch self {
+        case .beginner: "plan_gym_starter"
+        case .intermediate: "plan_upper_lower"
+        case .advanced: "plan_ppl"
+        }
+    }
+}
+
+/// Difficulty tag on catalog exercises (from free-exercise-db `level`, with expert → advanced).
+enum ExerciseDifficulty: String, Codable, CaseIterable, Identifiable {
+    case beginner
+    case intermediate
+    case advanced
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .beginner: "Beginner"
+        case .intermediate: "Intermediate"
+        case .advanced: "Advanced"
+        }
+    }
+
+    /// Maps vendor strings (`beginner` / `intermediate` / `expert`) into app values.
+    static func fromVendor(_ raw: String?) -> ExerciseDifficulty? {
+        switch raw?.lowercased() {
+        case "beginner": return .beginner
+        case "intermediate": return .intermediate
+        case "expert", "advanced": return .advanced
+        default: return nil
+        }
+    }
+}
+
 enum DietPreference: String, Codable, CaseIterable, Identifiable {
     case veg
     case eggetarian

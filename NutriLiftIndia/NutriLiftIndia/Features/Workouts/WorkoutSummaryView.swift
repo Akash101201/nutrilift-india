@@ -83,9 +83,12 @@ struct RecapExerciseList: View {
 
 struct RecapTips: View {
     let recap: WorkoutRecap
+    var experience: ExperienceLevel = .intermediate
 
     private var tips: [String] {
-        recap.exercises.prefix(6).compactMap { ProgressionAdvisor.suggestion(for: $0) }
+        recap.exercises.prefix(6).compactMap {
+            ProgressionAdvisor.suggestion(for: $0, experience: experience)
+        }
     }
 
     var body: some View {
@@ -147,6 +150,7 @@ struct CoachSummaryCard: View {
 struct WorkoutSummaryView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var launcher: WorkoutLauncher
+    @Query private var profiles: [UserProfile]
     @Query private var allSessions: [WorkoutSession]
     @Query private var exercises: [Exercise]
 
@@ -159,6 +163,10 @@ struct WorkoutSummaryView: View {
     @State private var routineName = ""
     @State private var routineSaved = false
 
+    private var experience: ExperienceLevel {
+        profiles.first?.experience ?? .intermediate
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -168,7 +176,7 @@ struct WorkoutSummaryView: View {
                         RecapStatTiles(recap: recap)
                         CoachSummaryCard(content: coach)
                         RecapExerciseList(recap: recap)
-                        RecapTips(recap: recap)
+                        RecapTips(recap: recap, experience: experience)
                     } else {
                         ProgressView().frame(maxWidth: .infinity).padding(.top, 40)
                     }
@@ -246,20 +254,20 @@ struct WorkoutSummaryView: View {
             return
         }
         guard OnDeviceWriter.isAvailable else {
-            coach = .ready(text: WorkoutSummary.fallbackText(built), onDevice: false)
+            coach = .ready(text: WorkoutSummary.fallbackText(built, experience: experience), onDevice: false)
             return
         }
         do {
             let text = try await OnDeviceWriter.write(
                 instructions: WorkoutSummary.instructions,
-                prompt: WorkoutSummary.prompt(built),
-                facts: WorkoutSummary.facts(built)
+                prompt: WorkoutSummary.prompt(built, experience: experience),
+                facts: WorkoutSummary.facts(built, experience: experience)
             )
             session.aiSummary = text
             try? modelContext.save()
             coach = .ready(text: text, onDevice: true)
         } catch {
-            coach = .ready(text: WorkoutSummary.fallbackText(built), onDevice: false)
+            coach = .ready(text: WorkoutSummary.fallbackText(built, experience: experience), onDevice: false)
         }
     }
 

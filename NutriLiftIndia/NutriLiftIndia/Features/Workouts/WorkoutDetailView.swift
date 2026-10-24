@@ -8,12 +8,17 @@ struct WorkoutDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var launcher: WorkoutLauncher
+    @Query private var profiles: [UserProfile]
     @Query private var allSessions: [WorkoutSession]
     @Query private var exercises: [Exercise]
 
     @State private var showDeleteConfirm = false
     /// Deleting waits until this screen is gone, so the body never reads a deleted workout.
     @State private var deleteRequested = false
+
+    private var experience: ExperienceLevel {
+        profiles.first?.experience ?? .intermediate
+    }
 
     private var recap: WorkoutRecap {
         WorkoutRecapBuilder.build(session: session, allSessions: allSessions, exercises: exercises)
@@ -48,12 +53,12 @@ struct WorkoutDetailView: View {
                 RecapStatTiles(recap: recap)
 
                 CoachSummaryCard(content: .ready(
-                    text: session.aiSummary ?? WorkoutSummary.fallbackText(recap),
+                    text: session.aiSummary ?? WorkoutSummary.fallbackText(recap, experience: experience),
                     onDevice: session.aiSummary != nil
                 ))
 
                 RecapExerciseList(recap: recap)
-                RecapTips(recap: recap)
+                RecapTips(recap: recap, experience: experience)
 
                 if !session.notes.isEmpty {
                     VStack(alignment: .leading, spacing: 6) {

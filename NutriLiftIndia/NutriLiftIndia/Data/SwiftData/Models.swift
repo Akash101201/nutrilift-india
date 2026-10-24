@@ -26,6 +26,10 @@ final class UserProfile {
     var leanMassKg: Double?
     var fiberTargetG: Double = 25
     var waterTargetMl: Double = 2500
+    /// Gym experience. Defaults to intermediate so existing installs keep the current UX.
+    var experienceRaw: String = ExperienceLevel.intermediate.rawValue
+    /// Seed id of the active leveled training plan (`plan_gym_starter`, etc.).
+    var activePlanSeedId: String = ExperienceLevel.intermediate.defaultPlanSeedId
 
     init(
         age: Int = 25,
@@ -35,6 +39,7 @@ final class UserProfile {
         activity: ActivityLevel = .moderate,
         goal: FitnessGoal = .maintain,
         dietPref: DietPreference = .veg,
+        experience: ExperienceLevel = .intermediate,
         usesMetric: Bool = true
     ) {
         self.id = UUID()
@@ -54,6 +59,8 @@ final class UserProfile {
         self.stepTarget = 8000
         self.createdAt = Date()
         self.updatedAt = Date()
+        self.experienceRaw = experience.rawValue
+        self.activePlanSeedId = experience.defaultPlanSeedId
     }
 
     var sex: BiologicalSex {
@@ -79,6 +86,15 @@ final class UserProfile {
     var pace: Pace {
         get { Pace(rawValue: paceRaw) ?? .steady }
         set { paceRaw = newValue.rawValue }
+    }
+
+    var experience: ExperienceLevel {
+        get { ExperienceLevel(rawValue: experienceRaw) ?? .intermediate }
+        set {
+            experienceRaw = newValue.rawValue
+            // Keep the active plan aligned when the user changes level in Settings.
+            activePlanSeedId = newValue.defaultPlanSeedId
+        }
     }
 
     /// The engine input built from this profile.
@@ -336,6 +352,8 @@ final class Exercise {
     var instructions: [String]? = nil
     /// Exercises the user created. Never removed by seed refreshes.
     var isCustom: Bool = false
+    /// Catalog difficulty (`beginner` / `intermediate` / `advanced`). Nil for custom or untagged rows.
+    var difficultyRaw: String? = nil
 
     init(
         seedId: String = UUID().uuidString,
@@ -343,7 +361,8 @@ final class Exercise {
         muscleGroup: MuscleGroup,
         equipment: EquipmentType,
         instructions: [String] = [],
-        isCustom: Bool = false
+        isCustom: Bool = false,
+        difficulty: ExerciseDifficulty? = nil
     ) {
         self.seedId = seedId
         self.name = name
@@ -351,6 +370,7 @@ final class Exercise {
         self.equipmentRaw = equipment.rawValue
         self.instructions = instructions
         self.isCustom = isCustom
+        self.difficultyRaw = difficulty?.rawValue
     }
 
     var muscleGroup: MuscleGroup {
@@ -361,6 +381,14 @@ final class Exercise {
     var equipment: EquipmentType {
         get { EquipmentType(rawValue: equipmentRaw) ?? .other }
         set { equipmentRaw = newValue.rawValue }
+    }
+
+    var difficulty: ExerciseDifficulty? {
+        get {
+            guard let difficultyRaw else { return nil }
+            return ExerciseDifficulty(rawValue: difficultyRaw)
+        }
+        set { difficultyRaw = newValue?.rawValue }
     }
 }
 
@@ -373,19 +401,83 @@ final class WorkoutTemplate {
     var exercises: [TemplateExercise]
     /// Routines the user created or duplicated. Never removed by seed refreshes.
     var isCustom: Bool = false
+    /// Suggested experience level for starter routines. Nil for custom routines.
+    var recommendedLevelRaw: String? = nil
 
     init(
         seedId: String = UUID().uuidString,
         name: String,
         notes: String = "",
         exercises: [TemplateExercise] = [],
-        isCustom: Bool = false
+        isCustom: Bool = false,
+        recommendedLevel: ExperienceLevel? = nil
     ) {
         self.seedId = seedId
         self.name = name
         self.notes = notes
         self.exercises = exercises
         self.isCustom = isCustom
+        self.recommendedLevelRaw = recommendedLevel?.rawValue
+    }
+
+    var recommendedLevel: ExperienceLevel? {
+        get {
+            guard let recommendedLevelRaw else { return nil }
+            return ExperienceLevel(rawValue: recommendedLevelRaw)
+        }
+        set { recommendedLevelRaw = newValue?.rawValue }
+    }
+}
+
+@Model
+final class TrainingPlan {
+    @Attribute(.unique) var seedId: String
+    var name: String
+    var notes: String
+    var experienceRaw: String
+    var daysPerWeek: Int
+    @Relationship(deleteRule: .cascade, inverse: \PlanDay.plan)
+    var days: [PlanDay]
+
+    init(
+        seedId: String,
+        name: String,
+        notes: String = "",
+        experience: ExperienceLevel,
+        daysPerWeek: Int,
+        days: [PlanDay] = []
+    ) {
+        self.seedId = seedId
+        self.name = name
+        self.notes = notes
+        self.experienceRaw = experience.rawValue
+        self.daysPerWeek = daysPerWeek
+        self.days = days
+    }
+
+    var experience: ExperienceLevel {
+        get { ExperienceLevel(rawValue: experienceRaw) ?? .intermediate }
+        set { experienceRaw = newValue.rawValue }
+    }
+
+    var orderedDays: [PlanDay] {
+        days.sorted { $0.sortOrder < $1.sortOrder }
+    }
+}
+
+@Model
+final class PlanDay {
+    var id: UUID
+    var name: String
+    var templateSeedId: String
+    var sortOrder: Int
+    var plan: TrainingPlan?
+
+    init(name: String, templateSeedId: String, sortOrder: Int = 0) {
+        self.id = UUID()
+        self.name = name
+        self.templateSeedId = templateSeedId
+        self.sortOrder = sortOrder
     }
 }
 

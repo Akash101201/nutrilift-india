@@ -118,6 +118,13 @@ struct ExerciseLibraryView: View {
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(Theme.plum.opacity(0.15), in: Capsule())
+                    } else if let difficulty = exercise.difficulty {
+                        Text(difficulty.displayName)
+                            .font(.rounded(.caption2, weight: .bold))
+                            .foregroundStyle(Theme.saffron)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Theme.saffron.opacity(0.14), in: Capsule())
                     }
                 }
                 Text("\(exercise.muscleGroup.displayName) · \(exercise.equipment.displayName)")

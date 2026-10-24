@@ -5,6 +5,7 @@ import Foundation
 struct LoggedSet: Equatable, Sendable {
     var weightKg: Double
     var reps: Int
+    var rpe: Double? = nil
 
     var e1RM: Double { PRDetector.estimatedOneRM(weightKg: weightKg, reps: reps) }
     var volume: Double { weightKg * Double(reps) }
@@ -24,6 +25,13 @@ struct ExerciseLog: Equatable, Sendable, Identifiable {
     var id: String { exerciseSeedId }
 
     var volume: Double { sets.reduce(0) { $0 + $1.volume } }
+
+    /// Average of logged RPE values, if any.
+    var averageRPE: Double? {
+        let values = sets.compactMap(\.rpe)
+        guard !values.isEmpty else { return nil }
+        return values.reduce(0, +) / Double(values.count)
+    }
 
     /// Heaviest-looking set: highest estimated 1RM, or most reps for bodyweight work.
     var bestSet: LoggedSet? {
@@ -62,6 +70,7 @@ struct WorkoutRecap: Equatable, Sendable {
 // MARK: - Progression suggestions
 
 /// Simple, honest progressive-overload rules: add reps first, then add weight.
+/// Tone and aggressiveness follow the user's gym experience level.
 enum ProgressionAdvisor {
     static func increment(for equipment: EquipmentType?) -> Double {
         switch equipment {
@@ -70,21 +79,41 @@ enum ProgressionAdvisor {
         }
     }
 
-    static func suggestion(for log: ExerciseLog) -> String? {
+    static func suggestion(for log: ExerciseLog, experience: ExperienceLevel = .intermediate) -> String? {
         guard let best = log.bestSet else { return nil }
         if best.weightKg <= 0 {
-            return "Next time, try to add one or two reps to each set of \(log.name)."
+            switch experience {
+            case .beginner:
+                return "Next time on \(log.name), add one or two reps and keep the movement smooth and controlled."
+            case .intermediate, .advanced:
+                return "Next time, try to add one or two reps to each set of \(log.name)."
+            }
         }
         let topWeightSets = log.sets.filter { abs($0.weightKg - best.weightKg) < 0.001 }
         let minReps = topWeightSets.map(\.reps).min() ?? best.reps
         let weight = WorkoutSummary.kgText(best.weightKg)
 
+        if experience == .advanced, let rpe = log.averageRPE, rpe <= 7, minReps >= 5 {
+            let next = WorkoutSummary.kgText(best.weightKg + increment(for: log.equipment))
+            let rpeText = rpe == floor(rpe) ? "\(Int(rpe))" : String(format: "%.1f", rpe)
+            return "Your \(log.name) sets averaged RPE \(rpeText). Next time try \(next) kg if form stays solid."
+        }
+
         if minReps >= 10 {
+            if experience == .beginner {
+                return "Nice work hitting \(minReps) reps on \(log.name) at \(weight) kg. Next time add one more rep each set, or a small bump in load when that feels easy."
+            }
             let next = WorkoutSummary.kgText(best.weightKg + increment(for: log.equipment))
             return "Next time try \(next) kg on \(log.name), because you got \(minReps) reps on every set at \(weight) kg."
         }
         if best.reps >= 6 {
+            if experience == .beginner {
+                return "Stay at \(weight) kg on \(log.name) and aim for \(minReps + 1) clean reps each set. Form first."
+            }
             return "Stay at \(weight) kg on \(log.name) and aim for \(minReps + 1) reps on every set before adding weight."
+        }
+        if experience == .beginner {
+            return "Keep \(weight) kg on \(log.name) and focus on smooth, controlled reps. Get to 6 solid reps a set before adding weight."
         }
         return "Keep \(weight) kg on \(log.name) and focus on smooth, controlled reps until you can reach 6 reps a set."
     }
@@ -95,7 +124,7 @@ enum ProgressionAdvisor {
 /// The after-workout story: appreciation, what was done, and how to improve next time.
 /// Numbers come from the recap; an on-device model may only phrase them (see `Grounding`).
 enum WorkoutSummary {
-    static func facts(_ recap: WorkoutRecap) -> [String] {
+    static func facts(_ recap: WorkoutRecap, experience: ExperienceLevel = .intermediate) -> [String] {
         var lines: [String] = []
         lines.append(
             "Workout: \"\(recap.name)\". Duration \(recap.durationMinutes) minutes, \(recap.exercises.count) exercises, "
@@ -128,7 +157,7 @@ enum WorkoutSummary {
                     line += " Total volume is \(whole(-change)) kg lower than last time."
                 }
             }
-            if let tip = ProgressionAdvisor.suggestion(for: log) {
+            if let tip = ProgressionAdvisor.suggestion(for: log, experience: experience) {
                 line += " Suggestion for next time: \(tip)"
             }
             lines.append(line)
@@ -147,8 +176,8 @@ enum WorkoutSummary {
     Do not give medical advice or recommend supplements. Keep it positive and practical.
     """
 
-    static func prompt(_ recap: WorkoutRecap) -> String {
-        let bullets = facts(recap).map { "- \($0)" }.joined(separator: "\n")
+    static func prompt(_ recap: WorkoutRecap, experience: ExperienceLevel = .intermediate) -> String {
+        let bullets = facts(recap, experience: experience).map { "- \($0)" }.joined(separator: "\n")
         return """
         Facts about the workout the user just finished:
         \(bullets)
@@ -158,7 +187,7 @@ enum WorkoutSummary {
     }
 
     /// Always-available version, written from the same facts with no model involved.
-    static func fallbackText(_ recap: WorkoutRecap) -> String {
+    static func fallbackText(_ recap: WorkoutRecap, experience: ExperienceLevel = .intermediate) -> String {
         let prs = recap.prExercises
         var opening: String
         if prs.isEmpty {
@@ -169,7 +198,9 @@ enum WorkoutSummary {
         opening += " You did \(recap.totalSets) sets across \(recap.exercises.count) exercises in \(recap.durationMinutes) minutes, "
             + "moving \(whole(recap.totalVolume)) kg in total."
 
-        let tips = recap.exercises.prefix(6).compactMap { ProgressionAdvisor.suggestion(for: $0) }.prefix(2)
+        let tips = recap.exercises.prefix(6).compactMap {
+            ProgressionAdvisor.suggestion(for: $0, experience: experience)
+        }.prefix(2)
         var second = ""
         if !tips.isEmpty {
             second = "To keep improving: " + tips.joined(separator: " ")

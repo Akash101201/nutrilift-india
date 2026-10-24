@@ -156,6 +156,12 @@ struct SettingsView: View {
                     ForEach(Pace.allCases) { Text("\($0.emoji) \($0.displayName)").tag($0) }
                 }
             }
+            Picker("Gym experience", selection: Binding(
+                get: { profile.experience },
+                set: { profile.experience = $0; profile.updatedAt = Date() }
+            )) {
+                ForEach(ExperienceLevel.allCases) { Text("\($0.emoji) \($0.displayName)").tag($0) }
+            }
             Picker("Diet", selection: Binding(get: { profile.dietPref }, set: { profile.dietPref = $0 })) {
                 ForEach(DietPreference.allCases) { Text("\($0.emoji) \($0.displayName)").tag($0) }
             }

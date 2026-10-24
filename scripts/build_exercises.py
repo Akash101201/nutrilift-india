@@ -95,6 +95,20 @@ def norm(name: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+def map_level(raw: object) -> str | None:
+    """Map free-exercise-db level strings onto app ExperienceLevel values."""
+    if not isinstance(raw, str):
+        return None
+    key = raw.strip().lower()
+    if key == "beginner":
+        return "beginner"
+    if key == "intermediate":
+        return "intermediate"
+    if key in ("expert", "advanced"):
+        return "advanced"
+    return None
+
+
 def singular_key(name: str) -> str:
     parts = norm(name).split()
     if not parts:
@@ -171,30 +185,39 @@ def write_exercises() -> list[dict]:
             if len(candidates) == 1:
                 match = candidates[0]
         instructions: list[str] = []
+        level: str | None = None
         if match is not None:
             if match.get("category") == "stretching" and "stretch" not in name.lower():
                 sys.exit(f"Refusing to attach a stretch to {seed_id} ({name})")
             used.add(match["id"])
             instructions = clean_steps(match.get("instructions") or [])
-        rows.append({
+            level = map_level(match.get("level"))
+        row = {
             "id": seed_id,
             "name": name,
             "muscleGroup": muscle,
             "equipment": equipment,
             "instructions": instructions,
-        })
+        }
+        if level:
+            row["level"] = level
+        rows.append(row)
 
     extras = []
     for entry in catalog:
         if entry["id"] in used:
             continue
-        extras.append({
+        extra = {
             "id": fedb_seed_id(entry["id"]),
             "name": entry["name"],
             "muscleGroup": map_muscle(entry),
             "equipment": map_equipment(entry),
             "instructions": clean_steps(entry.get("instructions") or []),
-        })
+        }
+        level = map_level(entry.get("level"))
+        if level:
+            extra["level"] = level
+        extras.append(extra)
     extras.sort(key=lambda row: row["name"].lower())
     rows.extend(extras)
 

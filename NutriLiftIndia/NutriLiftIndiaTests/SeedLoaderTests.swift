@@ -35,12 +35,20 @@ final class SeedLoaderTests: XCTestCase {
 
         let templates = try context.fetch(FetchDescriptor<WorkoutTemplate>())
         let starter = templates.filter { !$0.isCustom }
-        XCTAssertEqual(starter.count, 6)
+        XCTAssertEqual(starter.count, 7)
+        XCTAssertNotNil(starter.first { $0.seedId == "tmpl_full_body_a_easy" })
         for template in starter {
             for planned in template.exercises {
                 XCTAssertNotNil(byId[planned.exerciseSeedId], planned.exerciseSeedId)
             }
         }
+
+        let plans = try context.fetch(FetchDescriptor<TrainingPlan>())
+        XCTAssertEqual(plans.count, 3)
+        XCTAssertEqual(plans.first { $0.seedId == "plan_gym_starter" }?.orderedDays.count, 3)
+
+        let squat = try XCTUnwrap(byId["ex_squat"])
+        XCTAssertNotNil(squat.difficulty)
 
         let meals = try context.fetch(FetchDescriptor<MealTemplate>())
         XCTAssertEqual(meals.filter { $0.builtInKey != nil }.count, 4)
@@ -153,5 +161,13 @@ final class SeedLoaderTests: XCTestCase {
         let data = Data(#"{"id":"ex_plank","name":"Plank","muscleGroup":"core","equipment":"bodyweight"}"#.utf8)
         let decoded = try JSONDecoder().decode(SeedExerciseDTO.self, from: data)
         XCTAssertEqual(decoded.instructions, [])
+        XCTAssertNil(decoded.level)
+    }
+
+    func testExerciseJSONWithLevelDecodes() throws {
+        let data = Data(#"{"id":"ex_plank","name":"Plank","muscleGroup":"core","equipment":"bodyweight","level":"beginner"}"#.utf8)
+        let decoded = try JSONDecoder().decode(SeedExerciseDTO.self, from: data)
+        XCTAssertEqual(decoded.level, "beginner")
+        XCTAssertEqual(ExerciseDifficulty.fromVendor("expert"), .advanced)
     }
 }

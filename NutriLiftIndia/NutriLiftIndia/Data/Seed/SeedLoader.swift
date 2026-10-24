@@ -2,7 +2,8 @@ import Foundation
 import SwiftData
 
 enum SeedLoader {
-    static let currentSeedVersion = 2
+    /// Bumped for leveled plans, exercise difficulty, and the beginner easy template.
+    static let currentSeedVersion = 3
 
     @MainActor
     static func seedIfNeeded(context: ModelContext) throws {
@@ -28,6 +29,7 @@ enum SeedLoader {
 
         try loadExercises(context: context)
         try loadTemplates(context: context)
+        try loadPlans(context: context)
 
         // Default meal templates for fast Indian logging
         try insertDefaultMealTemplates(context: context)
@@ -46,6 +48,8 @@ enum SeedLoader {
         exercises.forEach(context.delete)
         let templates = try context.fetch(FetchDescriptor<WorkoutTemplate>()).filter { !$0.isCustom }
         templates.forEach(context.delete)
+        let plans = try context.fetch(FetchDescriptor<TrainingPlan>())
+        plans.forEach(context.delete)
     }
 
     private struct FoodUserState {
@@ -104,12 +108,14 @@ enum SeedLoader {
         for dto in exercises {
             let muscle = MuscleGroup(rawValue: dto.muscleGroup) ?? .fullBody
             let equipment = EquipmentType(rawValue: dto.equipment) ?? .other
+            let difficulty = ExerciseDifficulty.fromVendor(dto.level)
             context.insert(Exercise(
                 seedId: dto.id,
                 name: dto.name,
                 muscleGroup: muscle,
                 equipment: equipment,
-                instructions: dto.instructions
+                instructions: dto.instructions,
+                difficulty: difficulty
             ))
         }
     }
@@ -122,7 +128,13 @@ enum SeedLoader {
         let byId = Dictionary(uniqueKeysWithValues: allExercises.map { ($0.seedId, $0) })
 
         for dto in templates {
-            let template = WorkoutTemplate(seedId: dto.id, name: dto.name, notes: dto.notes)
+            let level = dto.recommendedLevel.flatMap(ExperienceLevel.init(rawValue:))
+            let template = WorkoutTemplate(
+                seedId: dto.id,
+                name: dto.name,
+                notes: dto.notes,
+                recommendedLevel: level
+            )
             for (index, ex) in dto.exercises.enumerated() {
                 let resolved = byId[ex.exerciseId]
                 let te = TemplateExercise(
@@ -136,6 +148,29 @@ enum SeedLoader {
                 template.exercises.append(te)
             }
             context.insert(template)
+        }
+    }
+
+    @MainActor
+    private static func loadPlans(context: ModelContext) throws {
+        let plans: [SeedPlanDTO] = try decodeJSON(named: "training_plans")
+        for dto in plans {
+            let level = ExperienceLevel(rawValue: dto.experienceLevel) ?? .intermediate
+            let plan = TrainingPlan(
+                seedId: dto.id,
+                name: dto.name,
+                notes: dto.notes,
+                experience: level,
+                daysPerWeek: dto.daysPerWeek
+            )
+            for (index, day) in dto.days.enumerated() {
+                plan.days.append(PlanDay(
+                    name: day.name,
+                    templateSeedId: day.templateId,
+                    sortOrder: index
+                ))
+            }
+            context.insert(plan)
         }
     }
 

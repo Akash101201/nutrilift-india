@@ -4,13 +4,34 @@ import SwiftData
 struct WorkoutsHomeView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var launcher: WorkoutLauncher
+    @Query private var profiles: [UserProfile]
     @Query(sort: \WorkoutTemplate.name) private var templates: [WorkoutTemplate]
+    @Query private var plans: [TrainingPlan]
     @Query(sort: \WorkoutSession.startedAt, order: .reverse) private var sessions: [WorkoutSession]
     @Query private var exercises: [Exercise]
 
     @State private var showNewRoutine = false
     @State private var editingRoutine: RoutineTarget?
     @State private var pendingDelete: WorkoutTemplate?
+
+    private var profile: UserProfile? { profiles.first }
+
+    private var activePlan: TrainingPlan? {
+        guard let id = profile?.activePlanSeedId else { return nil }
+        return plans.first { $0.seedId == id }
+            ?? plans.first { $0.experience == (profile?.experience ?? .intermediate) }
+    }
+
+    private var nextPlanDay: PlanScheduler.NextDay? {
+        guard let plan = activePlan else { return nil }
+        let lastTemplate = finished.first?.templateSeedId
+        return PlanScheduler.nextDay(days: PlanScheduler.dayRefs(from: plan), lastFinishedTemplateSeedId: lastTemplate)
+    }
+
+    private var nextRoutine: WorkoutTemplate? {
+        guard let next = nextPlanDay else { return nil }
+        return templates.first { $0.seedId == next.templateSeedId }
+    }
 
     /// Wrapper so `.sheet(item:)` has a plain Identifiable value.
     private struct RoutineTarget: Identifiable {
@@ -42,6 +63,7 @@ struct WorkoutsHomeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 22) {
                     startSection
+                    planSection
                     routinesSection
                     weekSection
                     libraryLink
@@ -128,6 +150,51 @@ struct WorkoutsHomeView: View {
         }
     }
 
+    // MARK: Plan
+
+    @ViewBuilder
+    private var planSection: some View {
+        if active == nil, let plan = activePlan, let next = nextPlanDay, let routine = nextRoutine {
+            VStack(alignment: .leading, spacing: 12) {
+                EmojiHeader(emoji: "📅", title: "Your plan")
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(plan.name)
+                        .font(.rounded(.headline, weight: .bold))
+                    Text("\(plan.daysPerWeek)× / week · \(plan.experience.displayName)")
+                        .font(.rounded(.caption))
+                        .foregroundStyle(.secondary)
+                    if !plan.notes.isEmpty {
+                        Text(plan.notes)
+                            .font(.rounded(.footnote))
+                            .foregroundStyle(.secondary)
+                    }
+                    Button {
+                        Haptics.tap()
+                        launcher.start(routine, context: modelContext)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Start next")
+                                    .font(.rounded(.caption, weight: .semibold))
+                                    .opacity(0.9)
+                                Text(next.name)
+                                    .font(.rounded(.title3, weight: .bold))
+                            }
+                            Spacer()
+                            Image(systemName: "play.circle.fill")
+                                .font(.title)
+                        }
+                        .foregroundStyle(.white)
+                        .padding(14)
+                        .background(Theme.brandGradient, in: RoundedRectangle(cornerRadius: Theme.radius, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
+                }
+                .appCard()
+            }
+        }
+    }
+
     // MARK: Routines
 
     private var routinesSection: some View {
@@ -180,10 +247,20 @@ struct WorkoutsHomeView: View {
         let ordered = routine.exercises.sorted { $0.sortOrder < $1.sortOrder }
         return VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .top) {
-                Text(routine.name)
-                    .font(.rounded(.headline, weight: .bold))
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(routine.name)
+                        .font(.rounded(.headline, weight: .bold))
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                    if let level = routine.recommendedLevel {
+                        Text(level.displayName)
+                            .font(.rounded(.caption2, weight: .bold))
+                            .foregroundStyle(Theme.plum)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Theme.plum.opacity(0.12), in: Capsule())
+                    }
+                }
                 Spacer(minLength: 0)
                 Menu {
                     if routine.isCustom {

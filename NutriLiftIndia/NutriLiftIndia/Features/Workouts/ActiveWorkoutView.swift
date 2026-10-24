@@ -6,6 +6,7 @@ import SwiftData
 struct ActiveWorkoutView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var launcher: WorkoutLauncher
+    @Query private var profiles: [UserProfile]
     @Query private var allSessions: [WorkoutSession]
     @Query private var exercises: [Exercise]
 
@@ -23,6 +24,20 @@ struct ActiveWorkoutView: View {
     @State private var detail: DetailTarget?
     @State private var prSetIDs: Set<UUID> = []
     @State private var celebrateCount = 0
+    /// Form tip rows expanded under an exercise (beginners).
+    @State private var expandedTips: Set<String> = []
+
+    private var experience: ExperienceLevel {
+        profiles.first?.experience ?? .intermediate
+    }
+
+    private var showsRPE: Bool {
+        experience == .intermediate || experience == .advanced
+    }
+
+    private var showsFormTips: Bool {
+        experience == .beginner
+    }
 
     private struct DetailTarget: Identifiable {
         let seedId: String
@@ -236,7 +251,19 @@ struct ActiveWorkoutView: View {
     @ViewBuilder
     private func exerciseSection(_ group: ExerciseGroup) -> some View {
         let previous = WorkoutHistory.lastSets(exerciseSeedId: group.seedId, in: allSessions, excluding: session.id)
+        let tips = formTips(for: group.seedId)
         Section {
+            if showsFormTips, !tips.isEmpty, expandedTips.contains(group.seedId) {
+                VStack(alignment: .leading, spacing: 6) {
+                    ForEach(Array(tips.enumerated()), id: \.offset) { index, tip in
+                        Text("\(index + 1). \(tip)")
+                            .font(.rounded(.caption))
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .listRowBackground(Theme.saffron.opacity(0.08))
+            }
             tableHeader
             ForEach(group.sets, id: \.id) { set in
                 setRow(set, previous: previous)
@@ -260,11 +287,16 @@ struct ActiveWorkoutView: View {
             .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 8, trailing: 12))
             .listRowBackground(Theme.card)
         } header: {
-            exerciseHeader(group)
+            exerciseHeader(group, tips: tips)
         }
     }
 
-    private func exerciseHeader(_ group: ExerciseGroup) -> some View {
+    private func formTips(for seedId: String) -> [String] {
+        let steps = exercises.first { $0.seedId == seedId }?.instructions ?? []
+        return Array(steps.prefix(2))
+    }
+
+    private func exerciseHeader(_ group: ExerciseGroup, tips: [String]) -> some View {
         HStack(spacing: 8) {
             Text(group.muscle.emoji).accessibilityHidden(true)
             Text(group.name)
@@ -272,6 +304,26 @@ struct ActiveWorkoutView: View {
                 .foregroundStyle(.primary)
                 .textCase(nil)
             Spacer()
+            if showsFormTips, !tips.isEmpty {
+                Button {
+                    Haptics.selection()
+                    if expandedTips.contains(group.seedId) {
+                        expandedTips.remove(group.seedId)
+                    } else {
+                        expandedTips.insert(group.seedId)
+                    }
+                } label: {
+                    Label(
+                        expandedTips.contains(group.seedId) ? "Hide tip" : "Form tip",
+                        systemImage: expandedTips.contains(group.seedId) ? "lightbulb.fill" : "lightbulb"
+                    )
+                    .font(.rounded(.caption, weight: .semibold))
+                    .labelStyle(.titleAndIcon)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(Theme.saffron)
+                .accessibilityLabel("Form tip for \(group.name)")
+            }
             Menu {
                 Button {
                     detail = DetailTarget(seedId: group.seedId, name: group.name, muscle: group.muscle)
@@ -295,8 +347,11 @@ struct ActiveWorkoutView: View {
         HStack(spacing: 8) {
             Text("SET").frame(width: 28)
             Text("PREVIOUS").frame(maxWidth: .infinity, alignment: .leading)
-            Text("KG").frame(width: 66)
-            Text("REPS").frame(width: 54)
+            Text("KG").frame(width: showsRPE ? 56 : 66)
+            Text("REPS").frame(width: showsRPE ? 44 : 54)
+            if showsRPE {
+                Text("RPE").frame(width: 40)
+            }
             Image(systemName: "checkmark").frame(width: 30)
         }
         .font(.rounded(.caption2, weight: .bold))
@@ -324,6 +379,7 @@ struct ActiveWorkoutView: View {
                         Haptics.selection()
                         set.weightKg = reference.weightKg
                         set.reps = reference.reps
+                        if showsRPE { set.rpe = reference.rpe }
                     } label: {
                         Text("\(WorkoutSummary.kgText(reference.weightKg)) × \(reference.reps)")
                             .font(.rounded(.caption))
@@ -346,7 +402,7 @@ struct ActiveWorkoutView: View {
                 .multilineTextAlignment(.center)
                 .font(.rounded(.body, weight: .semibold))
                 .padding(.vertical, 6)
-                .frame(width: 66)
+                .frame(width: showsRPE ? 56 : 66)
                 .background(Theme.saffron.opacity(0.12), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .accessibilityLabel("Weight in kilograms, set \(set.setNumber)")
 
@@ -355,9 +411,20 @@ struct ActiveWorkoutView: View {
                 .multilineTextAlignment(.center)
                 .font(.rounded(.body, weight: .semibold))
                 .padding(.vertical, 6)
-                .frame(width: 54)
+                .frame(width: showsRPE ? 44 : 54)
                 .background(Theme.saffron.opacity(0.12), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .accessibilityLabel("Reps, set \(set.setNumber)")
+
+            if showsRPE {
+                TextField("—", value: rpeBinding(set), format: .number.precision(.fractionLength(0...1)))
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.center)
+                    .font(.rounded(.caption, weight: .semibold))
+                    .padding(.vertical, 6)
+                    .frame(width: 40)
+                    .background(Theme.plum.opacity(0.12), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .accessibilityLabel("RPE from 1 to 10, set \(set.setNumber)")
+            }
 
             Button {
                 toggle(set)
@@ -395,6 +462,20 @@ struct ActiveWorkoutView: View {
         Binding(
             get: { set.reps },
             set: { set.reps = min(max($0, 0), 1000) }
+        )
+    }
+
+    /// Optional RPE (1–10). Zero in the field means unset.
+    private func rpeBinding(_ set: WorkoutSet) -> Binding<Double> {
+        Binding(
+            get: { set.rpe ?? 0 },
+            set: { newValue in
+                guard newValue.isFinite, newValue > 0 else {
+                    set.rpe = nil
+                    return
+                }
+                set.rpe = min(max(newValue, 1), 10)
+            }
         )
     }
 
