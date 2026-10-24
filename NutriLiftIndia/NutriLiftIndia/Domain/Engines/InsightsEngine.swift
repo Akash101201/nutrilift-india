@@ -139,6 +139,7 @@ enum InsightsEngine {
         let hardSets = ctx.sessions
             .filter { ctx.calendar.isDate($0.startedAt, inSameDayAs: ctx.now) }
             .flatMap(\.sets)
+            .filter(\.isCompleted)   // planned, unticked rows don't count as training
             .filter { ($0.rpe ?? 0) >= 8 || $0.reps * Int($0.weightKg) > 0 }
             .count
         guard trainedToday, hardSets >= 8, deficit >= 700, ctx.targets.calories < 2200 else { return [] }

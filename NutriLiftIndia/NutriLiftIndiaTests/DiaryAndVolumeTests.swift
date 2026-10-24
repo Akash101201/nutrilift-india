@@ -44,7 +44,6 @@ final class DiaryAndVolumeTests: XCTestCase {
             weightKg: 60,
             reps: 8
         )
-        set.session = session
         session.sets.append(set)
         let vol = VolumeAggregator.weeklySets(sessions: [session])
         let volume = try XCTUnwrap(vol.first)
@@ -64,7 +63,6 @@ final class DiaryAndVolumeTests: XCTestCase {
             weightKg: 60,
             reps: 5
         )
-        oldSet.session = old
         old.sets.append(oldSet)
 
         let newSet = WorkoutSet(

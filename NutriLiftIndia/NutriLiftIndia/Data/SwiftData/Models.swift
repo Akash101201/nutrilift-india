@@ -329,17 +329,21 @@ final class Exercise {
     var name: String
     var muscleGroupRaw: String
     var equipmentRaw: String
+    /// Exercises the user created. Never removed by seed refreshes.
+    var isCustom: Bool = false
 
     init(
         seedId: String = UUID().uuidString,
         name: String,
         muscleGroup: MuscleGroup,
-        equipment: EquipmentType
+        equipment: EquipmentType,
+        isCustom: Bool = false
     ) {
         self.seedId = seedId
         self.name = name
         self.muscleGroupRaw = muscleGroup.rawValue
         self.equipmentRaw = equipment.rawValue
+        self.isCustom = isCustom
     }
 
     var muscleGroup: MuscleGroup {
@@ -360,12 +364,21 @@ final class WorkoutTemplate {
     var notes: String
     @Relationship(deleteRule: .cascade, inverse: \TemplateExercise.template)
     var exercises: [TemplateExercise]
+    /// Routines the user created or duplicated. Never removed by seed refreshes.
+    var isCustom: Bool = false
 
-    init(seedId: String = UUID().uuidString, name: String, notes: String = "", exercises: [TemplateExercise] = []) {
+    init(
+        seedId: String = UUID().uuidString,
+        name: String,
+        notes: String = "",
+        exercises: [TemplateExercise] = [],
+        isCustom: Bool = false
+    ) {
         self.seedId = seedId
         self.name = name
         self.notes = notes
         self.exercises = exercises
+        self.isCustom = isCustom
     }
 }
 
@@ -411,6 +424,8 @@ final class WorkoutSession {
     var finishedAt: Date?
     var notes: String
     var templateSeedId: String?
+    /// The coach's after-workout summary, saved so history can show it again.
+    var aiSummary: String?
     @Relationship(deleteRule: .cascade, inverse: \WorkoutSet.session)
     var sets: [WorkoutSet]
 
@@ -445,6 +460,11 @@ final class WorkoutSet {
     var notes: String
     var completedAt: Date
     var session: WorkoutSession?
+    /// False for a planned row the user hasn't ticked off yet. Finishing a workout discards these,
+    /// so every finished session only holds completed sets. Old data defaults to true.
+    var isCompleted: Bool = true
+    /// Position of this set's exercise within the workout.
+    var exerciseOrder: Int = 0
 
     init(
         exerciseSeedId: String,
@@ -454,7 +474,9 @@ final class WorkoutSet {
         weightKg: Double,
         reps: Int,
         rpe: Double? = nil,
-        notes: String = ""
+        notes: String = "",
+        isCompleted: Bool = true,
+        exerciseOrder: Int = 0
     ) {
         self.id = UUID()
         self.exerciseSeedId = exerciseSeedId
@@ -466,6 +488,8 @@ final class WorkoutSet {
         self.rpe = rpe
         self.notes = notes
         self.completedAt = Date()
+        self.isCompleted = isCompleted
+        self.exerciseOrder = exerciseOrder
     }
 
     var muscleGroup: MuscleGroup {

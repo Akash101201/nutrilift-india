@@ -33,6 +33,7 @@ python3 scripts/generate_seeds.py
 - HealthKit is **optional**; the app works if denied.
 - Photo meal estimates use **Apple Foundation Models only**. Photos are **not uploaded**. After save, the in-memory photo is discarded. UI shows “Photo not uploaded.”
 - The "Why this is yours" explainer uses Apple Foundation Models on-device to word the target explanation. The numbers always come from `GoalEngine`; the model's answer is discarded unless every number in it appears in the facts we supplied, and a built-in personalised explanation is shown instead (also on devices without Apple Intelligence). Nothing leaves the device.
+- The after-workout coach message uses the same on-device, number-checked approach (`OnDeviceWriter` + `Grounding`), with a built-in fallback. Nothing leaves the device.
 - Export is a local JSON share sheet. Delete-all returns you to onboarding (seed foods/exercises remain).
 - **No iCloud sync in Phase 1** (planned Phase 2).
 

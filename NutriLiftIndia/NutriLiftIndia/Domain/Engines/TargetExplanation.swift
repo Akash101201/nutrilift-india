@@ -121,32 +121,18 @@ enum TargetExplanation {
 
     // MARK: Grounding check
 
-    /// True when every number in `text` also appears in `facts` (or is a tiny count like 1-3).
+    // The checks live in `Grounding` so other on-device writers (e.g. the workout summary) share them.
+
     static func isGrounded(_ text: String, facts: [String]) -> Bool {
-        var allowed: [Double] = [0, 1, 2, 3]
-        for line in facts { allowed.append(contentsOf: numbers(in: line)) }
-        for value in numbers(in: text) {
-            guard allowed.contains(where: { abs($0 - value) < 0.06 }) else { return false }
-        }
-        return true
+        Grounding.isGrounded(text, facts: facts)
     }
 
-    /// Cleans a model answer and returns it only if it is usable and grounded.
     static func validated(_ text: String, facts: [String]) -> String? {
-        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard trimmed.count >= 40, trimmed.count <= 1200 else { return nil }
-        guard isGrounded(trimmed, facts: facts) else { return nil }
-        return trimmed
+        Grounding.validated(text, facts: facts, maxLength: 1200)
     }
 
-    /// Numbers as written in `text`: "1,682" -> 1682, "1.65" -> 1.65.
     static func numbers(in text: String) -> [Double] {
-        guard let regex = try? NSRegularExpression(pattern: #"\d+(?:,\d{3})*(?:\.\d+)?"#) else { return [] }
-        let range = NSRange(text.startIndex..., in: text)
-        return regex.matches(in: text, range: range).compactMap { match in
-            guard let r = Range(match.range, in: text) else { return nil }
-            return Double(text[r].replacingOccurrences(of: ",", with: ""))
-        }
+        Grounding.numbers(in: text)
     }
 
     // MARK: Fallback

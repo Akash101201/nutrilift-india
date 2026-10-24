@@ -17,9 +17,6 @@ struct SettingsView: View {
     @State private var showTargetPrompt = false
     @State private var weightChangeKg = 0.0
 
-    /// A new weight this far from the one the targets were built on prompts a refresh.
-    private let retargetThresholdKg = 2.0
-
     private var profile: UserProfile? { profiles.first }
     private var settings: AppSettings? { settingsList.first }
 
@@ -279,13 +276,10 @@ struct SettingsView: View {
 
     /// Saves a weigh-in. Never changes targets silently: it only offers to refresh them.
     private func logWeight(_ kg: Double, fromHealthKit: Bool) {
-        let previous = profile?.weightKg ?? kg
-        modelContext.insert(BodyWeightSample(weightKg: kg, fromHealthKit: fromHealthKit))
-        profile?.weightKg = kg
-        try? modelContext.save()
+        guard let outcome = WeightLogService.log(kg, fromHealthKit: fromHealthKit, profile: profile, context: modelContext) else { return }
         Haptics.success()
-        if abs(kg - previous) >= retargetThresholdKg {
-            weightChangeKg = kg - previous
+        if outcome.suggestsRetarget {
+            weightChangeKg = outcome.changeKg
             showTargetPrompt = true
         }
     }

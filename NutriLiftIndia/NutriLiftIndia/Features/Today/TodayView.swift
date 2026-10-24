@@ -1,9 +1,12 @@
 import SwiftUI
 import SwiftData
+import Charts
 
 struct TodayView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var launcher: WorkoutLauncher
     @Query private var profiles: [UserProfile]
+    @Query(sort: \BodyWeightSample.date, order: .reverse) private var weightSamples: [BodyWeightSample]
     @Query(sort: \FoodDiaryEntry.date, order: .reverse) private var diary: [FoodDiaryEntry]
     @Query(sort: \WorkoutTemplate.name) private var templates: [WorkoutTemplate]
     @Query(sort: \WorkoutSession.startedAt, order: .reverse) private var sessions: [WorkoutSession]
@@ -12,6 +15,10 @@ struct TodayView: View {
     @AppStorage("proteinCelebratedDay") private var proteinCelebratedDay = ""
     @AppStorage("waterCelebratedDay") private var waterCelebratedDay = ""
     @State private var showSettings = false
+    @State private var showLogWeight = false
+    @State private var showTargetPrompt = false
+    @State private var pendingRetarget = false
+    @State private var weightChangeKg = 0.0
     @State private var celebrateCount = 0
 
     private static let glassMl = 250.0
@@ -21,8 +28,6 @@ struct TodayView: View {
     private var consumed: MacroSnapshot {
         DiaryTotals.totals(for: diary)
     }
-
-    private var nextTemplate: WorkoutTemplate? { templates.first }
 
     private var loggedDates: [Date] { diary.map(\.date) }
 
@@ -48,8 +53,9 @@ struct TodayView: View {
                         calorieCard(profile: profile)
                         habitsRow
                         waterCard(profile: profile)
+                        weightCard(profile: profile)
                         activityCard(profile: profile)
-                        workoutCTA
+                        workoutCard
                         Text("Burn and net calories are estimates.")
                             .font(.rounded(.caption))
                             .foregroundStyle(.secondary)
@@ -69,6 +75,24 @@ struct TodayView: View {
             .task { await health.refreshToday() }
             .refreshable { await health.refreshToday() }
             .sheet(isPresented: $showSettings) { SettingsView() }
+            .sheet(isPresented: $showLogWeight, onDismiss: {
+                // Presenting the alert in the same moment the sheet closes can get dropped, so wait for onDismiss.
+                if pendingRetarget {
+                    pendingRetarget = false
+                    showTargetPrompt = true
+                }
+            }) {
+                LogWeightSheet(weightKg: (weightSamples.first?.weightKg ?? profile?.weightKg ?? 65)) { kg, fromHealth in
+                    saveWeight(kg, fromHealthKit: fromHealth)
+                }
+                .presentationDetents([.large])
+            }
+            .alert("Update your targets? 🎯", isPresented: $showTargetPrompt) {
+                Button("Update targets") { refreshTargets() }
+                Button("Not now", role: .cancel) {}
+            } message: {
+                Text("Your weight changed by \(abs(weightChangeKg).formatted(.number.precision(.fractionLength(1)))) kg. Want to refresh your targets to match?")
+            }
             .celebrate(trigger: celebrateCount)
             .onAppear { celebrateProteinIfNeeded() }
             .onChange(of: proteinHit) { _, _ in celebrateProteinIfNeeded() }
@@ -276,20 +300,20 @@ struct TodayView: View {
     // MARK: Workout
 
     @ViewBuilder
-    private var workoutCTA: some View {
-        if let nextTemplate {
-            NavigationLink {
-                WorkoutSessionView(template: nextTemplate)
+    private var workoutCard: some View {
+        if let active = sessions.first(where: { WorkoutService.isInProgress($0) }) {
+            Button {
+                launcher.resumeActive(context: modelContext)
             } label: {
                 HStack(spacing: 14) {
-                    Text("🏋️")
+                    Text("⏱️")
                         .font(.system(size: 40))
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Next workout")
+                        Text("Workout in progress")
                             .font(.rounded(.subheadline, weight: .medium))
                             .opacity(0.85)
-                        Text("Start \(nextTemplate.name)")
+                        Text("Resume \(active.name)")
                             .font(.rounded(.title3, weight: .bold))
                     }
                     Spacer()
@@ -297,21 +321,220 @@ struct TodayView: View {
                         .font(.title)
                 }
                 .foregroundStyle(.white)
-                .gradientCard(Theme.brandGradient)
+                .gradientCard(Theme.freshGradient)
             }
             .buttonStyle(.plain)
         } else {
-            VStack(alignment: .leading, spacing: 6) {
-                EmojiHeader(emoji: "🏋️", title: "Next workout")
-                if let last = sessions.first(where: \.isFinished) {
-                    Text("Last: \(last.name)")
+            VStack(alignment: .leading, spacing: 12) {
+                EmojiHeader(emoji: "🏋️", title: "Workout")
+                Button("Start empty workout") {
+                    Haptics.tap()
+                    launcher.startEmpty(context: modelContext)
+                }
+                .buttonStyle(.gradient)
+
+                let routines = templates.sorted { ($0.isCustom ? 0 : 1, $0.name) < ($1.isCustom ? 0 : 1, $1.name) }
+                if !routines.isEmpty {
+                    Text("Or start a routine")
+                        .font(.rounded(.footnote, weight: .semibold))
                         .foregroundStyle(.secondary)
-                } else {
-                    Text("No templates yet. Check Workouts after seed loads.")
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(routines.prefix(6), id: \.seedId) { routine in
+                                Button {
+                                    Haptics.tap()
+                                    launcher.start(routine, context: modelContext)
+                                } label: {
+                                    Text(routine.name)
+                                        .font(.rounded(.subheadline, weight: .semibold))
+                                        .foregroundStyle(Theme.saffron)
+                                        .padding(.horizontal, 14)
+                                        .padding(.vertical, 8)
+                                        .background(Theme.saffron.opacity(0.14), in: Capsule())
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
+                }
+                if let last = sessions.first(where: \.isFinished) {
+                    Text("Last: \(last.name) · \((last.finishedAt ?? last.startedAt).formatted(.relative(presentation: .named)))")
+                        .font(.rounded(.caption))
                         .foregroundStyle(.secondary)
                 }
             }
             .appCard()
+        }
+    }
+
+    // MARK: Weight
+
+    private var recentWeights: [BodyWeightSample] {
+        let cutoff = Calendar.current.date(byAdding: .day, value: -30, to: Date()) ?? Date()
+        return weightSamples.filter { $0.date >= cutoff }
+    }
+
+    private func weightCard(profile: UserProfile) -> some View {
+        let latest = weightSamples.first?.weightKg ?? profile.weightKg
+        let recent = recentWeights
+        let change: Double? = {
+            guard recent.count > 1, let newest = recent.first, let oldest = recent.last else { return nil }
+            return newest.weightKg - oldest.weightKg
+        }()
+        return VStack(alignment: .leading, spacing: 12) {
+            EmojiHeader(
+                emoji: "⚖️",
+                title: "Weight",
+                trailing: weightSamples.first.map { $0.date.formatted(.relative(presentation: .named)) }
+            )
+            HStack(alignment: .center, spacing: 14) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(Formatters.kg(latest))
+                        .font(.rounded(.title, weight: .bold))
+                        .contentTransition(.numericText())
+                    Text(weightChangeText(change, goal: profile.goal))
+                        .font(.rounded(.caption, weight: .medium))
+                        .foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 0)
+                if recent.count > 1 {
+                    Chart(recent.reversed(), id: \.id) { sample in
+                        LineMark(
+                            x: .value("Date", sample.date),
+                            y: .value("kg", sample.weightKg)
+                        )
+                        .interpolationMethod(.catmullRom)
+                        .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round))
+                        .foregroundStyle(Theme.chilli)
+                        PointMark(
+                            x: .value("Date", sample.date),
+                            y: .value("kg", sample.weightKg)
+                        )
+                        .symbolSize(24)
+                        .foregroundStyle(Theme.saffron)
+                    }
+                    .chartXAxis(.hidden)
+                    .chartYAxis(.hidden)
+                    .chartYScale(domain: .automatic(includesZero: false))
+                    .frame(width: 120, height: 56)
+                    .accessibilityHidden(true)
+                }
+            }
+            Button("Log weight ⚖️") {
+                showLogWeight = true
+            }
+            .buttonStyle(.soft)
+        }
+        .appCard()
+    }
+
+    private func weightChangeText(_ change: Double?, goal: FitnessGoal) -> String {
+        guard let change else { return "Log a few weigh-ins to see your trend 📈" }
+        if abs(change) < 0.05 { return "➡️ Steady over the last 30 days" }
+        let amount = abs(change).formatted(.number.precision(.fractionLength(1)))
+        let direction = change < 0 ? "−" : "+"
+        var text = "\(change < 0 ? "📉" : "📈") \(direction)\(amount) kg in 30 days"
+        if (goal == .lose && change < 0) || (goal == .gain && change > 0) {
+            text += " · heading the right way 🎉"
+        }
+        return text
+    }
+
+    private func saveWeight(_ kg: Double, fromHealthKit: Bool = false) {
+        guard let outcome = WeightLogService.log(kg, fromHealthKit: fromHealthKit, profile: profile, context: modelContext) else { return }
+        Haptics.success()
+        if outcome.suggestsRetarget {
+            weightChangeKg = outcome.changeKg
+            pendingRetarget = true   // shown from the sheet's onDismiss
+        }
+    }
+
+    private func refreshTargets() {
+        guard let profile, let result = try? GoalEngine.calculate(profile.goalInput) else { return }
+        profile.apply(result)
+        try? modelContext.save()
+        Haptics.success()
+    }
+}
+
+/// Sheet for logging a weigh-in with a big number, a slider, and an optional Apple Health import.
+struct LogWeightSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    @State var weightKg: Double
+    /// Called with the weight and whether it came from Apple Health.
+    var onSave: (Double, Bool) -> Void
+
+    @State private var importing = false
+    @State private var importedFromHealth = false
+    /// The value that came from Apple Health. If the user then edits the number, it's no longer an import.
+    @State private var importedKg = 0.0
+    @State private var healthMessage: String?
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 16) {
+                    BigNumberInput(
+                        emoji: "⚖️",
+                        title: "Today's weight",
+                        value: $weightKg,
+                        range: GoalEngine.weightRange,
+                        step: 0.1,
+                        unit: "kg",
+                        fractionDigits: 1
+                    )
+                    Button(importing ? "Checking Apple Health…" : "Import latest from Apple Health ❤️") {
+                        Task { await importFromHealth() }
+                    }
+                    .buttonStyle(.soft)
+                    .disabled(importing)
+                    if let healthMessage {
+                        Text(healthMessage)
+                            .font(.rounded(.footnote))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(20)
+            }
+            .appBackground()
+            .navigationTitle("Log weight")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                Button("Save weight") {
+                    // Dismissing the keyboard commits a number still being typed; read it on the next run loop.
+                    Keyboard.dismiss()
+                    DispatchQueue.main.async {
+                        guard GoalEngine.weightRange.contains(weightKg) else { return }
+                        onSave(weightKg, importedFromHealth && weightKg == importedKg)
+                        dismiss()
+                    }
+                }
+                .buttonStyle(.gradient)
+                .disabled(!GoalEngine.weightRange.contains(weightKg))
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(.bar)
+            }
+        }
+    }
+
+    @MainActor
+    private func importFromHealth() async {
+        importing = true
+        defer { importing = false }
+        if let kg = await HealthKitService.shared.latestBodyMassKg(), GoalEngine.weightRange.contains(kg) {
+            weightKg = (kg * 10).rounded() / 10
+            importedKg = weightKg
+            importedFromHealth = true
+            healthMessage = "Imported \(Formatters.kg(kg)) from Apple Health."
+        } else {
+            healthMessage = "No weight found in Apple Health, or access isn't allowed. You can type it instead."
         }
     }
 }

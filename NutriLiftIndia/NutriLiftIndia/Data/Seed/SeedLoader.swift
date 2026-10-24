@@ -35,9 +35,10 @@ enum SeedLoader {
     private static func clearSeededContent(context: ModelContext) throws {
         let foods = try context.fetch(FetchDescriptor<FoodItem>()).filter { !$0.isCustom }
         foods.forEach(context.delete)
-        let exercises = try context.fetch(FetchDescriptor<Exercise>())
+        // Custom exercises and routines belong to the user and must survive a seed refresh.
+        let exercises = try context.fetch(FetchDescriptor<Exercise>()).filter { !$0.isCustom }
         exercises.forEach(context.delete)
-        let templates = try context.fetch(FetchDescriptor<WorkoutTemplate>())
+        let templates = try context.fetch(FetchDescriptor<WorkoutTemplate>()).filter { !$0.isCustom }
         templates.forEach(context.delete)
     }
 
@@ -94,7 +95,6 @@ enum SeedLoader {
                     defaultReps: ex.reps,
                     sortOrder: index
                 )
-                te.template = template
                 template.exercises.append(te)
             }
             context.insert(template)

@@ -524,7 +524,7 @@ struct LabeledNumberField: View {
 }
 
 /// A binding that clamps whatever is written to it into `range` and ignores non-finite values.
-private func clamped(_ binding: Binding<Double>, to range: ClosedRange<Double>) -> Binding<Double> {
+func clamped(_ binding: Binding<Double>, to range: ClosedRange<Double>) -> Binding<Double> {
     Binding(
         get: { binding.wrappedValue },
         set: { newValue in

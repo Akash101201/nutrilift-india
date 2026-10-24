@@ -10,6 +10,26 @@ enum ExportService {
         var weights: [WeightDTO]
         var customFoods: [FoodDTO]
         var water: [WaterDTO]?
+        var customExercises: [ExerciseDTO]?
+        var routines: [RoutineDTO]?
+    }
+
+    struct ExerciseDTO: Codable {
+        var name: String
+        var muscleGroup: String
+        var equipment: String
+    }
+
+    struct RoutineDTO: Codable {
+        var name: String
+        var notes: String
+        var exercises: [RoutineExerciseDTO]
+    }
+
+    struct RoutineExerciseDTO: Codable {
+        var name: String
+        var sets: Int
+        var reps: Int
     }
 
     struct WaterDTO: Codable {
@@ -55,6 +75,7 @@ enum ExportService {
         var startedAt: Date
         var finishedAt: Date?
         var notes: String
+        var summary: String?
         var sets: [SetDTO]
     }
 
@@ -91,6 +112,8 @@ enum ExportService {
         let weights = try context.fetch(FetchDescriptor<BodyWeightSample>())
         let customs = try context.fetch(FetchDescriptor<FoodItem>()).filter(\.isCustom)
         let waterLogs = try context.fetch(FetchDescriptor<WaterLogEntry>())
+        let customExercises = try context.fetch(FetchDescriptor<Exercise>()).filter(\.isCustom)
+        let routines = try context.fetch(FetchDescriptor<WorkoutTemplate>()).filter(\.isCustom)
 
         let payload = ExportPayload(
             exportedAt: Date(),
@@ -135,7 +158,8 @@ enum ExportService {
                     startedAt: session.startedAt,
                     finishedAt: session.finishedAt,
                     notes: session.notes,
-                    sets: session.sets.map {
+                    summary: session.aiSummary,
+                    sets: session.sets.filter(\.isCompleted).map {
                         SetDTO(
                             exerciseName: $0.exerciseName,
                             muscleGroup: $0.muscleGroupRaw,
@@ -159,7 +183,19 @@ enum ExportService {
                     servingAmount: $0.servingAmount
                 )
             },
-            water: waterLogs.map { WaterDTO(date: $0.date, amountMl: $0.amountMl) }
+            water: waterLogs.map { WaterDTO(date: $0.date, amountMl: $0.amountMl) },
+            customExercises: customExercises.map {
+                ExerciseDTO(name: $0.name, muscleGroup: $0.muscleGroupRaw, equipment: $0.equipmentRaw)
+            },
+            routines: routines.map { routine in
+                RoutineDTO(
+                    name: routine.name,
+                    notes: routine.notes,
+                    exercises: routine.exercises
+                        .sorted { $0.sortOrder < $1.sortOrder }
+                        .map { RoutineExerciseDTO(name: $0.exerciseName, sets: $0.defaultSets, reps: $0.defaultReps) }
+                )
+            }
         )
 
         let encoder = JSONEncoder()
@@ -179,6 +215,10 @@ enum ExportService {
 
         let customs = try context.fetch(FetchDescriptor<FoodItem>()).filter(\.isCustom)
         customs.forEach(context.delete)
+
+        // Custom exercises and routines are user data too.
+        try context.fetch(FetchDescriptor<Exercise>()).filter(\.isCustom).forEach(context.delete)
+        try context.fetch(FetchDescriptor<WorkoutTemplate>()).filter(\.isCustom).forEach(context.delete)
 
         // Keep seeds; reset settings flag except seeding
         let settings = try context.fetch(FetchDescriptor<AppSettings>())

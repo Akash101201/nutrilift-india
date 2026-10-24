@@ -16,7 +16,6 @@ final class PRCelebrationTests: XCTestCase {
     private func finishedSession(withSet set: WorkoutSet) -> WorkoutSession {
         let session = WorkoutSession(name: "Old")
         session.finishedAt = Date().addingTimeInterval(-86400)
-        set.session = session
         session.sets.append(set)
         return session
     }

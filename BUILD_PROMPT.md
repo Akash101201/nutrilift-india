@@ -40,15 +40,17 @@ Help Indian users track food (Indian cuisine first), hit calorie/macro goals for
 
 ### Today dashboard
 
-- Calories + macros remaining, steps vs target, exercise estimate, next workout CTA.
+- Calories + macros remaining, steps vs target, exercise estimate, water, streak, a weight log (latest weight, 30-day trend, quick log with optional Apple Health import and an "update your targets?" prompt on big changes), and a workout card (start empty, start a routine, or resume).
 - Label burn/net calories as estimates.
 
 ### Workouts
 
-- Seed ≥80 exercises (muscle groups, equipment).
-- Templates: Full Body A/B, PPL or Upper/Lower (at least 4 templates).
-- Session: sets (kg, reps, optional RPE), rest timer, notes, finish summary.
-- PRs + history + repeat workout.
+- Seed ≥80 exercises (muscle groups, equipment). Users can create, edit and delete their own custom exercises.
+- Starter routines (Full Body A/B, PPL or Upper/Lower) plus user-built routines: create from scratch, duplicate a starter to customise it, or save a finished workout as a routine.
+- Start an empty workout or a routine from Workouts or Today. The live workout is laid out like popular lifting apps: per-exercise table with SET / PREVIOUS (last time, tap to reuse) / KG / REPS / ✓, add or swipe-delete sets, add exercises on the fly, rest timer, notes, minimise and resume. A workout is saved as it goes; finishing keeps only ticked sets.
+- Per-exercise progress: personal bests, estimated 1RM / heaviest / volume charts, and full history, for built-in and custom exercises.
+- PRs + history + repeat workout. A "PR" must beat earlier sessions and earlier sets this session; a first-ever set is a baseline, not a record.
+- After finishing: a summary with duration, volume, sets and records, what was done (compared with last time), and next-time suggestions from simple progressive-overload rules. A coach message appreciating the effort and recapping it is written on-device by Apple Foundation Models. Its answer is discarded unless every number in it appears in the facts supplied, with a built-in message as fallback.
 - Weekly sets per muscle group aggregation.
 
 ### Progress
