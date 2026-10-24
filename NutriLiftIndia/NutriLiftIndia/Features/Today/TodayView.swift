@@ -12,6 +12,7 @@ struct TodayView: View {
     @Query private var plans: [TrainingPlan]
     @Query(sort: \WorkoutSession.startedAt, order: .reverse) private var sessions: [WorkoutSession]
     @Query(sort: \WaterLogEntry.date, order: .reverse) private var waterLogs: [WaterLogEntry]
+    @Query private var dailyReviews: [DailyReviewRecord]
     @ObservedObject private var health = HealthKitService.shared
     @AppStorage("proteinCelebratedDay") private var proteinCelebratedDay = ""
     @AppStorage("waterCelebratedDay") private var waterCelebratedDay = ""
@@ -21,6 +22,9 @@ struct TodayView: View {
     @State private var pendingRetarget = false
     @State private var weightChangeKg = 0.0
     @State private var celebrateCount = 0
+    @State private var endOfDayPhase: DailyReviewPhase = .idle
+    @State private var yesterdayTipsPhase: DailyReviewPhase = .idle
+    @State private var reviewTaskToken = 0
 
     private static let glassMl = 250.0
 
@@ -33,6 +37,42 @@ struct TodayView: View {
     private var loggedDates: [Date] { diary.map(\.date) }
 
     private var waterTodayMl: Double { HabitStats.waterTotalMl(entries: waterLogs) }
+
+    private var todaySnapshot: DaySnapshot? {
+        guard let profile else { return nil }
+        return DailyReview.snapshot(
+            day: Date(),
+            profile: profile,
+            diary: diary,
+            waterLogs: waterLogs,
+            sessions: sessions,
+            steps: health.todaySteps
+        )
+    }
+
+    private var yesterdaySnapshot: DaySnapshot? {
+        guard let profile,
+              let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else { return nil }
+        return DailyReview.snapshot(
+            day: yesterday,
+            profile: profile,
+            diary: diary,
+            waterLogs: waterLogs,
+            sessions: sessions,
+            steps: 0
+        )
+    }
+
+    private var todayReviewRecord: DailyReviewRecord? {
+        let key = DailyReview.dayKey(Date())
+        return dailyReviews.first { $0.dayKey == key }
+    }
+
+    private var yesterdayReviewRecord: DailyReviewRecord? {
+        guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else { return nil }
+        let key = DailyReview.dayKey(yesterday)
+        return dailyReviews.first { $0.dayKey == key }
+    }
 
     /// Local calendar day, so "once a day" celebrations reset at local midnight (ISO8601 style defaults to GMT).
     private var todayKey: String {
@@ -51,12 +91,14 @@ struct TodayView: View {
                 VStack(alignment: .leading, spacing: 18) {
                     header
                     if let profile {
+                        yesterdayTipsSection
                         calorieCard(profile: profile)
                         habitsRow
                         waterCard(profile: profile)
                         weightCard(profile: profile)
                         activityCard(profile: profile)
                         workoutCard
+                        endOfDaySection
                         Text("Burn and net calories are estimates.")
                             .font(.rounded(.caption))
                             .foregroundStyle(.secondary)
@@ -73,8 +115,17 @@ struct TodayView: View {
             }
             .appBackground()
             .toolbar(.hidden, for: .navigationBar)
-            .task { await health.refreshToday() }
-            .refreshable { await health.refreshToday() }
+            .task {
+                await health.refreshToday()
+                await refreshDailyReviews(force: false)
+            }
+            .refreshable {
+                await health.refreshToday()
+                await refreshDailyReviews(force: false)
+            }
+            .onChange(of: diary.count) { _, _ in
+                Task { await refreshDailyReviews(force: false) }
+            }
             .sheet(isPresented: $showSettings) { SettingsView() }
             .sheet(isPresented: $showLogWeight, onDismiss: {
                 // Presenting the alert in the same moment the sheet closes can get dropped, so wait for onDismiss.
@@ -189,6 +240,116 @@ struct TodayView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(label)
         .accessibilityValue(value)
+    }
+
+    // MARK: Daily review (Foundation Models)
+
+    @ViewBuilder
+    private var yesterdayTipsSection: some View {
+        if let yesterday = yesterdaySnapshot,
+           DailyReview.shouldShowYesterdayTips(yesterdayHadFood: DailyReview.hasLoggedFood(yesterday)) {
+            DailyReviewCard(
+                emoji: "✨",
+                title: "Improve today",
+                subtitle: "Suggestions from yesterday’s food, water and workouts. On-device only.",
+                phase: yesterdayTipsPhase,
+                onRefresh: {
+                    Task { await loadYesterdayTips(force: true) }
+                }
+            )
+        }
+    }
+
+    @ViewBuilder
+    private var endOfDaySection: some View {
+        if let today = todaySnapshot, DailyReview.hasLoggedFood(today) {
+            let eveningOrSaved = DailyReview.shouldShowEndOfDay(
+                snapshot: today,
+                hasSavedRecap: !(todayReviewRecord?.recapText ?? "").isEmpty
+            )
+            if eveningOrSaved || endOfDayPhase != .idle {
+                DailyReviewCard(
+                    emoji: "🌙",
+                    title: eveningOrSaved ? "How you did today" : "Day so far",
+                    subtitle: "Food, water and workouts — written on-device from your logs.",
+                    phase: endOfDayPhase == .idle && eveningOrSaved ? .loading : endOfDayPhase,
+                    onRefresh: {
+                        Task { await loadEndOfDayRecap(force: true) }
+                    }
+                )
+            } else {
+                VStack(alignment: .leading, spacing: 10) {
+                    EmojiHeader(emoji: "📝", title: "Day review")
+                    Text("This evening we’ll sum up today’s food, water and workouts on-device. Or generate a mid-day check-in now.")
+                        .font(.rounded(.subheadline))
+                        .foregroundStyle(.secondary)
+                    Button("Review my day so far") {
+                        Task { await loadEndOfDayRecap(force: true) }
+                    }
+                    .buttonStyle(.soft)
+                }
+                .appCard()
+            }
+        }
+    }
+
+    @MainActor
+    private func refreshDailyReviews(force: Bool) async {
+        reviewTaskToken += 1
+        let token = reviewTaskToken
+        await loadYesterdayTips(force: force)
+        guard token == reviewTaskToken else { return }
+        await loadEndOfDayRecap(force: force)
+    }
+
+    @MainActor
+    private func loadYesterdayTips(force: Bool) async {
+        guard let yesterday = yesterdaySnapshot,
+              DailyReview.shouldShowYesterdayTips(yesterdayHadFood: DailyReview.hasLoggedFood(yesterday)) else {
+            yesterdayTipsPhase = .idle
+            return
+        }
+        if !force, let saved = yesterdayReviewRecord?.tipsText, !saved.isEmpty {
+            yesterdayTipsPhase = .ready(text: saved, onDevice: yesterdayReviewRecord?.tipsOnDevice ?? false)
+            return
+        }
+        yesterdayTipsPhase = .loading
+        let result = await DailyReviewService.ensureTips(
+            yesterday: yesterday,
+            context: modelContext,
+            force: force
+        )
+        yesterdayTipsPhase = .ready(text: result.text, onDevice: result.onDevice)
+    }
+
+    @MainActor
+    private func loadEndOfDayRecap(force: Bool) async {
+        guard let today = todaySnapshot, DailyReview.hasLoggedFood(today) else {
+            endOfDayPhase = .idle
+            return
+        }
+        let showAuto = DailyReview.shouldShowEndOfDay(
+            snapshot: today,
+            hasSavedRecap: !(todayReviewRecord?.recapText ?? "").isEmpty
+        )
+        // Only auto-generate in evening (or when forcing / already saved). Daytime waits for the button.
+        guard force || showAuto else {
+            if let saved = todayReviewRecord?.recapText, !saved.isEmpty {
+                endOfDayPhase = .ready(text: saved, onDevice: todayReviewRecord?.recapOnDevice ?? false)
+            }
+            return
+        }
+        if !force, let saved = todayReviewRecord?.recapText, !saved.isEmpty {
+            endOfDayPhase = .ready(text: saved, onDevice: todayReviewRecord?.recapOnDevice ?? false)
+            return
+        }
+        endOfDayPhase = .loading
+        let result = await DailyReviewService.ensureRecap(
+            snapshot: today,
+            context: modelContext,
+            force: force
+        )
+        endOfDayPhase = .ready(text: result.text, onDevice: result.onDevice)
     }
 
     // MARK: Habits

@@ -636,6 +636,30 @@ final class WaterLogEntry {
     }
 }
 
+/// Cached on-device day review: evening recap for this day, plus tips meant for the next morning.
+@Model
+final class DailyReviewRecord {
+    @Attribute(.unique) var dayKey: String
+    var dayStart: Date
+    /// End-of-day “how you did” text for this calendar day.
+    var recapText: String?
+    var recapOnDevice: Bool
+    /// Improvement suggestions for the *next* day, generated from this day’s data.
+    var tipsText: String?
+    var tipsOnDevice: Bool
+    var updatedAt: Date
+
+    init(dayKey: String, dayStart: Date) {
+        self.dayKey = dayKey
+        self.dayStart = dayStart
+        self.recapText = nil
+        self.recapOnDevice = false
+        self.tipsText = nil
+        self.tipsOnDevice = false
+        self.updatedAt = Date()
+    }
+}
+
 @Model
 final class AppSettings {
     var id: UUID

@@ -215,6 +215,7 @@ enum ExportService {
         try deleteAll(WorkoutSession.self, context: context)
         try deleteAll(BodyWeightSample.self, context: context)
         try deleteAll(WaterLogEntry.self, context: context)
+        try deleteAll(DailyReviewRecord.self, context: context)
         try deleteAll(CoachChatSession.self, context: context)
         try deleteAll(UserProfile.self, context: context)
 

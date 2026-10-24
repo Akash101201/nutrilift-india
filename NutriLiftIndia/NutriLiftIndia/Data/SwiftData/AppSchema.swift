@@ -17,6 +17,7 @@ enum AppSchema {
         WorkoutSet.self,
         BodyWeightSample.self,
         WaterLogEntry.self,
+        DailyReviewRecord.self,
         AppSettings.self,
         CoachChatSession.self,
         CoachChatMessage.self,
