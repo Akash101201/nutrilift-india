@@ -32,6 +32,7 @@ python3 scripts/generate_seeds.py
 - No login, analytics SDKs, ad SDKs, or NutriLift cloud API.
 - HealthKit is **optional**; the app works if denied.
 - Photo meal estimates use **Apple Foundation Models only**. Photos are **not uploaded**. After save, the in-memory photo is discarded. UI shows “Photo not uploaded.”
+- The "Why this is yours" explainer uses Apple Foundation Models on-device to word the target explanation. The numbers always come from `GoalEngine`; the model's answer is discarded unless every number in it appears in the facts we supplied, and a built-in personalised explanation is shown instead (also on devices without Apple Intelligence). Nothing leaves the device.
 - Export is a local JSON share sheet. Delete-all returns you to onboarding (seed foods/exercises remain).
 - **No iCloud sync in Phase 1** (planned Phase 2).
 
@@ -39,15 +40,18 @@ python3 scripts/generate_seeds.py
 
 | Piece | Method |
 |--------|--------|
-| BMR | Mifflin-St Jeor |
-| TDEE | BMR × activity (1.2–1.9) |
-| Calories | TDEE + goal delta (−500 / 0 / +300), floor 800 kcal |
-| Protein | g/kg by goal (lose 2.0, maintain 1.6, gain 1.8) |
-| Fat | ~27.5% of calories |
-| Carbs | Remainder |
+| BMR | Mifflin-St Jeor, or Katch-McArdle when body fat % or lean mass is provided (both optional) |
+| TDEE | BMR × activity (1.2 / 1.375 / 1.5 / 1.65 / 1.8) |
+| Calories | TDEE − 10 / 15 / 20% to lose, + 5 / 10 / 15% to gain (gentle / steady / ambitious); loss capped near 1% of body weight per week |
+| Safety floor | 1200 kcal (female), 1500 (male), 1350 (other); never above maintenance for a loss goal; under 18 gets maintenance instead of a deficit |
+| Protein | ~0.9–1.4 g/kg to maintain, 1.2–1.8 g/kg to lose or gain, on lean mass / adjusted weight for heavier bodies; +10% veg/Jain, +5% eggetarian; capped at 35% of calories |
+| Fat | ~27% of calories, at least 0.6 g/kg |
+| Carbs | Remainder, keeping at least 30% of calories; macros always add up to the target |
+| Fiber | 14 g per 1000 kcal, at least 25 g |
+| Water | ~35 ml/kg plus an activity bonus, shown in 250 ml glasses |
 | Strength e1RM | Epley: `weight × (1 + reps/30)` |
 
-Soft-warn under 1200 kcal. Extreme auto-targets are floored — not medical advice.
+Several constants (activity multipliers, protein g/kg, diet bumps) are judgment calls inside published ranges, flagged in `GoalEngine.swift` and `Enums.swift`. Estimates for everyday use, not medical advice.
 
 ## Seed data notes
 

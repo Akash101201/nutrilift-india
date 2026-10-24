@@ -42,6 +42,20 @@ enum PRDetector {
         return best.values.sorted { $0.exerciseName < $1.exerciseName }
     }
 
+    /// A set worth celebrating: it beats the best from earlier sessions AND every earlier set of the
+    /// same exercise in this session. With no history for the exercise there is nothing to beat,
+    /// so a first-ever set is not a "PR".
+    static func isNewPR(set: WorkoutSet, priorSessions: [WorkoutSession], earlierSetsThisSession: [WorkoutSet]) -> Bool {
+        guard let priorBest = bestSets(from: priorSessions)
+            .first(where: { $0.exerciseSeedId == set.exerciseSeedId }) else { return false }
+        let e1rm = estimatedOneRM(weightKg: set.weightKg, reps: set.reps)
+        let earlierBest = earlierSetsThisSession
+            .filter { $0.exerciseSeedId == set.exerciseSeedId && $0.id != set.id }
+            .map { estimatedOneRM(weightKg: $0.weightKg, reps: $0.reps) }
+            .max() ?? 0
+        return e1rm > priorBest.estimatedOneRM && e1rm > earlierBest
+    }
+
     static func isPR(set: WorkoutSet, priorSessions: [WorkoutSession]) -> Bool {
         let priorBest = bestSets(from: priorSessions)
             .first { $0.exerciseSeedId == set.exerciseSeedId }

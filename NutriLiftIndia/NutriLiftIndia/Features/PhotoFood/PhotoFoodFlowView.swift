@@ -22,18 +22,28 @@ struct PhotoFoodFlowView: View {
                 case .capture:
                     capturePage
                 case .estimating:
-                    ProgressView("Estimating on-device…")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    VStack(spacing: 14) {
+                        Text("🔍")
+                            .font(.system(size: 56))
+                            .accessibilityHidden(true)
+                        ProgressView()
+                        Text("Estimating on-device…")
+                            .font(.rounded(.headline, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .review:
                     reviewPage
                 case .unavailable:
-                    ContentUnavailableView(
-                        "Photo estimate unavailable",
-                        systemImage: "camera.metering.unknown",
-                        description: Text(PhotoNutritionError.unavailable.localizedDescription)
+                    FriendlyEmptyState(
+                        emoji: "📵",
+                        title: "Photo estimate unavailable",
+                        message: PhotoNutritionError.unavailable.localizedDescription
                     )
                 }
             }
+            .appBackground()
+            .tint(Theme.saffron)
             .navigationTitle("Photo food")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -67,8 +77,9 @@ struct PhotoFoodFlowView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            .listRowBackground(Theme.card)
 
-            Section("Photo") {
+            Section {
                 if let image = vm.image {
                     Image(uiImage: image)
                         .resizable()
@@ -86,26 +97,41 @@ struct PhotoFoodFlowView: View {
                         Label("Take photo", systemImage: "camera")
                     }
                 }
+            } header: {
+                EmojiHeader(emoji: "📸", title: "Photo")
             }
+            .listRowBackground(Theme.card)
 
-            Section("Optional hints (improves estimate)") {
+            Section {
                 TextField("Food name", text: $vm.foodNameHint)
                 TextField("Quantity (e.g. 2 roti, 1 katori)", text: $vm.quantityHint)
+            } header: {
+                EmojiHeader(emoji: "💡", title: "Optional hints (improves estimate)")
             }
+            .listRowBackground(Theme.card)
 
-            Section("Meal") {
-                Picker("Meal", selection: $meal) {
-                    ForEach(MealType.allCases) { Text($0.displayName).tag($0) }
-                }
+            Section {
+                EmojiSegmented(
+                    options: MealType.allCases.map { EmojiOption(value: $0, emoji: $0.emoji, title: $0.displayName) },
+                    selection: $meal
+                )
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+            } header: {
+                EmojiHeader(emoji: "🍽️", title: "Meal")
             }
 
             Section {
-                Button("Estimate on-device") {
+                Button("Estimate on-device ✨") {
                     Task { await vm.runEstimate() }
                 }
+                .buttonStyle(.gradient)
                 .disabled(vm.imageJPEG == nil)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
             }
         }
+        .scrollContentBackground(.hidden)
         .onChange(of: pickerItem) { _, item in
             Task {
                 guard let item,
@@ -132,47 +158,43 @@ struct PhotoFoodFlowView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            Section("Override any field") {
+            .listRowBackground(Theme.card)
+            Section {
                 TextField("Name", text: $vm.editName)
-                HStack {
-                    Text("Quantity")
-                    TextField("Qty", value: $vm.editQuantity, format: .number)
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                }
+                LabeledNumberField("Quantity", value: $vm.editQuantity, emoji: "🔢")
                 Picker("Unit", selection: $vm.editUnit) {
-                    ForEach(ServingUnit.allCases) { Text($0.displayName).tag($0) }
+                    ForEach(ServingUnit.allCases) { Text("\($0.emoji) \($0.displayName)").tag($0) }
                 }
-                macroField("Calories", value: $vm.editCalories)
-                macroField("Protein g", value: $vm.editProtein)
-                macroField("Carbs g", value: $vm.editCarbs)
-                macroField("Fat g", value: $vm.editFat)
+                LabeledNumberField("Calories", value: $vm.editCalories, unit: "kcal", emoji: "🔥")
+                LabeledNumberField("Protein", value: $vm.editProtein, unit: "g", emoji: "🥚")
+                LabeledNumberField("Carbs", value: $vm.editCarbs, unit: "g", emoji: "🍚")
+                LabeledNumberField("Fat", value: $vm.editFat, unit: "g", emoji: "🥑")
+            } header: {
+                EmojiHeader(emoji: "✏️", title: "Override any field")
             }
+            .listRowBackground(Theme.card)
             if let notes = vm.estimateNotes, !notes.isEmpty {
-                Section("Model notes") {
+                Section {
                     Text(notes).font(.footnote).foregroundStyle(.secondary)
+                } header: {
+                    EmojiHeader(emoji: "📝", title: "Model notes")
                 }
+                .listRowBackground(Theme.card)
             }
             Section {
                 Button("Save to diary") {
                     save()
                 }
+                .buttonStyle(.gradient)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
                 Button("Discard", role: .destructive) {
                     vm.resetToCapture()
                 }
+                .listRowBackground(Theme.card)
             }
         }
-    }
-
-    private func macroField(_ title: String, value: Binding<Double>) -> some View {
-        HStack {
-            Text(title)
-            Spacer()
-            TextField(title, value: value, format: .number)
-                .keyboardType(.decimalPad)
-                .multilineTextAlignment(.trailing)
-                .frame(width: 100)
-        }
+        .scrollContentBackground(.hidden)
     }
 
     private func save() {

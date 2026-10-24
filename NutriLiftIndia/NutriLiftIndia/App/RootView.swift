@@ -36,19 +36,19 @@ struct RootView: View {
 
 struct MainTabView: View {
     var body: some View {
+        // Settings lives behind the profile button on Today, which keeps the bar to five tabs.
         TabView {
             TodayView()
-                .tabItem { Label("Today", systemImage: "sun.max") }
+                .tabItem { Label("Today", systemImage: "sun.max.fill") }
             FoodDiaryView()
                 .tabItem { Label("Food", systemImage: "fork.knife") }
             WorkoutsHomeView()
-                .tabItem { Label("Workouts", systemImage: "dumbbell") }
+                .tabItem { Label("Workouts", systemImage: "dumbbell.fill") }
             ProgressHomeView()
                 .tabItem { Label("Progress", systemImage: "chart.line.uptrend.xyaxis") }
             CoachHomeView()
-                .tabItem { Label("Coach", systemImage: "bubble.left.and.bubble.right") }
-            SettingsView()
-                .tabItem { Label("Settings", systemImage: "gearshape") }
+                .tabItem { Label("Coach", systemImage: "bubble.left.and.bubble.right.fill") }
         }
+        .tint(Theme.saffron)
     }
 }

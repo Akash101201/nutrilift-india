@@ -20,6 +20,12 @@ final class UserProfile {
     var stepTarget: Int
     var createdAt: Date
     var updatedAt: Date
+    // Added after v1. Defaults here let SwiftData migrate existing stores automatically.
+    var paceRaw: String = "steady"
+    var bodyFatPercent: Double?
+    var leanMassKg: Double?
+    var fiberTargetG: Double = 25
+    var waterTargetMl: Double = 2500
 
     init(
         age: Int = 25,
@@ -68,6 +74,34 @@ final class UserProfile {
     var dietPref: DietPreference {
         get { DietPreference(rawValue: dietPrefRaw) ?? .veg }
         set { dietPrefRaw = newValue.rawValue }
+    }
+
+    var pace: Pace {
+        get { Pace(rawValue: paceRaw) ?? .steady }
+        set { paceRaw = newValue.rawValue }
+    }
+
+    /// The engine input built from this profile.
+    var goalInput: GoalInput {
+        GoalInput(
+            weightKg: weightKg,
+            heightCm: heightCm,
+            age: age,
+            sex: sex,
+            activity: activity,
+            goal: goal,
+            pace: pace,
+            diet: dietPref,
+            bodyFatPercent: bodyFatPercent,
+            leanMassKg: leanMassKg
+        )
+    }
+
+    /// Stores a calculation result as the profile's targets.
+    func apply(_ result: GoalCalculationResult) {
+        targets = result.targets
+        fiberTargetG = result.fiberGrams
+        waterTargetMl = result.waterMl
     }
 
     var targets: MacroTargets {
@@ -454,6 +488,20 @@ final class BodyWeightSample {
         self.date = date
         self.weightKg = weightKg
         self.fromHealthKit = fromHealthKit
+    }
+}
+
+/// One tap on the water tracker.
+@Model
+final class WaterLogEntry {
+    var id: UUID
+    var date: Date
+    var amountMl: Double
+
+    init(date: Date = Date(), amountMl: Double = 250) {
+        self.id = UUID()
+        self.date = date
+        self.amountMl = amountMl
     }
 }
 

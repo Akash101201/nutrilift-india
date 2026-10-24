@@ -38,27 +38,48 @@ struct FoodSearchView: View {
     var body: some View {
         NavigationStack {
             List {
-                Picker("Meal", selection: $meal) {
-                    ForEach(MealType.allCases) { Text($0.displayName).tag($0) }
-                }
-                .pickerStyle(.segmented)
+                EmojiSegmented(
+                    options: MealType.allCases.map { EmojiOption(value: $0, emoji: $0.emoji, title: $0.displayName) },
+                    selection: $meal
+                )
                 .listRowInsets(EdgeInsets())
-                .padding(.vertical, 8)
+                .listRowBackground(Color.clear)
 
                 if query.isEmpty && !favorites.isEmpty {
-                    Section("Favorites") {
+                    Section {
                         ForEach(favorites, id: \.seedId) { foodRow($0) }
+                    } header: {
+                        EmojiHeader(emoji: "⭐️", title: "Favorites")
                     }
+                    .listRowBackground(Theme.card)
                 }
                 if query.isEmpty && !recents.isEmpty {
-                    Section("Recent") {
+                    Section {
                         ForEach(recents, id: \.seedId) { foodRow($0) }
+                    } header: {
+                        EmojiHeader(emoji: "🕒", title: "Recent")
                     }
+                    .listRowBackground(Theme.card)
                 }
-                Section(query.isEmpty ? "All foods" : "Results") {
+                Section {
                     ForEach(filtered, id: \.seedId) { foodRow($0) }
+                } header: {
+                    EmojiHeader(emoji: query.isEmpty ? "🍛" : "🔎", title: query.isEmpty ? "All foods" : "Results")
+                }
+                .listRowBackground(Theme.card)
+
+                if !query.isEmpty && filtered.isEmpty {
+                    FriendlyEmptyState(
+                        emoji: "🤔",
+                        title: "No match for “\(query)”",
+                        message: "Try another spelling, or add it yourself as a custom food."
+                    )
+                    .listRowBackground(Color.clear)
                 }
             }
+            .scrollContentBackground(.hidden)
+            .appBackground()
+            .tint(Theme.saffron)
             .searchable(text: $query, prompt: "Search roti, dal, paneer…")
             .navigationTitle("Add food")
             .toolbar {
@@ -81,22 +102,33 @@ struct FoodSearchView: View {
 
     private func foodRow(_ food: FoodItem) -> some View {
         Button {
+            Haptics.tap()
             selected = food
         } label: {
-            HStack {
-                VStack(alignment: .leading) {
+            HStack(spacing: 12) {
+                Text(FoodEmoji.emoji(for: food.name))
+                    .font(.title2)
+                    .frame(width: 40, height: 40)
+                    .background(Theme.saffron.opacity(0.14), in: Circle())
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
                     Text(food.name)
+                        .font(.rounded(.body, weight: .semibold))
+                        .foregroundStyle(.primary)
                     Text("\(Int(food.calories)) kcal / \(food.servingAmount.formatted()) \(food.servingUnit.displayName)")
-                        .font(.caption)
+                        .font(.rounded(.caption))
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
                 Button {
+                    Haptics.selection()
                     food.isFavorite.toggle()
                 } label: {
                     Image(systemName: food.isFavorite ? "star.fill" : "star")
+                        .foregroundStyle(food.isFavorite ? Theme.saffron : Color.secondary)
                 }
                 .buttonStyle(.borderless)
+                .accessibilityLabel(food.isFavorite ? "Remove from favorites" : "Add to favorites")
             }
         }
     }
@@ -112,43 +144,119 @@ struct FoodLogConfirmView: View {
     var onLogged: () -> Void
 
     @State private var quantity = 1.0
+    @State private var logged = false
+    @State private var celebrateCount = 0
+
+    private var snapshot: MacroSnapshot { food.perServingSnapshot.scaled(by: quantity) }
+
+    private static let quickQuantities: [(label: String, value: Double)] = [
+        ("¼", 0.25), ("½", 0.5), ("1", 1), ("2", 2), ("3", 3),
+    ]
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section(food.name) {
-                    Stepper(value: $quantity, in: 0.25...20, step: 0.25) {
-                        Text("Quantity: \(quantity.formatted()) \(food.servingUnit.displayName)")
+            ScrollView {
+                VStack(spacing: 18) {
+                    VStack(spacing: 6) {
+                        Text(FoodEmoji.emoji(for: food.name))
+                            .font(.system(size: 64))
+                            .accessibilityHidden(true)
+                        Text(food.name)
+                            .font(.rounded(.title2, weight: .bold))
+                            .multilineTextAlignment(.center)
+                        Text("\(meal.emoji) \(meal.displayName)")
+                            .font(.rounded(.subheadline))
+                            .foregroundStyle(.secondary)
                     }
-                    let snap = food.perServingSnapshot.scaled(by: quantity)
-                    Text("\(Int(snap.calories)) kcal · P \(Int(snap.proteinGrams)) · C \(Int(snap.carbGrams)) · F \(Int(snap.fatGrams))")
-                        .foregroundStyle(.secondary)
-                }
-                Section {
-                    Button("Add to diary") {
-                        let snap = food.perServingSnapshot.scaled(by: quantity)
-                        modelContext.insert(FoodDiaryEntry(
-                            date: day,
-                            mealType: meal,
-                            foodSeedId: food.seedId,
-                            displayName: food.name,
-                            quantity: quantity,
-                            servingUnit: food.servingUnit,
-                            snapshot: snap
-                        ))
-                        food.lastUsedAt = Date()
-                        try? modelContext.save()
-                        onLogged()
-                        dismiss()
+                    .frame(maxWidth: .infinity)
+
+                    VStack(spacing: 14) {
+                        EmojiSegmented(
+                            options: Self.quickQuantities.map { EmojiOption(value: $0.value, emoji: "", title: $0.label) },
+                            selection: $quantity
+                        )
+                        BigStepper(
+                            value: $quantity,
+                            range: 0.25...20,
+                            step: 0.25,
+                            unit: food.servingUnit.displayName,
+                            fractionDigits: 2
+                        )
                     }
+                    .appCard()
+
+                    VStack(spacing: 14) {
+                        Text("\(Int(snapshot.calories.rounded())) kcal")
+                            .font(.system(size: 36, weight: .bold, design: .rounded))
+                            .contentTransition(.numericText())
+                        HStack(spacing: 10) {
+                            macroTile("🥚", snapshot.proteinGrams, "Protein", Theme.protein)
+                            macroTile("🍚", snapshot.carbGrams, "Carbs", Theme.carbs)
+                            macroTile("🥑", snapshot.fatGrams, "Fat", Theme.fat)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .appCard()
                 }
+                .padding(20)
             }
+            .appBackground()
             .navigationTitle("Log")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                Button(logged ? "Logged! 🎉" : "Add to diary") { log() }
+                    .buttonStyle(.gradient)
+                    .disabled(logged)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(.bar)
+            }
+            .celebrate(trigger: celebrateCount)
+        }
+    }
+
+    private func macroTile(_ emoji: String, _ grams: Double, _ label: String, _ color: Color) -> some View {
+        VStack(spacing: 2) {
+            Text("\(emoji) \(Int(grams.rounded())) g")
+                .font(.rounded(.headline, weight: .bold))
+                .minimumScaleFactor(0.7)
+                .lineLimit(1)
+            Text(label)
+                .font(.rounded(.caption))
+                .foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 10)
+        .frame(maxWidth: .infinity)
+        .background(color.opacity(0.14), in: RoundedRectangle(cornerRadius: Theme.smallRadius, style: .continuous))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue("\(Int(grams.rounded())) grams")
+    }
+
+    private func log() {
+        guard !logged else { return }
+        logged = true
+        modelContext.insert(FoodDiaryEntry(
+            date: day,
+            mealType: meal,
+            foodSeedId: food.seedId,
+            displayName: food.name,
+            quantity: quantity,
+            servingUnit: food.servingUnit,
+            snapshot: snapshot
+        ))
+        food.lastUsedAt = Date()
+        try? modelContext.save()
+        celebrateCount += 1
+        // Let the confetti play briefly before the sheets close.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            onLogged()
+            dismiss()
         }
     }
 }

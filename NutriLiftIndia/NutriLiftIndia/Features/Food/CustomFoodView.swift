@@ -13,57 +13,86 @@ struct CustomFoodView: View {
     @State private var carbs = 20.0
     @State private var fat = 5.0
 
+    private var canSave: Bool {
+        !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     var body: some View {
         NavigationStack {
-            Form {
-                TextField("Name", text: $name)
-                Picker("Unit", selection: $unit) {
-                    ForEach(ServingUnit.allCases) { Text($0.displayName).tag($0) }
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    VStack(spacing: 6) {
+                        Text(canSave ? FoodEmoji.emoji(for: name) : "🍽️")
+                            .font(.system(size: 56))
+                            .accessibilityHidden(true)
+                        TextField("What did you eat?", text: $name)
+                            .font(.rounded(.title2, weight: .bold))
+                            .multilineTextAlignment(.center)
+                            .textInputAutocapitalization(.words)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .appCard()
+
+                    Text("📏 Serving")
+                        .font(.rounded(.headline, weight: .bold))
+                    EmojiSegmented(
+                        options: ServingUnit.allCases.map { EmojiOption(value: $0, emoji: $0.emoji, title: $0.displayName) },
+                        selection: $unit
+                    )
+                    VStack(spacing: 12) {
+                        LabeledNumberField("Serving amount", value: $amount, unit: unit.displayName, emoji: unit.emoji)
+                    }
+                    .appCard()
+
+                    Text("🔥 Nutrition per serving")
+                        .font(.rounded(.headline, weight: .bold))
+                    VStack(spacing: 12) {
+                        LabeledNumberField("Calories", value: $calories, unit: "kcal", emoji: "🔥")
+                        LabeledNumberField("Protein", value: $protein, unit: "g", emoji: "🥚")
+                        LabeledNumberField("Carbs", value: $carbs, unit: "g", emoji: "🍚")
+                        LabeledNumberField("Fat", value: $fat, unit: "g", emoji: "🥑")
+                    }
+                    .appCard()
                 }
-                field("Serving amount", value: $amount)
-                field("Calories", value: $calories)
-                field("Protein g", value: $protein)
-                field("Carbs g", value: $carbs)
-                field("Fat g", value: $fat)
+                .padding(20)
             }
+            .scrollDismissesKeyboard(.interactively)
+            .appBackground()
             .navigationTitle("Custom food")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        let item = FoodItem(
-                            name: name,
-                            servingUnit: unit,
-                            servingAmount: amount,
-                            gramsPerServing: amount,
-                            calories: calories,
-                            proteinG: protein,
-                            carbG: carbs,
-                            fatG: fat,
-                            sourceTag: "custom",
-                            confidence: "user",
-                            isCustom: true
-                        )
-                        modelContext.insert(item)
-                        try? modelContext.save()
-                        dismiss()
-                    }
-                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                Button("Save food 🍽️") { save() }
+                    .buttonStyle(.gradient)
+                    .disabled(!canSave)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(.bar)
             }
         }
     }
 
-    private func field(_ title: String, value: Binding<Double>) -> some View {
-        HStack {
-            Text(title)
-            Spacer()
-            TextField(title, value: value, format: .number)
-                .keyboardType(.decimalPad)
-                .multilineTextAlignment(.trailing)
-                .frame(width: 100)
-        }
+    private func save() {
+        let item = FoodItem(
+            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+            servingUnit: unit,
+            servingAmount: amount,
+            gramsPerServing: amount,
+            calories: calories,
+            proteinG: protein,
+            carbG: carbs,
+            fatG: fat,
+            sourceTag: "custom",
+            confidence: "user",
+            isCustom: true
+        )
+        modelContext.insert(item)
+        try? modelContext.save()
+        Haptics.success()
+        dismiss()
     }
 }

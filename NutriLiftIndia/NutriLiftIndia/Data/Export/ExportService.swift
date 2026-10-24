@@ -9,6 +9,12 @@ enum ExportService {
         var sessions: [SessionDTO]
         var weights: [WeightDTO]
         var customFoods: [FoodDTO]
+        var water: [WaterDTO]?
+    }
+
+    struct WaterDTO: Codable {
+        var date: Date
+        var amountMl: Double
     }
 
     struct ProfileDTO: Codable {
@@ -24,6 +30,11 @@ enum ExportService {
         var fatTargetG: Double
         var carbTargetG: Double
         var stepTarget: Int
+        var pace: String?
+        var bodyFatPercent: Double?
+        var leanMassKg: Double?
+        var fiberTargetG: Double?
+        var waterTargetMl: Double?
     }
 
     struct DiaryDTO: Codable {
@@ -79,6 +90,7 @@ enum ExportService {
         let sessions = try context.fetch(FetchDescriptor<WorkoutSession>())
         let weights = try context.fetch(FetchDescriptor<BodyWeightSample>())
         let customs = try context.fetch(FetchDescriptor<FoodItem>(predicate: #Predicate { $0.isCustom }))
+        let waterLogs = try context.fetch(FetchDescriptor<WaterLogEntry>())
 
         let payload = ExportPayload(
             exportedAt: Date(),
@@ -95,7 +107,12 @@ enum ExportService {
                     proteinTargetG: $0.proteinTargetG,
                     fatTargetG: $0.fatTargetG,
                     carbTargetG: $0.carbTargetG,
-                    stepTarget: $0.stepTarget
+                    stepTarget: $0.stepTarget,
+                    pace: $0.paceRaw,
+                    bodyFatPercent: $0.bodyFatPercent,
+                    leanMassKg: $0.leanMassKg,
+                    fiberTargetG: $0.fiberTargetG,
+                    waterTargetMl: $0.waterTargetMl
                 )
             },
             diary: diary.map {
@@ -141,7 +158,8 @@ enum ExportService {
                     servingUnit: $0.servingUnitRaw,
                     servingAmount: $0.servingAmount
                 )
-            }
+            },
+            water: waterLogs.map { WaterDTO(date: $0.date, amountMl: $0.amountMl) }
         )
 
         let encoder = JSONEncoder()
@@ -156,6 +174,7 @@ enum ExportService {
         try deleteAll(MealTemplate.self, context: context)
         try deleteAll(WorkoutSession.self, context: context)
         try deleteAll(BodyWeightSample.self, context: context)
+        try deleteAll(WaterLogEntry.self, context: context)
         try deleteAll(UserProfile.self, context: context)
 
         let customs = try context.fetch(FetchDescriptor<FoodItem>(predicate: #Predicate { $0.isCustom }))

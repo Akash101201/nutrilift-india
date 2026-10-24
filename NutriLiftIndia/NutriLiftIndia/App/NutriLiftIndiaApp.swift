@@ -4,19 +4,7 @@ import SwiftData
 @main
 struct NutriLiftIndiaApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            UserProfile.self,
-            FoodItem.self,
-            FoodDiaryEntry.self,
-            MealTemplate.self,
-            Exercise.self,
-            WorkoutTemplate.self,
-            TemplateExercise.self,
-            WorkoutSession.self,
-            WorkoutSet.self,
-            BodyWeightSample.self,
-            AppSettings.self,
-        ])
+        let schema = AppSchema.schema
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             return try ModelContainer(for: schema, configurations: [config])

@@ -5,20 +5,7 @@ import Foundation
 enum IntentModelAccess {
     @MainActor
     static func container() throws -> ModelContainer {
-        let schema = Schema([
-            UserProfile.self,
-            FoodItem.self,
-            FoodDiaryEntry.self,
-            MealTemplate.self,
-            Exercise.self,
-            WorkoutTemplate.self,
-            TemplateExercise.self,
-            WorkoutSession.self,
-            WorkoutSet.self,
-            BodyWeightSample.self,
-            AppSettings.self,
-        ])
-        return try ModelContainer(for: schema)
+        try ModelContainer(for: AppSchema.schema)
     }
 }
 

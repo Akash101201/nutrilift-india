@@ -24,9 +24,9 @@ Help Indian users track food (Indian cuisine first), hit calorie/macro goals for
 
 ### Onboarding
 
-- Collect age, sex, height, weight, activity, goal (lose/maintain/gain), diet pref (veg/eggetarian/non-veg/Jain/custom).
-- Compute BMR (Mifflin-St Jeor), TDEE, calorie target, macros (protein g/kg by goal; fat ~25–30%; carbs remainder).
-- Show explanation; allow full manual override of targets.
+- Paged, one-question-per-screen flow with emoji choices. Collect age, sex, height, weight, activity, goal (lose/maintain/gain) with pace (gentle/steady/ambitious), diet pref (veg/eggetarian/non-veg/Jain/custom). Optional "Fine-tune" step for body fat % or lean mass, easy to skip.
+- Compute BMR (Mifflin-St Jeor, or Katch-McArdle with body composition), TDEE, calorie target (percentage of TDEE by pace, sex-specific floors, under-18 rule), macros (protein g/kg on lean/adjusted weight with diet adjustment; fat ~27%; carbs remainder), fiber and water.
+- Show a "Why these numbers?" explainer and an accuracy meter; allow full manual override of targets.
 - HealthKit optional (steps, active energy, workouts, body mass). App works if denied.
 - Offline-capable; privacy promise on first screen.
 
@@ -93,7 +93,7 @@ At least 8 rules, explainable with user numbers, non-shaming. Examples:
 ### Quality bar
 
 - MVVM (or clear Feature/Domain/Data split).
-- Unit tests: BMR/TDEE/macros, diary totals, weekly muscle volume, PR detection.
+- Unit tests: BMR/TDEE/macros (including pace, floors, protein basis, body-composition inputs, validation), streaks and water totals, diary totals, weekly muscle volume, PR detection.
 - Info.plist HealthKit usage strings accurate.
 - README: how to run, privacy model, formulas, seed data notes, Phase 2 plan.
 - Works offline after first launch; builds for iOS Simulator.

@@ -58,15 +58,17 @@ struct ProgressHomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading, spacing: 22) {
                     weightSection
                     strengthSection
                     volumeSection
                     nutritionSection
                     InsightsSectionView()
                 }
-                .padding()
+                .padding(.horizontal, 20)
+                .padding(.bottom, 24)
             }
+            .appBackground()
             .navigationTitle("Progress")
             .onAppear {
                 if selectedExerciseId == nil {
@@ -76,103 +78,181 @@ struct ProgressHomeView: View {
         }
     }
 
+    // MARK: Weight
+
+    private var weightSummary: String? {
+        guard let first = filteredWeights.first, let last = filteredWeights.last, filteredWeights.count > 1 else {
+            return filteredWeights.last.map { "\(Formatters.kg($0.weightKg))" }
+        }
+        let change = last.weightKg - first.weightKg
+        let sign = change > 0 ? "+" : (change < 0 ? "−" : "")
+        let amount = abs(change).formatted(.number.precision(.fractionLength(1)))
+        return "\(Formatters.kg(last.weightKg)) · \(sign)\(amount) kg"
+    }
+
     private var weightSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Weight").font(.headline)
-            Picker("Range", selection: $range) {
-                ForEach(WeightChartRange.allCases) { Text($0.rawValue).tag($0) }
-            }
-            .pickerStyle(.segmented)
+        VStack(alignment: .leading, spacing: 12) {
+            EmojiHeader(emoji: "⚖️", title: "Weight", trailing: weightSummary)
+            EmojiSegmented(
+                options: WeightChartRange.allCases.map { EmojiOption(value: $0, emoji: "", title: $0.rawValue) },
+                selection: $range
+            )
             if filteredWeights.isEmpty {
-                empty("Log weight in Settings or sync Health to see a chart.", cta: nil)
+                empty("📈", "Log your weight in Settings or sync Health to see a chart.", cta: nil)
             } else {
                 Chart(filteredWeights, id: \.id) { sample in
+                    AreaMark(
+                        x: .value("Date", sample.date),
+                        y: .value("kg", sample.weightKg)
+                    )
+                    .interpolationMethod(.catmullRom)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Theme.saffron.opacity(0.35), Theme.saffron.opacity(0.02)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
                     LineMark(
                         x: .value("Date", sample.date),
                         y: .value("kg", sample.weightKg)
                     )
+                    .interpolationMethod(.catmullRom)
+                    .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .foregroundStyle(Theme.chilli)
                     PointMark(
                         x: .value("Date", sample.date),
                         y: .value("kg", sample.weightKg)
                     )
+                    .symbolSize(40)
+                    .foregroundStyle(Theme.saffron)
                 }
+                .chartYScale(domain: .automatic(includesZero: false))
                 .frame(height: 200)
+                .appCard()
             }
         }
     }
+
+    // MARK: Strength
 
     private var strengthSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Strength trend").font(.headline)
+        VStack(alignment: .leading, spacing: 12) {
+            EmojiHeader(emoji: "🏋️", title: "Strength trend")
             if exerciseOptions.isEmpty {
-                empty("Finish workouts with weighted sets to track e1RM.", cta: "Open Workouts")
+                empty("💪", "Finish workouts with weighted sets to track your estimated 1RM.", cta: "Open Workouts")
             } else {
-                Picker("Exercise", selection: Binding(
-                    get: { selectedExerciseId ?? exerciseOptions.first!.id },
-                    set: { selectedExerciseId = $0 }
-                )) {
-                    ForEach(exerciseOptions, id: \.id) { Text($0.name).tag(Optional($0.id)) }
-                }
-                if strengthPoints.count < 2 {
-                    Text("Need at least two sessions for a trend.")
-                        .foregroundStyle(.secondary)
-                } else {
-                    Chart {
-                        ForEach(Array(strengthPoints.enumerated()), id: \.offset) { _, point in
-                            LineMark(
-                                x: .value("Date", point.0),
-                                y: .value("e1RM", point.1)
-                            )
-                        }
+                VStack(alignment: .leading, spacing: 12) {
+                    Picker("Exercise", selection: Binding(
+                        get: { selectedExerciseId ?? exerciseOptions.first!.id },
+                        set: { selectedExerciseId = $0 }
+                    )) {
+                        ForEach(exerciseOptions, id: \.id) { Text($0.name).tag($0.id) }
                     }
-                    .frame(height: 200)
+                    .tint(Theme.saffron)
+                    if strengthPoints.count < 2 {
+                        Text("Need at least two sessions for a trend. Keep going! 🔥")
+                            .font(.rounded(.subheadline))
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Chart {
+                            ForEach(Array(strengthPoints.enumerated()), id: \.offset) { _, point in
+                                LineMark(
+                                    x: .value("Date", point.0),
+                                    y: .value("e1RM", point.1)
+                                )
+                                .interpolationMethod(.catmullRom)
+                                .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round))
+                                .foregroundStyle(Theme.teal)
+                                PointMark(
+                                    x: .value("Date", point.0),
+                                    y: .value("e1RM", point.1)
+                                )
+                                .symbolSize(40)
+                                .foregroundStyle(Theme.leaf)
+                            }
+                        }
+                        .chartYScale(domain: .automatic(includesZero: false))
+                        .frame(height: 200)
+                    }
                 }
+                .appCard()
             }
         }
     }
 
+    // MARK: Volume
+
     private var volumeSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Muscle-group volume (this week)").font(.headline)
+        VStack(alignment: .leading, spacing: 12) {
+            EmojiHeader(emoji: "📊", title: "Muscle-group volume (this week)")
             if weekVolume.isEmpty {
-                empty("No sets this week yet.", cta: "Start a workout")
+                empty("🗓️", "No sets this week yet.", cta: "Start a workout")
             } else {
                 Chart(weekVolume) { item in
                     BarMark(
                         x: .value("Sets", item.sets),
-                        y: .value("Muscle", item.muscleGroup.displayName)
+                        y: .value("Muscle", "\(item.muscleGroup.emoji) \(item.muscleGroup.displayName)")
                     )
+                    .cornerRadius(6)
+                    .foregroundStyle(Theme.teal.gradient)
                 }
-                .frame(height: CGFloat(max(160, weekVolume.count * 28)))
+                .frame(height: CGFloat(max(160, weekVolume.count * 32)))
+                .appCard()
             }
         }
     }
+
+    // MARK: Nutrition
 
     private var nutritionSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Nutrition adherence").font(.headline)
+        VStack(alignment: .leading, spacing: 12) {
+            EmojiHeader(emoji: "🥚", title: "Protein consistency")
             let p = proteinAdherence
             if p.total == 0 {
-                empty("Log food to see protein hit rate.", cta: "Log food")
+                empty("🍛", "Log food to see how often you hit your protein.", cta: "Log food")
             } else {
-                Text("Protein target hit \(p.hit)/\(p.total) days this week")
-                ProgressView(value: Double(p.hit), total: Double(p.total))
+                HStack(spacing: 18) {
+                    ProgressRing(
+                        progress: Double(p.hit) / Double(max(p.total, 1)),
+                        lineWidth: 12,
+                        colors: [Theme.chilli, Theme.saffron]
+                    ) {
+                        Text("\(p.hit)/\(p.total)")
+                            .font(.rounded(.title3, weight: .bold))
+                    }
+                    .frame(width: 96, height: 96)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Protein target hit \(p.hit) of \(p.total) days this week")
+                            .font(.rounded(.subheadline, weight: .semibold))
+                        Text(p.hit >= p.total ? "Perfect week! 🎉" : "Every day you hit it counts 💪")
+                            .font(.rounded(.caption))
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .appCard()
             }
         }
     }
 
-    private func empty(_ text: String, cta: String?) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(text).foregroundStyle(.secondary)
-            if let cta {
-                Text(cta)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.tint)
+    private func empty(_ emoji: String, _ text: String, cta: String?) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(emoji)
+                .font(.title)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(text)
+                    .font(.rounded(.subheadline))
+                    .foregroundStyle(.secondary)
+                if let cta {
+                    Text(cta)
+                        .font(.rounded(.caption, weight: .semibold))
+                        .foregroundStyle(Theme.saffron)
+                }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
+        .appCard()
     }
 }
 
@@ -192,20 +272,28 @@ struct InsightsSectionView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Insights").font(.headline)
+        VStack(alignment: .leading, spacing: 12) {
+            EmojiHeader(emoji: "💡", title: "Insights")
             if insights.isEmpty {
-                Text("Keep logging — insights appear when patterns show up.")
-                    .foregroundStyle(.secondary)
+                HStack(spacing: 12) {
+                    Text("🌱")
+                        .font(.title)
+                        .accessibilityHidden(true)
+                    Text("Keep logging. Insights appear when patterns show up.")
+                        .font(.rounded(.subheadline))
+                        .foregroundStyle(.secondary)
+                }
+                .appCard()
             } else {
                 ForEach(insights) { insight in
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(insight.title).font(.subheadline.weight(.semibold))
-                        Text(insight.body).font(.footnote).foregroundStyle(.secondary)
+                        Text(insight.title)
+                            .font(.rounded(.subheadline, weight: .bold))
+                        Text(insight.body)
+                            .font(.rounded(.footnote))
+                            .foregroundStyle(.secondary)
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                    .appCard()
                 }
             }
         }

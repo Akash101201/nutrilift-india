@@ -5,10 +5,13 @@ struct FoodDiaryView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \FoodDiaryEntry.createdAt, order: .reverse) private var entries: [FoodDiaryEntry]
     @Query(sort: \MealTemplate.name) private var templates: [MealTemplate]
+    @Query private var profiles: [UserProfile]
     @State private var day = Date()
     @State private var showAdd = false
     @State private var showPhoto = false
     @State private var showCustom = false
+
+    private var profile: UserProfile? { profiles.first }
 
     private var dayEntries: [FoodDiaryEntry] {
         entries.filter { Calendar.current.isDate($0.date, inSameDayAs: day) }
@@ -18,45 +21,27 @@ struct FoodDiaryView: View {
         DiaryTotals.totals(for: entries, on: day)
     }
 
+    private var dayTitle: String {
+        if Calendar.current.isDateInToday(day) { return "Today" }
+        if Calendar.current.isDateInYesterday(day) { return "Yesterday" }
+        return day.formatted(.dateTime.weekday(.wide).day().month())
+    }
+
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    DatePicker("Day", selection: $day, displayedComponents: .date)
-                    HStack {
-                        Text("Today totals")
-                        Spacer()
-                        Text("\(Int(totals.calories)) kcal · P \(Int(totals.proteinGrams))")
-                            .foregroundStyle(.secondary)
-                    }
+                    summaryCard
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
                 }
 
                 ForEach(MealType.allCases.sorted(by: { $0.sortOrder < $1.sortOrder })) { meal in
-                    Section(meal.displayName) {
-                        let mealEntries = dayEntries.filter { $0.mealType == meal }
-                        if mealEntries.isEmpty {
-                            Text("Nothing logged")
-                                .foregroundStyle(.secondary)
-                        } else {
-                            ForEach(mealEntries, id: \.id) { entry in
-                                VStack(alignment: .leading) {
-                                    Text(entry.displayName)
-                                    Text("\(entry.quantity.formatted()) \(entry.servingUnit.displayName) · \(Int(entry.calories)) kcal")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                            .onDelete { indexSet in
-                                for i in indexSet {
-                                    modelContext.delete(mealEntries[i])
-                                }
-                            }
-                        }
-                    }
+                    mealSection(meal)
                 }
 
                 if !templates.isEmpty {
-                    Section("Meal templates") {
+                    Section {
                         ForEach(templates, id: \.id) { template in
                             Button {
                                 applyTemplate(template)
@@ -64,21 +49,36 @@ struct FoodDiaryView: View {
                                 Label(template.name, systemImage: "square.stack")
                             }
                         }
+                    } header: {
+                        EmojiHeader(emoji: "📋", title: "Meal templates")
                     }
+                    .listRowBackground(Theme.card)
                 }
             }
+            .scrollContentBackground(.hidden)
+            .appBackground()
+            .tint(Theme.saffron)
             .navigationTitle("Food")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
-                        Button("Search foods") { showAdd = true }
-                        Button("Estimate from photo") { showPhoto = true }
-                        Button("Custom food") { showCustom = true }
-                        Button("Copy yesterday") { copyYesterday() }
+                        Button { showAdd = true } label: { Label("Search foods", systemImage: "magnifyingglass") }
+                        Button { showPhoto = true } label: { Label("Estimate from photo", systemImage: "camera") }
+                        Button { showCustom = true } label: { Label("Custom food", systemImage: "square.and.pencil") }
+                        Button { copyYesterday() } label: { Label("Copy yesterday", systemImage: "doc.on.doc") }
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title3)
                     }
+                    .accessibilityLabel("More ways to add food")
                 }
+            }
+            .safeAreaInset(edge: .bottom) {
+                Button("Add food 🍛") { showAdd = true }
+                    .buttonStyle(.gradient)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(.bar)
             }
             .sheet(isPresented: $showAdd) {
                 FoodSearchView(day: day)
@@ -91,6 +91,93 @@ struct FoodDiaryView: View {
             }
         }
     }
+
+    // MARK: Summary
+
+    private var summaryCard: some View {
+        let target = max(profile?.calorieTarget ?? 0, 1)
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(dayTitle)
+                    .font(.rounded(.title2, weight: .bold))
+                Spacer()
+                DatePicker("Day", selection: $day, displayedComponents: .date)
+                    .labelsHidden()
+            }
+            MacroBar(emoji: "🔥", name: "Calories", value: totals.calories, target: target, unit: "kcal", color: Theme.saffron)
+            HStack(spacing: 8) {
+                miniStat("🥚", "\(Int(totals.proteinGrams.rounded())) g", "Protein", Theme.protein)
+                miniStat("🍚", "\(Int(totals.carbGrams.rounded())) g", "Carbs", Theme.carbs)
+                miniStat("🥑", "\(Int(totals.fatGrams.rounded())) g", "Fat", Theme.fat)
+            }
+        }
+        .appCard()
+    }
+
+    private func miniStat(_ emoji: String, _ value: String, _ label: String, _ color: Color) -> some View {
+        VStack(spacing: 2) {
+            Text("\(emoji) \(value)")
+                .font(.rounded(.subheadline, weight: .bold))
+                .minimumScaleFactor(0.7)
+                .lineLimit(1)
+            Text(label)
+                .font(.rounded(.caption2))
+                .foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+        .background(color.opacity(0.14), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
+    }
+
+    // MARK: Meals
+
+    @ViewBuilder
+    private func mealSection(_ meal: MealType) -> some View {
+        let mealEntries = dayEntries.filter { $0.mealType == meal }
+        let kcal = mealEntries.reduce(0) { $0 + $1.calories }
+        Section {
+            if mealEntries.isEmpty {
+                Text("Nothing here yet. Tap Add food 🍽️")
+                    .font(.rounded(.subheadline))
+                    .foregroundStyle(.secondary)
+            } else {
+                ForEach(mealEntries, id: \.id) { entry in
+                    HStack(spacing: 12) {
+                        Text(FoodEmoji.emoji(for: entry.displayName))
+                            .font(.title2)
+                            .frame(width: 40, height: 40)
+                            .background(Theme.saffron.opacity(0.14), in: Circle())
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(entry.displayName)
+                                .font(.rounded(.body, weight: .semibold))
+                            Text("\(entry.quantity.formatted()) \(entry.servingUnit.displayName) · \(Int(entry.calories)) kcal")
+                                .font(.rounded(.caption))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                .onDelete { indexSet in
+                    for i in indexSet {
+                        modelContext.delete(mealEntries[i])
+                    }
+                    try? modelContext.save()
+                }
+            }
+        } header: {
+            EmojiHeader(
+                emoji: meal.emoji,
+                title: meal.displayName,
+                trailing: mealEntries.isEmpty ? nil : "\(Int(kcal.rounded())) kcal"
+            )
+        }
+        .listRowBackground(Theme.card)
+    }
+
+    // MARK: Actions
 
     private func applyTemplate(_ template: MealTemplate) {
         for item in template.items {
@@ -111,6 +198,7 @@ struct FoodDiaryView: View {
             modelContext.insert(entry)
         }
         try? modelContext.save()
+        Haptics.success()
     }
 
     private func copyYesterday() {
@@ -129,5 +217,6 @@ struct FoodDiaryView: View {
             ))
         }
         try? modelContext.save()
+        Haptics.success()
     }
 }
