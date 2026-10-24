@@ -7,7 +7,7 @@ import UIKit
 struct FoundationModelsPhotoNutritionEstimator: PhotoNutritionEstimating {
     var isAvailable: Bool {
         #if canImport(FoundationModels)
-        if #available(iOS 26.0, *) {
+        if #available(iOS 27.0, *) {
             #if targetEnvironment(simulator)
             // Apple Intelligence is typically unavailable in Simulator; keep manual logging as the path.
             return false
@@ -24,7 +24,7 @@ struct FoundationModelsPhotoNutritionEstimator: PhotoNutritionEstimating {
         guard UIImage(data: request.imageJPEGData) != nil else { throw PhotoNutritionError.invalidImage }
 
         #if canImport(FoundationModels)
-        if #available(iOS 26.0, *) {
+        if #available(iOS 27.0, *) {
             return try await FoundationModelsBridge.estimate(request)
         }
         #endif
@@ -56,6 +56,7 @@ enum FoundationModelsBridge {
     Values are estimates only — never invent a medical claim.
     """
 
+    @available(iOS 27.0, *)
     static func estimate(_ request: PhotoNutritionRequest) async throws -> PhotoNutritionEstimate {
         guard let uiImage = UIImage(data: request.imageJPEGData),
               let cgImage = Self.cgImage(from: uiImage) else {
@@ -69,7 +70,7 @@ enum FoundationModelsBridge {
             let session = LanguageModelSession(instructions: instructions)
             let response = try await session.respond(generating: PhotoFoodNutritionDraft.self) {
                 promptBits
-                Attachment(cgImage, orientation: orientation)
+                Attachment<ImageAttachmentContent>(cgImage, orientation: orientation)
             }
             return try Self.mapDraft(response.content, nameHint: request.foodNameHint)
         } catch let error as PhotoNutritionError {
@@ -85,7 +86,7 @@ enum FoundationModelsBridge {
                     calories, proteinGrams, carbGrams, fatGrams, confidence, notes.
                     servingUnit must be one of: gram, piece, katori, plate, glass, tablespoon, cup.
                     """
-                    Attachment(cgImage, orientation: orientation)
+                    Attachment<ImageAttachmentContent>(cgImage, orientation: orientation)
                 }
                 let text = String(describing: response.content)
                 return try PhotoNutritionResponseParser.parse(from: text, nameHint: request.foodNameHint)

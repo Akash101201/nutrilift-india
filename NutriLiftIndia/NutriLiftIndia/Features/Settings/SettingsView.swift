@@ -361,7 +361,7 @@ struct DisclaimerView: View {
     var body: some View {
         ScrollView {
             Text("""
-            NutriLift India is a personal logging tool, not medical advice, diagnosis, or treatment.
+            NutirLift is a personal logging tool, not medical advice, diagnosis, or treatment.
 
             Calorie and macro targets, photo estimates, and coaching tips are approximate. Talk to a qualified clinician before large diet changes, especially if you are pregnant, under 18, or managing a medical condition.
 

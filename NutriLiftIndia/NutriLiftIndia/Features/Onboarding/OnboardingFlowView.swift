@@ -171,7 +171,7 @@ struct OnboardingFlowView: View {
                 .accessibilityHidden(true)
                 .padding(.top, 40)
             VStack(alignment: .leading, spacing: 6) {
-                Text("NutriLift India")
+                Text("NutirLift")
                     .font(.rounded(.largeTitle, weight: .heavy))
                     .accessibilityAddTraits(.isHeader)
                 Text("Eat well. Lift strong. Have fun. 💪")

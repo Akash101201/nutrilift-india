@@ -70,7 +70,7 @@ struct ProgressHomeView: View {
             }
             .appBackground()
             .navigationTitle("Progress")
-            .onAppear {
+            .task {
                 if selectedExerciseId == nil {
                     selectedExerciseId = exerciseOptions.first?.id
                 }

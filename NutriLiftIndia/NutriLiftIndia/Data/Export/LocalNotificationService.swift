@@ -12,7 +12,7 @@ enum LocalNotificationService {
         date.hour = hour
         date.minute = 0
         let content = UNMutableNotificationContent()
-        content.title = "NutriLift India"
+        content.title = "NutirLift"
         content.body = "Gentle nudge: log a meal when you can. No pressure."
         content.sound = .default
         let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)

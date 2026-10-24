@@ -89,7 +89,10 @@ struct WorkoutFlowView: View {
             }
         } else {
             // The workout was discarded.
-            Color.clear.onAppear { dismiss() }
+            Color.clear.task {
+                await Task.yield()
+                dismiss()
+            }
         }
     }
 }

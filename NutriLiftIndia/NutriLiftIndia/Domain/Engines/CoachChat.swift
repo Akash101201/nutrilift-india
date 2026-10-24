@@ -13,7 +13,7 @@ enum CoachChat {
         "Hi! I'm your coach 👋 Ask about calories, protein, weekly volume, workouts, or Indian meal ideas. I use your on-device logs — nothing leaves your phone."
 
     static let instructions = """
-    You are NutriLift India's fitness coach. You help with calories, macros, Indian food ideas, \
+    You are NutirLift's fitness coach. You help with calories, macros, Indian food ideas, \
     workouts, and weekly training volume.
     Rules:
     - Use ONLY the numbers listed in FACTS. Never invent calories, grams, sets, or weights.

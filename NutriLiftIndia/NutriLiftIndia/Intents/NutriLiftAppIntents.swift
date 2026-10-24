@@ -11,7 +11,7 @@ enum IntentModelAccess {
 
 struct RemainingCaloriesIntent: AppIntent {
     static var title: LocalizedStringResource = "Remaining calories"
-    static var description = IntentDescription("How many calories you have left today in NutriLift India.")
+    static var description = IntentDescription("How many calories you have left today in NutirLift.")
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -20,7 +20,7 @@ struct RemainingCaloriesIntent: AppIntent {
         let profile = try context.fetch(FetchDescriptor<UserProfile>()).first
         let diary = try context.fetch(FetchDescriptor<FoodDiaryEntry>())
         guard let profile else {
-            return .result(dialog: "Open NutriLift India and finish onboarding first.")
+            return .result(dialog: "Open NutirLift and finish onboarding first.")
         }
         let consumed = DiaryTotals.totals(for: diary)
         let remaining = DiaryTotals.remaining(targets: profile.targets, consumed: consumed)
@@ -39,7 +39,7 @@ struct RemainingProteinIntent: AppIntent {
         let profile = try context.fetch(FetchDescriptor<UserProfile>()).first
         let diary = try context.fetch(FetchDescriptor<FoodDiaryEntry>())
         guard let profile else {
-            return .result(dialog: "Open NutriLift India and finish onboarding first.")
+            return .result(dialog: "Open NutirLift and finish onboarding first.")
         }
         let consumed = DiaryTotals.totals(for: diary)
         let remaining = DiaryTotals.remaining(targets: profile.targets, consumed: consumed)
@@ -68,7 +68,7 @@ enum WorkoutTemplateName: String, AppEnum {
 
 struct StartNamedWorkoutTemplateIntent: AppIntent {
     static var title: LocalizedStringResource = "Start workout template"
-    static var description = IntentDescription("Find a NutriLift India workout template by name.")
+    static var description = IntentDescription("Find a NutirLift workout template by name.")
 
     @Parameter(title: "Template name")
     var templateName: WorkoutTemplateName
@@ -83,7 +83,7 @@ struct StartNamedWorkoutTemplateIntent: AppIntent {
             $0.name.localizedCaseInsensitiveCompare(selectedName) == .orderedSame
         }
         if let match {
-            return .result(dialog: "Open NutriLift India and start “\(match.name)” from the Workouts tab. (\(match.exercises.count) exercises)")
+            return .result(dialog: "Open NutirLift and start “\(match.name)” from the Workouts tab. (\(match.exercises.count) exercises)")
         }
         let names = templates.map(\.name).sorted().joined(separator: ", ")
         return .result(dialog: "No template matched “\(selectedName)”. Available: \(names.isEmpty ? "none yet" : names).")

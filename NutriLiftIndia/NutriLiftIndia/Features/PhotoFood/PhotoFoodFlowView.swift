@@ -62,10 +62,7 @@ struct PhotoFoodFlowView: View {
                 }
             }
             .onAppear {
-                if !vm.estimator.isAvailable {
-                    vm.phase = .unavailable
-                    return
-                }
+                guard vm.estimator.isAvailable else { return }
                 applyPreferredCaptureIfNeeded()
             }
             .alert("Estimate failed", isPresented: Binding(
@@ -264,7 +261,7 @@ final class PhotoFoodViewModel: ObservableObject {
 
     let estimator: any PhotoNutritionEstimating = PhotoNutritionEstimatorFactory.make()
 
-    @Published var phase: Phase = .capture
+    @Published var phase: Phase
     @Published var image: UIImage?
     @Published var imageJPEG: Data?
     @Published var foodNameHint = ""
@@ -282,6 +279,10 @@ final class PhotoFoodViewModel: ObservableObject {
 
     /// True only after user reaches review; prevents accidental auto-save.
     @Published var awaitingConfirm = false
+
+    init() {
+        phase = estimator.isAvailable ? .capture : .unavailable
+    }
 
     func setImage(_ image: UIImage) {
         self.image = image
