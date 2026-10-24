@@ -27,6 +27,11 @@ struct OnboardingFlowView: View {
 
     private var privacyPage: some View {
         VStack(alignment: .leading, spacing: 20) {
+            Image("Logo")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 88, height: 88)
+                .accessibilityHidden(true)
             Text("NutriLift India")
                 .font(.largeTitle.bold())
             Text("Privacy-first fitness tracking")
