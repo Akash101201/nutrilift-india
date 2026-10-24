@@ -72,7 +72,7 @@ Values are guides for logging, not lab assays.
 3. On-device estimate → **confirm/edit** name, quantity, unit, calories, and macros.
 4. Save writes a diary entry with a macro snapshot (`source = photoEstimate`). Never auto-saves model output.
 
-Implementation: `PhotoNutritionEstimating` + `FoundationModelsPhotoNutritionEstimator` only.
+Implementation: `PhotoNutritionEstimating` + `FoundationModelsPhotoNutritionEstimator` (multimodal image attachment + guided generation; JSON parse fallback).
 
 ## App Intents (Siri)
 
