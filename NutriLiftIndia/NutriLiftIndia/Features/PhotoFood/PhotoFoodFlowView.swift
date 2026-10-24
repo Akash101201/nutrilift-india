@@ -18,12 +18,17 @@ struct PhotoFoodFlowView: View {
 
     var day: Date
     var preferredCapture: PhotoFoodCapturePreference = .choose
+    var initialMeal: MealType = .lunch
 
     @StateObject private var vm = PhotoFoodViewModel()
     @State private var pickerItem: PhotosPickerItem?
     @State private var showCamera = false
     @State private var meal: MealType = .lunch
     @State private var didApplyPreference = false
+    @State private var didSetMeal = false
+    @State private var fatAddOn: LogPortionAdjustments.FatAddOn = .none
+    @State private var portionStyle: LogPortionAdjustments.PortionStyle = .homemade
+    @State private var matchedSeedId: String?
 
     var body: some View {
         NavigationStack {
@@ -62,6 +67,10 @@ struct PhotoFoodFlowView: View {
                 }
             }
             .onAppear {
+                if !didSetMeal {
+                    meal = initialMeal
+                    didSetMeal = true
+                }
                 guard vm.estimator.isAvailable else { return }
                 applyPreferredCaptureIfNeeded()
             }
@@ -188,6 +197,15 @@ struct PhotoFoodFlowView: View {
             .listRowBackground(Theme.card)
             Section {
                 TextField("Name", text: $vm.editName)
+                    .onChange(of: vm.editName) { _, newValue in
+                        refreshCatalogMatch(for: newValue)
+                    }
+                if let matchedSeedId,
+                   let match = foods.first(where: { $0.seedId == matchedSeedId }) {
+                    Label("Matched catalog: \(match.name)", systemImage: "link")
+                        .font(.rounded(.caption))
+                        .foregroundStyle(Theme.leaf)
+                }
                 LabeledNumberField("Quantity", value: $vm.editQuantity, emoji: "🔢")
                 Picker("Unit", selection: $vm.editUnit) {
                     ForEach(ServingUnit.allCases) { Text("\($0.emoji) \($0.displayName)").tag($0) }
@@ -200,6 +218,26 @@ struct PhotoFoodFlowView: View {
                 EmojiHeader(emoji: "✏️", title: "Override any field")
             }
             .listRowBackground(Theme.card)
+            Section {
+                EmojiSegmented(
+                    options: LogPortionAdjustments.FatAddOn.allCases.map {
+                        EmojiOption(value: $0, emoji: $0.emoji, title: $0.label)
+                    },
+                    selection: $fatAddOn
+                )
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+                EmojiSegmented(
+                    options: LogPortionAdjustments.PortionStyle.allCases.map {
+                        EmojiOption(value: $0, emoji: $0.emoji, title: $0.label)
+                    },
+                    selection: $portionStyle
+                )
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+            } header: {
+                EmojiHeader(emoji: "🧈", title: "Cooking fat & portion")
+            }
             if let notes = vm.estimateNotes, !notes.isEmpty {
                 Section {
                     Text(notes).font(.footnote).foregroundStyle(.secondary)
@@ -217,28 +255,38 @@ struct PhotoFoodFlowView: View {
                 .listRowBackground(Color.clear)
                 Button("Discard", role: .destructive) {
                     vm.resetToCapture()
+                    matchedSeedId = nil
+                    fatAddOn = .none
+                    portionStyle = .homemade
                 }
                 .listRowBackground(Theme.card)
             }
         }
         .scrollContentBackground(.hidden)
+        .onAppear { refreshCatalogMatch(for: vm.editName) }
+    }
+
+    private func refreshCatalogMatch(for name: String) {
+        matchedSeedId = FoodCatalogMatcher.bestMatch(for: name, in: foods)?.seedId
     }
 
     private func save() {
         let name = vm.editName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !name.isEmpty else { return }
-        let match = foods.first { $0.name.localizedCaseInsensitiveCompare(name) == .orderedSame }
-        let snap = MacroSnapshot(
+        let match = matchedSeedId.flatMap { id in foods.first { $0.seedId == id } }
+            ?? FoodCatalogMatcher.bestMatch(for: name, in: foods)
+        let base = MacroSnapshot(
             calories: vm.editCalories,
             proteinGrams: vm.editProtein,
             carbGrams: vm.editCarbs,
             fatGrams: vm.editFat
         )
+        let snap = LogPortionAdjustments.apply(base: base, fatAddOn: fatAddOn, portionStyle: portionStyle)
         modelContext.insert(FoodDiaryEntry(
             date: day,
             mealType: meal,
             foodSeedId: match?.seedId,
-            displayName: name,
+            displayName: match?.name ?? name,
             quantity: vm.editQuantity,
             servingUnit: vm.editUnit,
             snapshot: snap,

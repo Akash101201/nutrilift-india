@@ -269,12 +269,20 @@ final class FoodDiaryEntry {
     }
 
     var snapshot: MacroSnapshot {
-        MacroSnapshot(
-            calories: calories,
-            proteinGrams: proteinG,
-            carbGrams: carbG,
-            fatGrams: fatG
-        )
+        get {
+            MacroSnapshot(
+                calories: calories,
+                proteinGrams: proteinG,
+                carbGrams: carbG,
+                fatGrams: fatG
+            )
+        }
+        set {
+            calories = newValue.calories
+            proteinG = newValue.proteinGrams
+            carbG = newValue.carbGrams
+            fatG = newValue.fatGrams
+        }
     }
 }
 

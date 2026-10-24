@@ -217,6 +217,9 @@ struct SettingsView: View {
             Button("Why these numbers? ✨") { showExplainer = true }
         } header: {
             EmojiHeader(emoji: "🎯", title: "Daily targets")
+        } footer: {
+            Text("Fiber is a daily aim only for now — the diary logs calories and macros (P/C/F), not fiber grams.")
+                .font(.rounded(.caption))
         }
         .listRowBackground(Theme.card)
     }

@@ -95,6 +95,8 @@ Implementation: `CoachChat` (facts + rules) + `CoachChatService` + `OnDeviceWrit
 
 ## Phase 2 (not blocking MVP)
 
+Food-tab daily-loop polish (edit entries, diet-aware search, oil/ghee adjusters, templates) ships before discovery extras below.
+
 - Richer multimodal photo mapping to seed foods  
 - Widgets, optional iCloud sync, barcode, Hindi labels, Live Activity rest timer  
 

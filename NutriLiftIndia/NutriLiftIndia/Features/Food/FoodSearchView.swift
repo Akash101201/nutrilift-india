@@ -2,34 +2,52 @@ import SwiftUI
 import SwiftData
 
 struct FoodSearchView: View {
-    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \FoodItem.name) private var foods: [FoodItem]
+    @Query private var profiles: [UserProfile]
 
     var day: Date
+    var initialMeal: MealType = .lunch
+
     @State private var query = ""
     @State private var meal: MealType = .lunch
     @State private var selected: FoodItem?
-    @State private var quantity = 1.0
+    @State private var showAllDiets = false
+    @State private var didSetMeal = false
+
+    private var diet: DietPreference { profiles.first?.dietPref ?? .veg }
+
+    private var dietFiltered: [FoodItem] {
+        FoodDietFilter.filter(foods, diet: diet, showAll: showAllDiets)
+    }
 
     private var filtered: [FoodItem] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         let base: [FoodItem]
         if q.isEmpty {
-            base = foods
-                .sorted { ($0.lastUsedAt ?? .distantPast) > ($1.lastUsedAt ?? .distantPast) }
+            // Browse: hide low-confidence placeholders unless the user is searching.
+            base = dietFiltered
+                .filter { $0.confidence.lowercased() != "low" || $0.isCustom || $0.isFavorite }
+                .sorted { lhs, rhs in
+                    let l = rank(lhs)
+                    let r = rank(rhs)
+                    if l != r { return l > r }
+                    return (lhs.lastUsedAt ?? .distantPast) > (rhs.lastUsedAt ?? .distantPast)
+                }
         } else {
-            base = foods.filter { $0.searchBlob.contains(q) }
+            base = dietFiltered
+                .filter { $0.searchBlob.contains(q) }
+                .sorted { rank($0) > rank($1) }
         }
         return Array(base.prefix(80))
     }
 
     private var favorites: [FoodItem] {
-        foods.filter(\.isFavorite).prefix(12).map { $0 }
+        dietFiltered.filter(\.isFavorite).prefix(12).map { $0 }
     }
 
     private var recents: [FoodItem] {
-        foods.filter { $0.lastUsedAt != nil && !$0.isFavorite }
+        dietFiltered.filter { $0.lastUsedAt != nil && !$0.isFavorite }
             .sorted { ($0.lastUsedAt ?? .distantPast) > ($1.lastUsedAt ?? .distantPast) }
             .prefix(12)
             .map { $0 }
@@ -44,6 +62,19 @@ struct FoodSearchView: View {
                 )
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
+
+                if diet != .nonVeg && diet != .custom {
+                    Section {
+                        Toggle(isOn: $showAllDiets) {
+                            Label(
+                                showAllDiets ? "Showing all foods" : "Filtered for \(diet.displayName)",
+                                systemImage: showAllDiets ? "line.3.horizontal.decrease.circle" : "leaf"
+                            )
+                        }
+                        .tint(Theme.saffron)
+                    }
+                    .listRowBackground(Theme.card)
+                }
 
                 if query.isEmpty && !favorites.isEmpty {
                     Section {
@@ -72,7 +103,9 @@ struct FoodSearchView: View {
                     FriendlyEmptyState(
                         emoji: "🤔",
                         title: "No match for “\(query)”",
-                        message: "Try another spelling, or add it yourself as a custom food."
+                        message: showAllDiets
+                            ? "Try another spelling, or add it yourself as a custom food."
+                            : "Nothing matched your \(diet.displayName) filter. Turn on “Showing all foods” or add a custom food."
                     )
                     .listRowBackground(Color.clear)
                 }
@@ -87,6 +120,11 @@ struct FoodSearchView: View {
                     Button("Close") { dismiss() }
                 }
             }
+            .onAppear {
+                guard !didSetMeal else { return }
+                meal = initialMeal
+                didSetMeal = true
+            }
             .sheet(isPresented: Binding(
                 get: { selected != nil },
                 set: { if !$0 { selected = nil } }
@@ -97,6 +135,15 @@ struct FoodSearchView: View {
                     }
                 }
             }
+        }
+    }
+
+    private func rank(_ food: FoodItem) -> Int {
+        switch food.confidence.lowercased() {
+        case "high": return 3
+        case "medium", "user": return 2
+        case "low": return 0
+        default: return 1
         }
     }
 
@@ -144,10 +191,16 @@ struct FoodLogConfirmView: View {
     var onLogged: () -> Void
 
     @State private var quantity = 1.0
+    @State private var fatAddOn: LogPortionAdjustments.FatAddOn = .none
+    @State private var portionStyle: LogPortionAdjustments.PortionStyle = .homemade
     @State private var logged = false
     @State private var celebrateCount = 0
 
-    private var snapshot: MacroSnapshot { food.perServingSnapshot.scaled(by: quantity) }
+    private var baseSnapshot: MacroSnapshot { food.perServingSnapshot.scaled(by: quantity) }
+
+    private var snapshot: MacroSnapshot {
+        LogPortionAdjustments.apply(base: baseSnapshot, fatAddOn: fatAddOn, portionStyle: portionStyle)
+    }
 
     private static let quickQuantities: [(label: String, value: Double)] = [
         ("¼", 0.25), ("½", 0.5), ("1", 1), ("2", 2), ("3", 3),
@@ -167,6 +220,7 @@ struct FoodLogConfirmView: View {
                         Text("\(meal.emoji) \(meal.displayName)")
                             .font(.rounded(.subheadline))
                             .foregroundStyle(.secondary)
+                        confidenceBadge
                     }
                     .frame(maxWidth: .infinity)
 
@@ -181,6 +235,26 @@ struct FoodLogConfirmView: View {
                             step: 0.25,
                             unit: food.servingUnit.displayName,
                             fractionDigits: 2
+                        )
+                    }
+                    .appCard()
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("🧈 Cooking fat")
+                            .font(.rounded(.subheadline, weight: .semibold))
+                        EmojiSegmented(
+                            options: LogPortionAdjustments.FatAddOn.allCases.map {
+                                EmojiOption(value: $0, emoji: $0.emoji, title: $0.label)
+                            },
+                            selection: $fatAddOn
+                        )
+                        Text("🏠 Portion style")
+                            .font(.rounded(.subheadline, weight: .semibold))
+                        EmojiSegmented(
+                            options: LogPortionAdjustments.PortionStyle.allCases.map {
+                                EmojiOption(value: $0, emoji: $0.emoji, title: $0.label)
+                            },
+                            selection: $portionStyle
                         )
                     }
                     .appCard()
@@ -220,6 +294,23 @@ struct FoodLogConfirmView: View {
         }
     }
 
+    @ViewBuilder
+    private var confidenceBadge: some View {
+        let c = food.confidence.lowercased()
+        if c == "low" || food.sourceTag.lowercased().contains("estimated") {
+            Text(c == "low" ? "Rough estimate — adjust if needed" : "Estimated values — adjust if needed")
+                .font(.rounded(.caption))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
+                .background(Theme.saffron.opacity(0.12), in: Capsule())
+        } else if food.sourceTag.lowercased().contains("ifct") {
+            Text("IFCT-inspired")
+                .font(.rounded(.caption, weight: .medium))
+                .foregroundStyle(Theme.leaf)
+        }
+    }
+
     private func macroTile(_ emoji: String, _ grams: Double, _ label: String, _ color: Color) -> some View {
         VStack(spacing: 2) {
             Text("\(emoji) \(Int(grams.rounded())) g")
@@ -253,7 +344,6 @@ struct FoodLogConfirmView: View {
         food.lastUsedAt = Date()
         try? modelContext.save()
         celebrateCount += 1
-        // Let the confetti play briefly before the sheets close.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
             onLogged()
             dismiss()

@@ -5,6 +5,9 @@ struct CustomFoodView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
+    var day: Date = Date()
+    var initialMeal: MealType = .lunch
+
     @State private var name = ""
     @State private var unit: ServingUnit = .katori
     @State private var amount = 1.0
@@ -12,6 +15,9 @@ struct CustomFoodView: View {
     @State private var protein = 5.0
     @State private var carbs = 20.0
     @State private var fat = 5.0
+    @State private var meal: MealType = .lunch
+    @State private var alsoLog = true
+    @State private var didSetMeal = false
 
     private var canSave: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -53,6 +59,20 @@ struct CustomFoodView: View {
                         LabeledNumberField("Fat", value: $fat, unit: "g", emoji: "🥑")
                     }
                     .appCard()
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Toggle(isOn: $alsoLog) {
+                            Label("Add to diary now", systemImage: "book.closed")
+                        }
+                        .tint(Theme.saffron)
+                        if alsoLog {
+                            EmojiSegmented(
+                                options: MealType.allCases.map { EmojiOption(value: $0, emoji: $0.emoji, title: $0.displayName) },
+                                selection: $meal
+                            )
+                        }
+                    }
+                    .appCard()
                 }
                 .padding(20)
             }
@@ -65,8 +85,13 @@ struct CustomFoodView: View {
                     Button("Cancel") { dismiss() }
                 }
             }
+            .onAppear {
+                guard !didSetMeal else { return }
+                meal = initialMeal
+                didSetMeal = true
+            }
             .safeAreaInset(edge: .bottom) {
-                Button("Save food 🍽️") { save() }
+                Button(alsoLog ? "Save & log 🍽️" : "Save food 🍽️") { save() }
                     .buttonStyle(.gradient)
                     .disabled(!canSave)
                     .padding(.horizontal, 20)
@@ -77,8 +102,9 @@ struct CustomFoodView: View {
     }
 
     private func save() {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let item = FoodItem(
-            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+            name: trimmed,
             servingUnit: unit,
             servingAmount: amount,
             gramsPerServing: amount,
@@ -91,6 +117,24 @@ struct CustomFoodView: View {
             isCustom: true
         )
         modelContext.insert(item)
+        if alsoLog {
+            item.lastUsedAt = Date()
+            let snap = MacroSnapshot(
+                calories: calories,
+                proteinGrams: protein,
+                carbGrams: carbs,
+                fatGrams: fat
+            )
+            modelContext.insert(FoodDiaryEntry(
+                date: day,
+                mealType: meal,
+                foodSeedId: item.seedId,
+                displayName: trimmed,
+                quantity: 1,
+                servingUnit: unit,
+                snapshot: snap
+            ))
+        }
         try? modelContext.save()
         Haptics.success()
         dismiss()
