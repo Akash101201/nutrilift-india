@@ -7,7 +7,7 @@ struct Insight: Identifiable, Equatable, Sendable {
 }
 
 enum InsightsEngine {
-    struct Context: Sendable {
+    struct Context {
         var dietPref: DietPreference
         var targets: MacroTargets
         var diaryEntries: [FoodDiaryEntry]

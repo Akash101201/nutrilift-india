@@ -89,7 +89,7 @@ enum ExportService {
         let diary = try context.fetch(FetchDescriptor<FoodDiaryEntry>())
         let sessions = try context.fetch(FetchDescriptor<WorkoutSession>())
         let weights = try context.fetch(FetchDescriptor<BodyWeightSample>())
-        let customs = try context.fetch(FetchDescriptor<FoodItem>(predicate: #Predicate { $0.isCustom }))
+        let customs = try context.fetch(FetchDescriptor<FoodItem>()).filter(\.isCustom)
         let waterLogs = try context.fetch(FetchDescriptor<WaterLogEntry>())
 
         let payload = ExportPayload(
@@ -177,7 +177,7 @@ enum ExportService {
         try deleteAll(WaterLogEntry.self, context: context)
         try deleteAll(UserProfile.self, context: context)
 
-        let customs = try context.fetch(FetchDescriptor<FoodItem>(predicate: #Predicate { $0.isCustom }))
+        let customs = try context.fetch(FetchDescriptor<FoodItem>()).filter(\.isCustom)
         customs.forEach(context.delete)
 
         // Keep seeds; reset settings flag except seeding

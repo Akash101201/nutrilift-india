@@ -33,7 +33,7 @@ enum SeedLoader {
 
     @MainActor
     private static func clearSeededContent(context: ModelContext) throws {
-        let foods = try context.fetch(FetchDescriptor<FoodItem>(predicate: #Predicate { !$0.isCustom }))
+        let foods = try context.fetch(FetchDescriptor<FoodItem>()).filter { !$0.isCustom }
         foods.forEach(context.delete)
         let exercises = try context.fetch(FetchDescriptor<Exercise>())
         exercises.forEach(context.delete)

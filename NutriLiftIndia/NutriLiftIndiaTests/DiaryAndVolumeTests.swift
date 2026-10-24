@@ -33,7 +33,7 @@ final class DiaryAndVolumeTests: XCTestCase {
         XCTAssertEqual(rem.proteinGrams, 80, accuracy: 0.1)
     }
 
-    func testWeeklyMuscleVolume() {
+    func testWeeklyMuscleVolume() throws {
         let session = WorkoutSession(name: "Test")
         session.finishedAt = Date()
         let set = WorkoutSet(
@@ -47,9 +47,10 @@ final class DiaryAndVolumeTests: XCTestCase {
         set.session = session
         session.sets.append(set)
         let vol = VolumeAggregator.weeklySets(sessions: [session])
-        XCTAssertEqual(vol.first?.muscleGroup, .legs)
-        XCTAssertEqual(vol.first?.sets, 1)
-        XCTAssertEqual(vol.first?.volumeKg, 480, accuracy: 0.1)
+        let volume = try XCTUnwrap(vol.first)
+        XCTAssertEqual(volume.muscleGroup, .legs)
+        XCTAssertEqual(volume.sets, 1)
+        XCTAssertEqual(volume.volumeKg, 480, accuracy: 0.1)
     }
 
     func testPRDetection() {
