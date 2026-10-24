@@ -545,3 +545,63 @@ final class AppSettings {
         self.hasSeeded = false
     }
 }
+
+/// One Coach conversation. Messages cascade-delete with the session.
+@Model
+final class CoachChatSession {
+    var id: UUID
+    var title: String
+    var createdAt: Date
+    var updatedAt: Date
+    @Relationship(deleteRule: .cascade, inverse: \CoachChatMessage.session)
+    var messages: [CoachChatMessage]
+
+    init(title: String = "New chat") {
+        self.id = UUID()
+        self.title = title
+        self.createdAt = Date()
+        self.updatedAt = Date()
+        self.messages = []
+    }
+
+    var sortedMessages: [CoachChatMessage] {
+        messages.sorted { $0.createdAt < $1.createdAt }
+    }
+}
+
+@Model
+final class CoachChatMessage {
+    var id: UUID
+    /// `user` or `assistant`
+    var roleRaw: String
+    var text: String
+    var createdAt: Date
+    /// True when the assistant reply came from on-device Foundation Models.
+    var usedOnDevice: Bool
+    var session: CoachChatSession?
+
+    init(
+        role: CoachMessageRole,
+        text: String,
+        usedOnDevice: Bool = false,
+        createdAt: Date = Date()
+    ) {
+        self.id = UUID()
+        self.roleRaw = role.rawValue
+        self.text = text
+        self.createdAt = createdAt
+        self.usedOnDevice = usedOnDevice
+    }
+
+    var role: CoachMessageRole {
+        get { CoachMessageRole(rawValue: roleRaw) ?? .assistant }
+        set { roleRaw = newValue.rawValue }
+    }
+
+    var isUser: Bool { role == .user }
+}
+
+enum CoachMessageRole: String, Codable, CaseIterable {
+    case user
+    case assistant
+}

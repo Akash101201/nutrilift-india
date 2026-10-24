@@ -3,17 +3,27 @@ import SwiftData
 import PhotosUI
 import UIKit
 
+/// How the Food tab should open the photo estimate flow.
+enum PhotoFoodCapturePreference: Equatable {
+    /// Show the capture screen (user picks gallery or camera).
+    case choose
+    /// Jump straight into the system camera when available.
+    case camera
+}
+
 struct PhotoFoodFlowView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Query private var foods: [FoodItem]
 
     var day: Date
+    var preferredCapture: PhotoFoodCapturePreference = .choose
 
     @StateObject private var vm = PhotoFoodViewModel()
     @State private var pickerItem: PhotosPickerItem?
     @State private var showCamera = false
     @State private var meal: MealType = .lunch
+    @State private var didApplyPreference = false
 
     var body: some View {
         NavigationStack {
@@ -54,7 +64,9 @@ struct PhotoFoodFlowView: View {
             .onAppear {
                 if !vm.estimator.isAvailable {
                     vm.phase = .unavailable
+                    return
                 }
+                applyPreferredCaptureIfNeeded()
             }
             .alert("Estimate failed", isPresented: Binding(
                 get: { vm.errorMessage != nil },
@@ -64,6 +76,17 @@ struct PhotoFoodFlowView: View {
             } message: {
                 Text(vm.errorMessage ?? "")
             }
+        }
+    }
+
+    private func applyPreferredCaptureIfNeeded() {
+        guard !didApplyPreference else { return }
+        didApplyPreference = true
+        guard preferredCapture == .camera,
+              UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        // Slight delay so the sheet can finish presenting before the camera cover.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            showCamera = true
         }
     }
 
@@ -87,18 +110,25 @@ struct PhotoFoodFlowView: View {
                         .frame(maxHeight: 220)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
-                PhotosPicker(selection: $pickerItem, matching: .images) {
-                    Label("Choose photo", systemImage: "photo")
-                }
+
                 if UIImagePickerController.isSourceTypeAvailable(.camera) {
                     Button {
                         showCamera = true
                     } label: {
-                        Label("Take photo", systemImage: "camera")
+                        Label("Take photo with camera", systemImage: "camera.fill")
+                            .font(.rounded(.body, weight: .semibold))
                     }
                 }
+
+                PhotosPicker(selection: $pickerItem, matching: .images) {
+                    Label("Choose from photo library", systemImage: "photo.on.rectangle")
+                        .font(.rounded(.body, weight: .semibold))
+                }
             } header: {
-                EmojiHeader(emoji: "📸", title: "Photo")
+                EmojiHeader(emoji: "📸", title: "Capture or choose")
+            } footer: {
+                Text("Camera and library both stay on-device. Confirm the estimate before it is saved to your diary.")
+                    .font(.rounded(.caption))
             }
             .listRowBackground(Theme.card)
 

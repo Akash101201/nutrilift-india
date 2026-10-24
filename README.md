@@ -34,6 +34,7 @@ python3 scripts/generate_seeds.py
 - Photo meal estimates use **Apple Foundation Models only**. Photos are **not uploaded**. After save, the in-memory photo is discarded. UI shows “Photo not uploaded.”
 - The "Why this is yours" explainer uses Apple Foundation Models on-device to word the target explanation. The numbers always come from `GoalEngine`; the model's answer is discarded unless every number in it appears in the facts we supplied, and a built-in personalised explanation is shown instead (also on devices without Apple Intelligence). Nothing leaves the device.
 - The after-workout coach message uses the same on-device, number-checked approach (`OnDeviceWriter` + `Grounding`), with a built-in fallback. Nothing leaves the device.
+- **Coach chat** keeps multiple sessions on-device (new / delete). Replies prefer Apple Foundation Models when available, grounded in a local context pack (today’s macros, 7-day protein hits, weekly volume, insights, diet pref). If the model is unavailable or invents numbers, a rule-based answer is shown instead. Chats are never uploaded.
 - Export is a local JSON share sheet. Delete-all returns you to onboarding (seed foods/exercises remain).
 - **No iCloud sync in Phase 1** (planned Phase 2).
 
@@ -83,10 +84,18 @@ Implementation: `PhotoNutritionEstimating` + `FoundationModelsPhotoNutritionEsti
 
 Feature / Domain / Data (MVVM ViewModels). Unit tests cover GoalEngine, diary totals, weekly muscle volume, PR detection, and photo confirm mapping.
 
+## Coach chat
+
+1. Coach tab → **Start a chat** or **New chat** (toolbar).
+2. Ask free-form or tap a quick prompt (calories, protein, volume, meal ideas).
+3. Badge shows **On-device** when Foundation Models wrote the reply, otherwise **Basic answers**.
+4. Swipe / menu → **Delete chat**. Delete-all data in Settings also clears chats.
+
+Implementation: `CoachChat` (facts + rules) + `CoachChatService` + `OnDeviceWriter` / `Grounding`. Models: `CoachChatSession`, `CoachChatMessage`.
+
 ## Phase 2 (not blocking MVP)
 
 - Richer multimodal photo mapping to seed foods  
-- Fuller on-device coach with 7-day context pack  
 - Widgets, optional iCloud sync, barcode, Hindi labels, Live Activity rest timer  
 
 ## Explicit out of scope

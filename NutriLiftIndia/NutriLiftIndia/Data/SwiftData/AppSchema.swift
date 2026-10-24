@@ -16,6 +16,8 @@ enum AppSchema {
         BodyWeightSample.self,
         WaterLogEntry.self,
         AppSettings.self,
+        CoachChatSession.self,
+        CoachChatMessage.self,
     ]
 
     static var schema: Schema { Schema(models) }

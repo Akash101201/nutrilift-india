@@ -164,10 +164,10 @@ struct OnboardingFlowView: View {
 
     private var welcomePage: some View {
         VStack(alignment: .leading, spacing: 22) {
-            Image("Logo")
+            Image("LogoTransparent")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 110, height: 110)
+                .frame(width: 96, height: 96)
                 .accessibilityHidden(true)
                 .padding(.top, 40)
             VStack(alignment: .leading, spacing: 6) {

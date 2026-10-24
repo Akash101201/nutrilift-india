@@ -31,7 +31,13 @@ enum OnDeviceWriter {
     }
 
     /// Returns grounded model text, or throws. Retries once with a firmer reminder if the first answer strays.
-    static func write(instructions: String, prompt: String, facts: [String]) async throws -> String {
+    static func write(
+        instructions: String,
+        prompt: String,
+        facts: [String],
+        minLength: Int = 40,
+        maxLength: Int = 1500
+    ) async throws -> String {
         guard isAvailable else { throw WriteError.unavailable }
 
         #if canImport(FoundationModels)
@@ -42,7 +48,7 @@ enum OnDeviceWriter {
                     instructions: instructions,
                     prompt: attempt == 0 ? prompt : prompt + reminder
                 )
-                if let text = Grounding.validated(raw, facts: facts) {
+                if let text = Grounding.validated(raw, facts: facts, minLength: minLength, maxLength: maxLength) {
                     return text
                 }
             }

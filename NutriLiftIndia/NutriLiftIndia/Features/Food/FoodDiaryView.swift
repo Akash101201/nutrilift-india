@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct FoodDiaryView: View {
     @Environment(\.modelContext) private var modelContext
@@ -9,9 +10,18 @@ struct FoodDiaryView: View {
     @State private var day = Date()
     @State private var showAdd = false
     @State private var showPhoto = false
+    @State private var photoPreference: PhotoFoodCapturePreference = .choose
     @State private var showCustom = false
 
     private var profile: UserProfile? { profiles.first }
+
+    private var photoEstimateAvailable: Bool {
+        PhotoNutritionEstimatorFactory.make().isAvailable
+    }
+
+    private var cameraAvailable: Bool {
+        UIImagePickerController.isSourceTypeAvailable(.camera)
+    }
 
     private var dayEntries: [FoodDiaryEntry] {
         entries.filter { Calendar.current.isDate($0.date, inSameDayAs: day) }
@@ -34,6 +44,14 @@ struct FoodDiaryView: View {
                     summaryCard
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
+                }
+
+                Section {
+                    photoLogCard
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                } header: {
+                    EmojiHeader(emoji: "📸", title: "Add with photo")
                 }
 
                 ForEach(MealType.allCases.sorted(by: { $0.sortOrder < $1.sortOrder })) { meal in
@@ -63,7 +81,18 @@ struct FoodDiaryView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         Button { showAdd = true } label: { Label("Search foods", systemImage: "magnifyingglass") }
-                        Button { showPhoto = true } label: { Label("Estimate from photo", systemImage: "camera") }
+                        Button {
+                            openPhotoFlow(preference: .choose)
+                        } label: {
+                            Label("Estimate from photo", systemImage: "photo")
+                        }
+                        if cameraAvailable {
+                            Button {
+                                openPhotoFlow(preference: .camera)
+                            } label: {
+                                Label("Take photo", systemImage: "camera")
+                            }
+                        }
                         Button { showCustom = true } label: { Label("Custom food", systemImage: "square.and.pencil") }
                         Button { copyYesterday() } label: { Label("Copy yesterday", systemImage: "doc.on.doc") }
                     } label: {
@@ -84,12 +113,79 @@ struct FoodDiaryView: View {
                 FoodSearchView(day: day)
             }
             .sheet(isPresented: $showPhoto) {
-                PhotoFoodFlowView(day: day)
+                PhotoFoodFlowView(day: day, preferredCapture: photoPreference)
             }
             .sheet(isPresented: $showCustom) {
                 CustomFoodView()
             }
         }
+    }
+
+    // MARK: Photo / camera
+
+    private var photoLogCard: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                Text("📷")
+                    .font(.system(size: 36))
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Snap a meal")
+                        .font(.rounded(.headline, weight: .bold))
+                    Text(
+                        photoEstimateAvailable
+                            ? "Estimate calories on-device with Apple Intelligence. Photos stay on this iPhone."
+                            : "Photo estimates need Apple Intelligence on a supported iPhone. You can still search and log foods."
+                    )
+                    .font(.rounded(.footnote))
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
+            HStack(spacing: 10) {
+                if cameraAvailable {
+                    Button {
+                        openPhotoFlow(preference: .camera)
+                    } label: {
+                        Label("Camera", systemImage: "camera.fill")
+                    }
+                    .buttonStyle(.gradient)
+                    .accessibilityHint(
+                        photoEstimateAvailable
+                            ? "Open camera to estimate food"
+                            : "Opens photo flow; estimate needs Apple Intelligence"
+                    )
+                }
+
+                Button {
+                    openPhotoFlow(preference: .choose)
+                } label: {
+                    Label(cameraAvailable ? "Gallery" : "Choose photo", systemImage: "photo.on.rectangle")
+                }
+                .buttonStyle(.soft)
+                .accessibilityHint(
+                    photoEstimateAvailable
+                        ? "Choose a photo to estimate food"
+                        : "Opens photo flow; estimate needs Apple Intelligence"
+                )
+            }
+
+            HStack(spacing: 6) {
+                Image(systemName: "lock.shield.fill")
+                    .foregroundStyle(Theme.leaf)
+                Text(photoEstimateAvailable ? "Photo not uploaded · on-device only" : "Unavailable on this device")
+                    .font(.rounded(.caption, weight: .medium))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .appCard()
+        .opacity(photoEstimateAvailable ? 1 : 0.85)
+    }
+
+    private func openPhotoFlow(preference: PhotoFoodCapturePreference) {
+        photoPreference = preference
+        showPhoto = true
     }
 
     // MARK: Summary
