@@ -85,10 +85,28 @@ struct OnboardingFlowView: View {
     private var goalsPage: some View {
         Form {
             Section("Activity") {
-                Picker("Level", selection: $vm.activity) {
-                    ForEach(ActivityLevel.allCases) { level in
-                        Text("\(level.displayName) — \(level.detail)").tag(level)
+                ForEach(ActivityLevel.allCases) { level in
+                    Button {
+                        vm.activity = level
+                    } label: {
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(level.displayName)
+                                    .foregroundStyle(.primary)
+                                Text(level.detail)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            Spacer(minLength: 8)
+                            if vm.activity == level {
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.tint)
+                            }
+                        }
+                        .contentShape(Rectangle())
                     }
+                    .buttonStyle(.plain)
                 }
             }
             Section("Goal") {
