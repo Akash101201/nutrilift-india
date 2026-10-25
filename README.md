@@ -35,6 +35,7 @@ python3 scripts/generate_seeds.py
 - The "Why this is yours" explainer uses Apple Foundation Models on-device to word the target explanation. The numbers always come from `GoalEngine`; the model's answer is discarded unless every number in it appears in the facts we supplied, and a built-in personalised explanation is shown instead (also on devices without Apple Intelligence). Nothing leaves the device.
 - The after-workout coach message uses the same on-device, number-checked approach (`OnDeviceWriter` + `Grounding`), with a built-in fallback. Nothing leaves the device.
 - **Daily review on Today**: evening “how you did” (food, water, workouts) and next-morning tips from yesterday use Apple Foundation Models the same way — facts packed locally, numbers grounded, built-in fallback if the model is unavailable. Cached on-device in `DailyReviewRecord`.
+- **Barcode scan**: camera + manual entry. Looks up a bundled Indian packaged list first (`barcode_products.json`: whey, bars, Amul protein drinks). Optional **Open Food Facts** lookup only when you tap “Look up online” — not a NutriLift server; no account.
 - **Coach chat** keeps multiple sessions on-device (new / delete). Replies prefer Apple Foundation Models when available, grounded in a local context pack (today’s macros, 7-day protein hits, weekly volume, insights, diet pref). If the model is unavailable or invents numbers, a rule-based answer is shown instead. Chats are never uploaded.
 - Export is a local JSON share sheet. Delete-all returns you to onboarding (seed foods/exercises remain).
 - **No iCloud sync in Phase 1** (planned Phase 2).
@@ -60,7 +61,7 @@ Several constants (activity multipliers, protein g/kg, diet bumps) are judgment 
 
 Bundled under `NutriLiftIndia/NutriLiftIndia/Resources/Seed/`:
 
-- `foods.json` — **320** Indian-first foods (English names + transliterations, household units, kcal/P/C/F, source/confidence). Core items are IFCT-inspired or estimated; generated regional variants are low-confidence placeholders for search coverage.
+- `foods.json` — Indian-first catalog built by `scripts/build_foods_catalog.py` from **INDB** cooked recipes (~1,014) plus selected **IFCT 2017** staples (oils, milk, paneer, fruit). Household units when INDB provides a serving; otherwise per 100 g. Tags: `source` = `INDB` / `IFCT2017`, `confidence` = high/medium. Stable ids (`roti_whole_wheat`, `idli`, …) keep meal templates working. Raw downloads live in `scripts/data/raw/` (gitignored).
 - `exercises.json` — **908** exercises: the original gym staples, plus the public-domain [free-exercise-db](https://github.com/yuhonas/free-exercise-db) catalog (names and instructions; no photos). Staple ids are unchanged so saved routines still match. Muscles are mapped onto the app's groups.
 - `workout_templates.json` — Full Body A/B, Upper, Lower, Push, Pull (**6** templates).
 
@@ -96,10 +97,10 @@ Implementation: `CoachChat` (facts + rules) + `CoachChatService` + `OnDeviceWrit
 
 ## Phase 2 (not blocking MVP)
 
-Food-tab daily-loop polish (edit entries, diet-aware search, oil/ghee adjusters, templates) ships before discovery extras below.
+Food-tab daily-loop polish (edit entries, diet-aware search, oil/ghee adjusters, templates) and barcode scan for packaged protein products are in the app.
 
 - Richer multimodal photo mapping to seed foods  
-- Widgets, optional iCloud sync, barcode, Hindi labels, Live Activity rest timer  
+- Widgets, optional iCloud sync, Hindi labels, Live Activity rest timer  
 
 ## Explicit out of scope
 

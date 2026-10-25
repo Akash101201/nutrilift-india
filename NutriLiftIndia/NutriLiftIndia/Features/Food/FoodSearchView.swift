@@ -14,6 +14,7 @@ struct FoodSearchView: View {
     @State private var selected: FoodItem?
     @State private var showAllDiets = false
     @State private var didSetMeal = false
+    @State private var showBarcode = false
 
     private var diet: DietPreference { profiles.first?.dietPref ?? .veg }
 
@@ -119,11 +120,21 @@ struct FoodSearchView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") { dismiss() }
                 }
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        showBarcode = true
+                    } label: {
+                        Label("Scan barcode", systemImage: "barcode.viewfinder")
+                    }
+                }
             }
             .onAppear {
                 guard !didSetMeal else { return }
                 meal = initialMeal
                 didSetMeal = true
+            }
+            .sheet(isPresented: $showBarcode) {
+                BarcodeScanFlowView(day: day, initialMeal: meal)
             }
             .sheet(isPresented: Binding(
                 get: { selected != nil },

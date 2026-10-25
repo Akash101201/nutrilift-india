@@ -454,14 +454,17 @@ def build_plans() -> list[dict]:
 
 
 def main() -> None:
-    foods = build_foods()
+    # Foods come from INDB + IFCT via build_foods_catalog.py (not the old procedural filler).
+    from build_foods_catalog import main as build_foods_catalog
+
+    build_foods_catalog()
     templates = build_templates()
     plans = build_plans()
 
-    (OUT / "foods.json").write_text(json.dumps(foods, indent=2), encoding="utf-8")
     (OUT / "workout_templates.json").write_text(json.dumps(templates, indent=2), encoding="utf-8")
     (OUT / "training_plans.json").write_text(json.dumps(plans, indent=2), encoding="utf-8")
-    print(f"Wrote {len(foods)} foods, {len(templates)} templates, {len(plans)} plans -> {OUT}")
+    foods_count = len(json.loads((OUT / "foods.json").read_text(encoding="utf-8")))
+    print(f"Wrote {foods_count} foods, {len(templates)} templates, {len(plans)} plans -> {OUT}")
 
     from build_exercises import write_exercises
     write_exercises()

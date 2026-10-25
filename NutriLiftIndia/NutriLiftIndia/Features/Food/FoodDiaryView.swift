@@ -15,6 +15,7 @@ struct FoodDiaryView: View {
     @State private var showPhoto = false
     @State private var photoPreference: PhotoFoodCapturePreference = .choose
     @State private var showCustom = false
+    @State private var showBarcode = false
     @State private var editingEntry: FoodDiaryEntry?
     @State private var quickLogFood: FoodItem?
     @State private var saveTemplateMeal: MealType?
@@ -95,6 +96,30 @@ struct FoodDiaryView: View {
                     EmojiHeader(emoji: "📸", title: "Add with photo")
                 }
 
+                Section {
+                    Button {
+                        openBarcode(meal: nextEmptyMeal ?? .lunch)
+                    } label: {
+                        HStack(spacing: 12) {
+                            Text("📦")
+                                .font(.title2)
+                                .frame(width: 40, height: 40)
+                                .background(Theme.teal.opacity(0.14), in: Circle())
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Scan barcode")
+                                    .font(.rounded(.body, weight: .semibold))
+                                    .foregroundStyle(.primary)
+                                Text("Whey, protein bars, Amul drinks — local list + optional Open Food Facts")
+                                    .font(.rounded(.caption))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                } header: {
+                    EmojiHeader(emoji: "🏷️", title: "Packaged foods")
+                }
+                .listRowBackground(Theme.card)
+
                 ForEach(MealType.allCases.sorted(by: { $0.sortOrder < $1.sortOrder })) { meal in
                     mealSection(meal)
                 }
@@ -139,6 +164,11 @@ struct FoodDiaryView: View {
                             }
                         }
                         Button {
+                            openBarcode(meal: nextEmptyMeal ?? .lunch)
+                        } label: {
+                            Label("Scan barcode", systemImage: "barcode.viewfinder")
+                        }
+                        Button {
                             openCustom(meal: nextEmptyMeal ?? .lunch)
                         } label: {
                             Label("Custom food", systemImage: "square.and.pencil")
@@ -166,6 +196,9 @@ struct FoodDiaryView: View {
             }
             .sheet(isPresented: $showCustom) {
                 CustomFoodView(day: day, initialMeal: addMeal)
+            }
+            .sheet(isPresented: $showBarcode) {
+                BarcodeScanFlowView(day: day, initialMeal: addMeal)
             }
             .sheet(isPresented: Binding(
                 get: { editingEntry != nil },
@@ -329,6 +362,11 @@ struct FoodDiaryView: View {
     private func openCustom(meal: MealType) {
         addMeal = meal
         showCustom = true
+    }
+
+    private func openBarcode(meal: MealType) {
+        addMeal = meal
+        showBarcode = true
     }
 
     // MARK: Summary

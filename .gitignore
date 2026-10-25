@@ -20,3 +20,6 @@ xcuserdata/
 .env
 *.p12
 *.mobileprovision
+
+# Local nutrition source downloads (regenerate with scripts/build_foods_catalog.py)
+scripts/data/raw/

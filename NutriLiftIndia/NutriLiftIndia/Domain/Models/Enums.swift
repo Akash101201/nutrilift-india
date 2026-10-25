@@ -442,6 +442,7 @@ enum EquipmentType: String, Codable, CaseIterable, Identifiable {
 enum DiaryEntrySource: String, Codable {
     case manual
     case photoEstimate
+    case barcode
 }
 
 enum WeightChartRange: String, CaseIterable, Identifiable {

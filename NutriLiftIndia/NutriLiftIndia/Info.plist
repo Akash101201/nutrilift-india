@@ -7,7 +7,7 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>NutirLift may write body mass you log in the app to Apple Health if you choose. Nothing is uploaded to NutirLift servers.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Take a meal photo for on-device calorie and macro estimates using Apple Foundation Models. Photos stay on your device and are not uploaded.</string>
+	<string>Scan packaged-food barcodes and take meal photos for nutrition logging. Photos and scans stay on your device. Optional online barcode lookup uses Open Food Facts only when you choose it.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose a meal photo for on-device nutrition estimates. Photos stay on your device and are not uploaded.</string>
 	<key>UIBackgroundModes</key>
